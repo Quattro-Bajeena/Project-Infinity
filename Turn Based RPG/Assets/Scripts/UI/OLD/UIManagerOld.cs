@@ -80,11 +80,11 @@ public class UIManagerOld : MonoBehaviour
             if (entity.IsCharacter)
             {
                 charactersInBattle.Add(entity);
-                charactersInBattleDict.Add(entity.entityName, entity);
+                charactersInBattleDict.Add(entity.EntityName, entity);
             }
             else
             {
-                enemiesInBattle.Add(entity.entityName);
+                enemiesInBattle.Add(entity.EntityName);
             }
         }
 
@@ -170,7 +170,7 @@ public class UIManagerOld : MonoBehaviour
         List<string> possibleTargets = new List<string>();
         foreach (CombatModule entity in entitiesInBattle)
         {
-            if(entity.IsCharacter == false) { possibleTargets.Add(entity.entityName); }
+            if(entity.IsCharacter == false) { possibleTargets.Add(entity.EntityName); }
         }
 
         if(possibleTargets.Count != 0)
@@ -297,7 +297,7 @@ public class UIManagerOld : MonoBehaviour
 
         foreach (CombatModule entity in entitiesInBattle)
         {
-            if(targetID == entity.entityName)
+            if(targetID == entity.EntityName)
             {
                 GameObject newDamageText = Instantiate(damageTextPrefab);
 
@@ -351,7 +351,7 @@ public class UIManagerOld : MonoBehaviour
         string id = data.id;
         for(int i=0; i < entitiesInBattle.Count; i++)
         {
-            if(entitiesInBattle[i].entityName == id)
+            if(entitiesInBattle[i].EntityName == id)
             {
                 entitiesInBattle.RemoveAt(i);
                 break;
@@ -404,33 +404,33 @@ public class UIManagerOld : MonoBehaviour
         {
             //Bars
             GameObject newBar = Instantiate(characterBarPrefab) as GameObject;
-            newBar.name = "Character Bar: " + character.entityName;
+            newBar.name = "Character Bar: " + character.EntityName;
 
             var characterBarScript = newBar.GetComponent<CharacterBarScript>();
             characterBarScript.character = character;
             characterBarScript.initialize();
 
             newBar.transform.SetParent(characterPanel, false);
-            characterBars.Add(character.entityName, newBar);
+            characterBars.Add(character.EntityName, newBar);
 
 
             //Selector
             GameObject newSelector = Instantiate(selectorPrefab);
-            newSelector.name = "Selector: " + character.entityName;
+            newSelector.name = "Selector: " + character.EntityName;
             newSelector.SetActive(false);
             newSelector.transform.SetParent(character.gameObject.transform, false);
 
-            selectors.Add(character.entityName, newSelector);
+            selectors.Add(character.EntityName, newSelector);
 
             //Action Panels
             
             GameObject newMagicPanel = Instantiate(actionPanelPrefab);
 
-            newMagicPanel.name = "magic panel: " + character.entityName;
+            newMagicPanel.name = "magic panel: " + character.EntityName;
             newMagicPanel.transform.SetParent(enemyPanel, false);
 
             //attackPanels.Add(character.Key, newAttackPanel);
-            magicPanels.Add(character.entityName, newMagicPanel);
+            magicPanels.Add(character.EntityName, newMagicPanel);
 
             var actions = character.abilities;
             

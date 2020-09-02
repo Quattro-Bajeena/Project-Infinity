@@ -89,15 +89,15 @@ public class UIManager : MonoBehaviour
 
         foreach (var entity in FindObjectsOfType<Entity>())
         {
-            entities.Add( entity.gameObject.GetComponent<CombatModule>().entityName, entity.gameObject);
+            entities.Add( entity.gameObject.GetComponent<CombatModule>().EntityName, entity.gameObject);
             CombatModule entityCombat = entity.GetComponent<CombatModule>();
             if (entityCombat.IsCharacter == true)
             {
-                characters.Add(entityCombat.entityName, entityCombat);
+                characters.Add(entityCombat.EntityName, entityCombat);
             }
             else
             {
-                enemies.Add(entityCombat.entityName, entity.gameObject);
+                enemies.Add(entityCombat.EntityName, entity.gameObject);
             }
         }
 
@@ -112,7 +112,7 @@ public class UIManager : MonoBehaviour
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(panelStack.Peek().GetComponent<RectTransform>());
 
-        currentlySelectedButton = panelStack.Peek().GetComponent<UIPanel>().getFirstButton();
+        currentlySelectedButton = panelStack.Peek().GetComponent<UIPanel>().GetFirstButton();
         EventSystem.current.SetSelectedGameObject(currentlySelectedButton);
         StartCoroutine(SelectedButtonChanged(currentlySelectedButton));
 
@@ -166,7 +166,7 @@ public class UIManager : MonoBehaviour
             currentCharacter = data.id;
             menuSelector.SetActive(true);
             SetAttackControles(false); //ui controls
-            EventSystem.current.SetSelectedGameObject(firstSelectedPanel.GetComponent<UIPanel>().getFirstButton());
+            EventSystem.current.SetSelectedGameObject(firstSelectedPanel.GetComponent<UIPanel>().GetFirstButton());
             movePanel.GetComponent<MovePanel>().SetActive(true);
             attackBar.GetComponent<AttackBar>().changeActiveCharacter(characters[data.id]);
 
@@ -181,7 +181,7 @@ public class UIManager : MonoBehaviour
         DisableControls();
         foreach (GameObject targetGo in targets)
         {
-            currentActionTargets.Add(targetGo.GetComponent<CombatModule>().entityName);
+            currentActionTargets.Add(targetGo.GetComponent<CombatModule>().EntityName);
         }
         
         //Switch:
@@ -222,7 +222,7 @@ public class UIManager : MonoBehaviour
             }
 
             HidePanel();
-            OpenTargetPanel(targetsGO);
+            OpenTargetPanel(targetsGO, ability.actionRange);
         }
         
     }
@@ -294,7 +294,7 @@ public class UIManager : MonoBehaviour
         {
             currentUIMove = UIMove.Attack;
             EventManager.TriggerEvent(UIEvents.AttackMenuSelected, new UIEventData(currentCharacter));
-            OpenTargetPanel(new List<GameObject>(enemies.Values));
+            OpenTargetPanel(new List<GameObject>(enemies.Values), CombatAction.ActionRange.Single);
         }
         
     }
@@ -313,9 +313,9 @@ public class UIManager : MonoBehaviour
     }
     
     // Opening Panels With Data they need
-    public void OpenTargetPanel(List<GameObject> entities)
+    public void OpenTargetPanel(List<GameObject> entities, CombatAction.ActionRange range)
     {
-        targetPanel.GetComponent<TargetSelectPanel>().Create(entities);
+        targetPanel.GetComponent<TargetSelectPanel>().Create(entities, range);
         OpenPanel(targetPanel);
 
     }
@@ -430,7 +430,7 @@ public class UIManager : MonoBehaviour
         newPanel.transform.SetAsLastSibling();
 
 
-        EventSystem.current.SetSelectedGameObject(newPanel.GetComponent<UIPanel>().getFirstButton());
+        EventSystem.current.SetSelectedGameObject(newPanel.GetComponent<UIPanel>().GetFirstButton());
 
         currentluUsedPanel = newPanel;
         panelStack.Push(newPanel);

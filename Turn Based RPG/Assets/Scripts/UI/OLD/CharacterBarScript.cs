@@ -30,7 +30,7 @@ public class CharacterBarScript : MonoBehaviour
     {
         bar = transform.Find("ProgressBar/Bar").GetComponent<Image>();
         Text name = transform.Find("CharacterName").GetComponent<Text>();
-        name.text = character.entityName;
+        name.text = character.EntityName;
 
         hpText = transform.Find("Stats/HPText/HPValue").GetComponent<Text>();
         mpText = transform.Find("Stats/MPText/MPValue").GetComponent<Text>();

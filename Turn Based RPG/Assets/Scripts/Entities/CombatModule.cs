@@ -10,8 +10,8 @@ using UnityEngine.EventSystems;
 public class CombatModule : MonoBehaviour
 {
 
-    public string entityName { get; set; }
-    public Entity entity { get; set; }
+    public string EntityName { get; set; }
+    public Entity Entity { get; set; }
     public bool IsCharacter { get; set; }
 
     
@@ -45,8 +45,8 @@ public class CombatModule : MonoBehaviour
     void Awake()
     {
         startPosition = transform.position;
-        entity = gameObject.GetComponent<Entity>();
-        entityName = entity.entityName;
+        Entity = gameObject.GetComponent<Entity>();
+        EntityName = Entity.entityName;
 
         if (GetComponent<CharacterModule>())
         {
@@ -55,7 +55,7 @@ public class CombatModule : MonoBehaviour
         else IsCharacter = false;
 
         //stats = entity.stats.getStatistics();
-        stats = new EntityStatistics(entity.stats.GetStatistics());
+        stats = new EntityStatistics(Entity.stats.GetStatistics());
 
     }
     void Start()
@@ -65,7 +65,7 @@ public class CombatModule : MonoBehaviour
         foreach (CombatAction action in availableActions)
         {
             
-            entity.animations.AddClip(action.actionName, action.actionAnimation);
+            Entity.animations.AddClip(action.actionName, action.actionAnimation);
             switch (action.actionType)
             {
                 case CombatAction.ActionType.Ability:
@@ -114,7 +114,7 @@ public class CombatModule : MonoBehaviour
                 UpdateActionGauge();
                 if(actionGauge >= 1f) 
                 {
-                    EventManager.TriggerEvent(CombatEvents.ReadyForAction, new CombatEventData(entityName));
+                    EventManager.TriggerEvent(CombatEvents.ReadyForAction, new CombatEventData(EntityName));
                     state = CombatState.ReadyForAction;
                 }
                 break;
@@ -144,7 +144,7 @@ public class CombatModule : MonoBehaviour
                 if(state == CombatState.ReadyForAction)
                 {
                     state = CombatState.PerformingAction;
-                    EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(entityName));
+                    EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(EntityName));
 
                     currentPerformingAction = PerformAttackAction(position);
                     StartCoroutine(currentPerformingAction);
@@ -156,7 +156,7 @@ public class CombatModule : MonoBehaviour
                 if(state == CombatState.ReadyForAction)
                 {
                     state = CombatState.PerformingAction;
-                    EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(entityName));
+                    EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(EntityName));
 
                     currentPerformingAction = PerformAbilityAction(action, position);
                     StartCoroutine(currentPerformingAction);
@@ -206,7 +206,7 @@ public class CombatModule : MonoBehaviour
         {
             //Play death animation
             //start courotine
-            EventManager.TriggerEvent(CombatEvents.EntityDied, new CombatEventData(entityName));
+            EventManager.TriggerEvent(CombatEvents.EntityDied, new CombatEventData(EntityName));
         }
     }
 
@@ -214,7 +214,7 @@ public class CombatModule : MonoBehaviour
 
     void JumpOnBattlefield(UIEventData data)
     {
-        if (data.id == entityName)
+        if (data.id == EntityName)
         {
             //TO DO: get the position better, maybe a empty and field on battle manager
             Vector3 battlefiedPosition = new Vector3(
@@ -229,7 +229,7 @@ public class CombatModule : MonoBehaviour
 
     void RetreatFromBattlefied(UIEventData data)
     {
-        if (data.id == entityName)
+        if (data.id == EntityName)
         {
             StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 0f, 10f));
         }
@@ -253,7 +253,7 @@ public class CombatModule : MonoBehaviour
                 
                 action = combo;
                 CancelAttack();
-                EventManager.TriggerEvent(CombatEvents.ComboLaunched, new CombatEventData(entityName));
+                EventManager.TriggerEvent(CombatEvents.ComboLaunched, new CombatEventData(EntityName));
             }
         }
 
@@ -271,9 +271,9 @@ public class CombatModule : MonoBehaviour
             //there are attack in the queue
             if (attackQueue.Count != 0)
             {
-                entity.animations.Play(attackQueue.Peek().actionName);
-                while (entity.animations.IsPlaying == true) { yield return null; }
-                EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(entityName, attackQueue.Peek()));
+                Entity.animations.Play(attackQueue.Peek().actionName);
+                while (Entity.animations.IsPlaying == true) { yield return null; }
+                EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(EntityName, attackQueue.Peek()));
                 attackQueue.Dequeue();
             }
             //no attacks and attacking is canceled
@@ -302,10 +302,10 @@ public class CombatModule : MonoBehaviour
     {
         while (MoveTowardsTarget(targetPosition, 1.5f, 5f)) { yield return null; }
 
-        entity.animations.Play(action.actionName);
-        while(entity.animations.IsPlaying == true) { yield return null; }
+        Entity.animations.Play(action.actionName);
+        while(Entity.animations.IsPlaying == true) { yield return null; }
 
-        EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(entityName, action));
+        EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(EntityName, action));
 
         while (MoveTowardsTarget(startPosition, 0, 5f)) { yield return null; }
 
@@ -322,8 +322,8 @@ public class CombatModule : MonoBehaviour
         actionGauge = 0;
         attackComboList.Clear();
 
-        entity.animations.PlayIdle();
-        EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(entityName));
+        Entity.animations.PlayIdle();
+        EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(EntityName));
 
         state = CombatState.Charging;
     }

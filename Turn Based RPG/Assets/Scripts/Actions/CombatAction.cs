@@ -66,7 +66,6 @@ public class CombatAction : MonoBehaviour
         StatisticModifiers.AddRange(GetComponents<IStatisticModifier>());
         ResourceType = GetComponent<IUsesResourceStat>();
         ElementalDamages.AddRange(GetComponents<ElementalModifier>());
-        actionRange = GetComponent<ActionRange>();
         comboAction = GetComponent<ComboAction>();
         baseAttack = GetComponent<BaseAttack>();
         TargetType = GetComponent<ITargetType>();
@@ -78,7 +77,7 @@ public class CombatAction : MonoBehaviour
             actionRange = ActionRange.Single;
 
         }
-        if(actionType == ActionType.Combo)
+        if (actionType == ActionType.Combo)
         {
             cost = 0;
         }
