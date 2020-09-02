@@ -7,11 +7,11 @@ public class AttackButtonScript : MonoBehaviour
 {
     [SerializeField] BaseAttackType type;
 
-    UIManager uiManager;
+    UIManagerOld uiManager;
     
     void Start()
     {
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = FindObjectOfType<UIManagerOld>();
     }
 
     public void attackPicked()

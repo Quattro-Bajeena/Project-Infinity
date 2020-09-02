@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterBarScript : MonoBehaviour
 {
-    public CombatScript character;
+    public CombatModule character;
     Image bar;
     Text hpText;
     Text mpText;

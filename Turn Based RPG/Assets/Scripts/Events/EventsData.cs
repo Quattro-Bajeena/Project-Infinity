@@ -17,18 +17,7 @@ public enum CombatEvents
     
 }
 
-public enum UIEvents
-{
-    TargetPicked, //target id
-    AbilityPicked, //CombatAction
-    AttackLaunched, //id
-    ActionLaunched, //attacker id, target id, CombatAction
-    AttackCanceled, //id
-    SelectedButtonChanged, //buttonSelected
-    AttackMenuSelected, //id
-    AttackMenuCanceled
-    
-}
+
 
 public struct CombatEventData
 {
@@ -67,6 +56,18 @@ public struct CombatEventData
 
 }
 
+public enum UIEvents
+{
+    TargetPicked, //target id
+    AbilityPicked, //CombatAction
+    AttackLaunched, //id
+    ActionLaunched, //attacker id, target id, CombatAction
+    AttackCanceled, //id
+    SelectedButtonChanged, //buttonSelected
+    AttackMenuSelected, //id
+    AttackMenuCanceled
+
+}
 public struct UIEventData
 {
     public string id;

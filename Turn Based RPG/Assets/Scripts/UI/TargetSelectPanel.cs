@@ -10,7 +10,7 @@ public class TargetSelectPanel : MonoBehaviour
     [SerializeField] float selectorVerticalOffset;
     [SerializeField] GameObject selector;
 
-    UIManagerTest uiManager;
+    UIManager uiManager;
     UIPanel panelInfo;
 
     //List<GameObject> buttons = new List<GameObject>();
@@ -19,6 +19,8 @@ public class TargetSelectPanel : MonoBehaviour
 
     [SerializeField] bool active;
     [SerializeField] Camera overviewCamera;
+
+    bool selectAll = false;
 
     void Start()
     {
@@ -36,7 +38,7 @@ public class TargetSelectPanel : MonoBehaviour
         ClearTargets();
     }
 
-    public void Initialize(UIManagerTest uiManager)
+    public void Initialize(UIManager uiManager)
     {
         this.uiManager = uiManager;
         panelInfo = GetComponent<UIPanel>();

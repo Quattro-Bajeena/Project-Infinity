@@ -16,7 +16,7 @@ public class ElementalModifier : MonoBehaviour
     }
 
     public Element thisElement;
-    public float calculateElementalModifier(float statChange, EntityStatistics targetStatistics)
+    public float CalculateElementalModifier(float statChange, EntityStatistics targetStatistics)
     {
         return statChange * (1 - targetStatistics.resistances[thisElement]);
     }

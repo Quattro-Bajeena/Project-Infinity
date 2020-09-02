@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7912630496925627167
+--- !u!1 &8311286473892784659
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7912630496925627166}
-  - component: {fileID: 7912630496925627152}
-  - component: {fileID: 7912630496925627153}
-  - component: {fileID: 7912630496925627155}
-  - component: {fileID: 7912630496925627164}
-  - component: {fileID: 7912630496925627165}
+  - component: {fileID: 8311286473892784656}
+  - component: {fileID: 8311286473892784650}
+  - component: {fileID: 8311286473892784661}
+  - component: {fileID: 8311286473892784660}
+  - component: {fileID: 8311286473892784662}
+  - component: {fileID: 8311286473892784657}
   m_Layer: 0
-  m_Name: FireSpell
+  m_Name: ComboKick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7912630496925627166
+--- !u!4 &8311286473892784656
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912630496925627167}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 8311286473892784659}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7912630496925627152
+--- !u!114 &8311286473892784650
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912630496925627167}
+  m_GameObject: {fileID: 8311286473892784659}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
@@ -49,57 +49,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 0
   comboAction: {fileID: 0}
-  actionAnimation: {fileID: 7400000, guid: bbeb4e40c0471fb49a8d56b50c863ecd, type: 2}
-  actionName: Fire Ball
-  power: 10
-  cost: 5
-  actionType: 0
---- !u!114 &7912630496925627153
+  actionAnimation: {fileID: 7400000, guid: aaa339ef8704b3b4b8812e28863c1f2a, type: 2}
+  actionName: Combo Kick
+  power: 15
+  cost: 0
+  actionType: 2
+--- !u!114 &8311286473892784661
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912630496925627167}
+  m_GameObject: {fileID: 8311286473892784659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 125669d110ae7aa4da31070c11a23384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8311286473892784660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8311286473892784659}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisElement: 0
---- !u!114 &7912630496925627155
+--- !u!114 &8311286473892784662
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912630496925627167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f38d4955a339ef3448240d8d99f16001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7912630496925627164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912630496925627167}
+  m_GameObject: {fileID: 8311286473892784659}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75ef1186125d4f64d8b278fd70c11272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7912630496925627165
+--- !u!114 &8311286473892784657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7912630496925627167}
+  m_GameObject: {fileID: 8311286473892784659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9ff72d12394a54cbe874e4ea56f0a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 859ef6f421c34d54384b8cac02227253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredInput: 02000000000000000000000000000000

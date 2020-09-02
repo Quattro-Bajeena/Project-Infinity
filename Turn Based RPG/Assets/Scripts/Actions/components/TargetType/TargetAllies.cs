@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class TargetAllies : MonoBehaviour ,ITargetType
 {
-    public List<CombatScript> getTargets(CombatScript attacker, List<CombatScript> potentialTargets)
+    public List<CombatModule> GetTargets(CombatModule attacker, List<CombatModule> potentialTargets)
     {
-        List<CombatScript> targets = new List<CombatScript>();
+        List<CombatModule> targets = new List<CombatModule>();
 
 
         foreach (var potentialTarget in potentialTargets)
         {
-            if (potentialTarget.isCharacter == attacker.isCharacter)
+            if (potentialTarget.IsCharacter == attacker.IsCharacter)
             {
                 targets.Add(potentialTarget);
             }
@@ -20,14 +20,14 @@ public class TargetAllies : MonoBehaviour ,ITargetType
         return targets;
     }
 
-    public List<string> getTargetsById(string attackerId, bool isCharacter, List<CombatScript> potentialTargets)
+    public List<string> GetTargetsById(string attackerId, bool isCharacter, List<CombatModule> potentialTargets)
     {
         List<string> targets = new List<string>();
 
 
         foreach (var potentialTarget in potentialTargets)
         {
-            if (potentialTarget.isCharacter == isCharacter)
+            if (potentialTarget.IsCharacter == isCharacter)
             {
                 targets.Add(potentialTarget.entityName);
             }

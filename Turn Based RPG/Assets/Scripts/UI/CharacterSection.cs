@@ -5,8 +5,8 @@ using UnityEngine;
 public class CharacterSection : MonoBehaviour
 {
     [SerializeField] GameObject characterPanelPrefab;
-    UIManagerTest UIManager;
-    Dictionary<string, CombatScript> characters;
+    UIManager UIManager;
+    Dictionary<string, CombatModule> characters;
     Dictionary<string, CharacterPanel> characterPanels = new Dictionary<string, CharacterPanel>();
 
     void Start()
@@ -62,11 +62,11 @@ public class CharacterSection : MonoBehaviour
         }
     }
 
-    public void Initialize(Dictionary<string, CombatScript> characters, UIManagerTest UIManager)
+    public void Initialize(Dictionary<string, CombatModule> characters, UIManager UIManager)
     {
         this.UIManager = UIManager;
         this.characters = characters;
-        foreach (KeyValuePair<string, CombatScript> character in characters)
+        foreach (KeyValuePair<string, CombatModule> character in characters)
         {
             GameObject newCharacterPanel = Instantiate(characterPanelPrefab);
             newCharacterPanel.SetActive(true);

@@ -3,24 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhysicalDamage : MonoBehaviour ,IStatisticModifier, IHealthModifier 
+public class PhysicalDamage : MonoBehaviour ,IStatisticModifier, IHealthModifier , IStatisticLowerer
 {
     
 
-    public float calculateStatChange(float power, EntityStatistics attackerStats, EntityStatistics targetStats)
+    public float CalculateStatChange(float power, EntityStatistics attackerStats, EntityStatistics targetStats)
     {
-
-        return -1 * (4 * attackerStats.attack - 3 * targetStats.defense) * power; ;
+        return -1 * (4 * attackerStats.attack - 3 * targetStats.defense) * power;
     }
 
-    public void applyStatChange(float value, EntityStatistics targetStats)
+    public void ApplyStatChange(float value, EntityStatistics targetStats)
     {
         targetStats.health += value;
         
     }
-
-    //public float getModifiedHealth(float power, EntityStatistics attackerStats, EntityStatistics targetStats)
-    //{
-    //    return -1 * calculateStatChange(power, attackerStats, targetStats); ;
-    //}
 }

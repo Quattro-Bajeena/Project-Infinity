@@ -6,8 +6,8 @@ using UnityEngine;
 public interface IActionEffect
 {
 
-    void onEnter(EntityStatistics stats);
-    void onEveryTurn(EntityStatistics stats);
-    void onExit(EntityStatistics stats);
+    void OnEnter(EntityStatistics stats);
+    void OnEveryTurn(EntityStatistics stats);
+    void OnExit(EntityStatistics stats);
       
 }

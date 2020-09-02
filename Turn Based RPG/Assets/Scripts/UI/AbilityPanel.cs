@@ -7,7 +7,7 @@ public class AbilityPanel : MonoBehaviour
 {
     [SerializeField] GameObject buttonTemplate;
 
-    UIManagerTest uiManager;
+    UIManager uiManager;
     //List<GameObject> buttons = new List<GameObject>();
     UIPanel panelInfo;
 
@@ -19,7 +19,7 @@ public class AbilityPanel : MonoBehaviour
 
     ScrollRect scrollRect;
 
-    public void Initialize(UIManagerTest uiManager)
+    public void Initialize(UIManager uiManager)
     {
         this.uiManager = uiManager;
         scrollRect = GetComponent<ScrollRect>();
@@ -39,7 +39,7 @@ public class AbilityPanel : MonoBehaviour
             panelInfo.AddButton(newButton);
             newButton.SetActive(true);
 
-            bool enoughtResource = ability.isEnoughResource(characterStats);
+            bool enoughtResource = ability.IsEnoughResource(characterStats);
 
             newButton.GetComponent<AbilityButton>().Initialize(ability, enoughtResource, this, notEnoughResourceNameColor, notEnoughResourceCostColor, highlightColor);
             newButton.transform.SetParent(scrollRect.content.transform, false);

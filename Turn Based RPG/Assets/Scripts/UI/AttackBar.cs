@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class AttackBar : MonoBehaviour
 {
     Slider slider;
-    [SerializeField] CombatScript currentCharacter;
+    [SerializeField] CombatModule currentCharacter;
 
 
     private void Awake()
@@ -24,7 +24,7 @@ public class AttackBar : MonoBehaviour
         EventManager.StopListening(UIEvents.AttackLaunched, updateAttackBar);
     }
 
-    public void changeActiveCharacter(CombatScript newCharacter)
+    public void changeActiveCharacter(CombatModule newCharacter)
     {
         currentCharacter = newCharacter;
         slider.value = currentCharacter.stats.actionPoints / currentCharacter.stats.maxActionPoints;

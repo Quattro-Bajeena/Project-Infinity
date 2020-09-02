@@ -11,7 +11,7 @@ public class EventManager : MonoBehaviour
 
     private static EventManager eventManager;
 
-    public static EventManager instance
+    public static EventManager Instance
     {
         get
         {
@@ -48,26 +48,26 @@ public class EventManager : MonoBehaviour
     //Combat Events
     public static void StartListening(CombatEvents eventName, Action<CombatEventData> listener)
     {
-        if (instance.combatEventDictionary.ContainsKey(eventName))
+        if (Instance.combatEventDictionary.ContainsKey(eventName))
         {
-            instance.combatEventDictionary[eventName] += listener;
+            Instance.combatEventDictionary[eventName] += listener;
         }
         else
         {
-            instance.combatEventDictionary.Add(eventName, listener);
+            Instance.combatEventDictionary.Add(eventName, listener);
         }
     }
 
     public static void StopListening(CombatEvents eventName, Action<CombatEventData> listener)
     {
-        if (instance)
+        if (Instance)
         {
-            if (instance.combatEventDictionary.ContainsKey(eventName))
+            if (Instance.combatEventDictionary.ContainsKey(eventName))
             {
-                instance.combatEventDictionary[eventName] -= listener;
-                if (instance.combatEventDictionary[eventName] == null)
+                Instance.combatEventDictionary[eventName] -= listener;
+                if (Instance.combatEventDictionary[eventName] == null)
                 {
-                    instance.combatEventDictionary.Remove(eventName);
+                    Instance.combatEventDictionary.Remove(eventName);
                 }
             }
         }
@@ -77,10 +77,10 @@ public class EventManager : MonoBehaviour
     public static void TriggerEvent(CombatEvents eventName, CombatEventData data)
     {
 
-        if (instance.combatEventDictionary.ContainsKey(eventName))
+        if (Instance.combatEventDictionary.ContainsKey(eventName))
         {
             Debug.Log("Combat: " + eventName.ToString());
-            instance.combatEventDictionary[eventName].Invoke(data);
+            Instance.combatEventDictionary[eventName].Invoke(data);
         }
 
         else Debug.LogWarning("Combat Warning: " + eventName.ToString());
@@ -90,28 +90,28 @@ public class EventManager : MonoBehaviour
     //UI Events
     public static void StartListening(UIEvents eventName, Action<UIEventData> listener)
     {
-        if (instance.uiEventDictionary.ContainsKey(eventName))
+        if (Instance.uiEventDictionary.ContainsKey(eventName))
         {
             
-            instance.uiEventDictionary[eventName] += listener;
+            Instance.uiEventDictionary[eventName] += listener;
         }
         else
         {
-            instance.uiEventDictionary.Add(eventName, listener);
+            Instance.uiEventDictionary.Add(eventName, listener);
         }
     }
 
 
     public static void StopListening(UIEvents eventName, Action<UIEventData> listener)
     {
-        if (instance)
+        if (Instance)
         {
-            if (instance.uiEventDictionary.ContainsKey(eventName))
+            if (Instance.uiEventDictionary.ContainsKey(eventName))
             {
-                instance.uiEventDictionary[eventName] -= listener;
-                if (instance.uiEventDictionary[eventName] == null)
+                Instance.uiEventDictionary[eventName] -= listener;
+                if (Instance.uiEventDictionary[eventName] == null)
                 {
-                    instance.uiEventDictionary.Remove(eventName);
+                    Instance.uiEventDictionary.Remove(eventName);
                 }
             }
         }
@@ -123,10 +123,10 @@ public class EventManager : MonoBehaviour
     public static void TriggerEvent(UIEvents eventName, UIEventData data)
     {
 
-        if (instance.uiEventDictionary.ContainsKey(eventName))
+        if (Instance.uiEventDictionary.ContainsKey(eventName))
         {
             Debug.Log("UI: " + eventName.ToString());
-            instance.uiEventDictionary[eventName].Invoke(data);
+            Instance.uiEventDictionary[eventName].Invoke(data);
         }
         else Debug.LogWarning("UI Warning: " + eventName.ToString());
     }

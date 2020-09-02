@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatisticsScript : MonoBehaviour
+public class StatisticsModule : MonoBehaviour
 {
 	[SerializeField]
 	private EntityStatistics baseStats;
 
-	public EntityScript entity;
+	public Entity entity;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		entity = gameObject.GetComponent<EntityScript>();
+		entity = gameObject.GetComponent<Entity>();
 	}
 
 	// Update is called once per frame
@@ -21,7 +21,7 @@ public class StatisticsScript : MonoBehaviour
 		
 	}
 
-	public EntityStatistics getStatistics()
+	public EntityStatistics GetStatistics()
     {
 		return baseStats;
     }

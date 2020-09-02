@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 
 
-interface IUsesResourceStat
+public interface IUsesResourceStat
 {
-    void useResourceStat(EntityStatistics attackerStats, float cost);
-    bool isEnoughResource(EntityStatistics attackerStats, float cost);
+    void UseResourceStat(EntityStatistics attackerStats, float cost);
+    bool IsEnoughResource(EntityStatistics attackerStats, float cost);
 }
 

@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityScript : MonoBehaviour
+public class Entity : MonoBehaviour
 {
    
 
     public string entityName;
 
-    public StatisticsScript stats;
-    public CombatScript combat;
-    public AnimationManager animations;
+    public StatisticsModule stats;
+    public CombatModule combat;
+    public AnimationModule animations;
 
 
     void Awake()
     {
-        stats = GetComponent<StatisticsScript>();
-        combat = GetComponent<CombatScript>();
-        animations = GetComponent<AnimationManager>();
+        stats = GetComponent<StatisticsModule>();
+        combat = GetComponent<CombatModule>();
+        animations = GetComponent<AnimationModule>();
     }
 
     // Start is called before the first frame update

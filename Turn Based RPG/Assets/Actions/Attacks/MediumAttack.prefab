@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6159327904694879605
+--- !u!1 &4894254522060665404
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,13 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6159327904694879882}
-  - component: {fileID: 6159327904694879887}
-  - component: {fileID: 6159327904694879886}
-  - component: {fileID: 6159327904694879881}
-  - component: {fileID: 6159327904694879880}
-  - component: {fileID: 6159327904694879883}
-  - component: {fileID: 6159327904694879884}
+  - component: {fileID: 4894254522060665407}
+  - component: {fileID: 4894254522060665349}
+  - component: {fileID: 4894254522060665346}
+  - component: {fileID: 4894254522060665344}
+  - component: {fileID: 4894254522060665345}
+  - component: {fileID: 4894254522060665406}
   m_Layer: 0
   m_Name: MediumAttack
   m_TagString: Untagged
@@ -22,13 +21,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6159327904694879882
+--- !u!4 &4894254522060665407
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159327904694879605}
+  m_GameObject: {fileID: 4894254522060665404}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -36,80 +35,69 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6159327904694879887
+--- !u!114 &4894254522060665349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159327904694879605}
+  m_GameObject: {fileID: 4894254522060665404}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionRange: 0
+  comboAction: {fileID: 0}
   actionAnimation: {fileID: 7400000, guid: 620d364c7f16f7245810def2d9ddd3e2, type: 2}
   actionName: Character 1 Medium Attack
   power: 1
   cost: 2
   actionType: 1
---- !u!114 &6159327904694879886
+--- !u!114 &4894254522060665346
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159327904694879605}
+  m_GameObject: {fileID: 4894254522060665404}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc98e533f17d11e49bc04f2405859900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackType: 1
---- !u!114 &6159327904694879881
+--- !u!114 &4894254522060665344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159327904694879605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23b962719a2feb5439efe063ae5f899d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisRange: 0
---- !u!114 &6159327904694879880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159327904694879605}
+  m_GameObject: {fileID: 4894254522060665404}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75ef1186125d4f64d8b278fd70c11272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6159327904694879883
+--- !u!114 &4894254522060665345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159327904694879605}
+  m_GameObject: {fileID: 4894254522060665404}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 125669d110ae7aa4da31070c11a23384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6159327904694879884
+--- !u!114 &4894254522060665406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6159327904694879605}
+  m_GameObject: {fileID: 4894254522060665404}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bee73da1b619aca43a9adbcd6febf50f, type: 3}

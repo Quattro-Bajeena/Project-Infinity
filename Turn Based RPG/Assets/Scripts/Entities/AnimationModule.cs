@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimationManager : MonoBehaviour
+public class AnimationModule : MonoBehaviour
 {
 
     Animation animationController;
@@ -22,7 +22,7 @@ public class AnimationManager : MonoBehaviour
     void Start()
     {
         animationController.AddClip(defaultIdleAnimation, "Idle");
-        playLoop("Idle");
+        PlayLoop("Idle");
     }
 
     // Update is called once per frame
@@ -34,12 +34,12 @@ public class AnimationManager : MonoBehaviour
         //}
     }
 
-    public void addClip(string name, AnimationClip clip)
+    public void AddClip(string name, AnimationClip clip)
     {
         animationController.AddClip(clip, name);
     }
 
-    public void play(string name, bool overrideCurrent = true)
+    public void Play(string name, bool overrideCurrent = true)
     {
         animationController.wrapMode = WrapMode.Once;
         if(animationController.isPlaying == true)
@@ -51,18 +51,18 @@ public class AnimationManager : MonoBehaviour
 
     }
 
-    public void playLoop(string name)
+    public void PlayLoop(string name)
     {
         animationController.wrapMode = WrapMode.Loop;
         animationController.Play(name);
     }
 
-    public void playIdle()
+    public void PlayIdle()
     {
-        playLoop("Idle");
+        PlayLoop("Idle");
     }
 
-    public bool isPlaying
+    public bool IsPlaying
     {
         get
         {
@@ -71,7 +71,7 @@ public class AnimationManager : MonoBehaviour
     }
 
 
-    public void queue(string name)
+    public void Queue(string name)
     {
         animationController.PlayQueued(name);
     }

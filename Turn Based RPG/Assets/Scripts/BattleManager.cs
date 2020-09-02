@@ -7,10 +7,12 @@ using UnityEngine.Events;
 public class BattleManager : MonoBehaviour
 {
     
-    public Dictionary<string, CombatScript> entitiesInBattle = new Dictionary<string, CombatScript>();
+    [SerializeField] Dictionary<string, CombatModule> entitiesInBattle = new Dictionary<string, CombatModule>();
     
-    public List<string> entityQueue = new List<string>();
+    [SerializeField] List<string> entityQueue = new List<string>();
 
+    //public List<string> characterQueue = new List<string>();
+    //public List<string> enemyQueue = new List<string>();
 
     enum BattleState
     {
@@ -21,8 +23,8 @@ public class BattleManager : MonoBehaviour
 
     BattleState state;
 
-    public CombatScript currentAttacker;
-    public List<CombatScript> currentTargets = new List<CombatScript>();
+    public CombatModule currentAttacker;
+    public List<CombatModule> currentTargets = new List<CombatModule>();
     
     void Awake()
     {
@@ -31,7 +33,7 @@ public class BattleManager : MonoBehaviour
 
     void Start()
     {
-        var entities = FindObjectsOfType<CombatScript>();
+        var entities = FindObjectsOfType<CombatModule>();
         foreach (var entity in entities)
         {
             entitiesInBattle.Add(entity.entityName, entity);
@@ -41,24 +43,25 @@ public class BattleManager : MonoBehaviour
 
     void OnEnable()
     {
-        EventManager.StartListening(CombatEvents.ReadyForAction, queueAction);
-        EventManager.StartListening(CombatEvents.CombatAnimationFinished, modifyEntityStatistics);
-        EventManager.StartListening(CombatEvents.ActionCompleted, actionCompleted);
-        EventManager.StartListening(CombatEvents.EntityDied, entityDeath);
+        EventManager.StartListening(CombatEvents.ReadyForAction, QueueAction);
+        EventManager.StartListening(CombatEvents.CombatAnimationFinished, ModifyEntityStatistics);
+        EventManager.StartListening(CombatEvents.ActionCompleted, ActionCompleted);
+        EventManager.StartListening(CombatEvents.EntityDied, EntityDeath);
         
 
-        EventManager.StartListening(UIEvents.ActionLaunched, processAction);
-        EventManager.StartListening(UIEvents.AttackCanceled, cancelAttack);
+        EventManager.StartListening(UIEvents.ActionLaunched, ProcessAction);
+        EventManager.StartListening(UIEvents.AttackCanceled, CancelAttack);
     }
 
     void OnDisable()
     {
-        EventManager.StopListening(CombatEvents.ReadyForAction, queueAction);
-        EventManager.StopListening(CombatEvents.CombatAnimationFinished, modifyEntityStatistics);
-        EventManager.StopListening(CombatEvents.ActionCompleted, actionCompleted);
-        EventManager.StopListening(CombatEvents.EntityDied, entityDeath);
+        EventManager.StopListening(CombatEvents.ReadyForAction, QueueAction);
+        EventManager.StopListening(CombatEvents.CombatAnimationFinished, ModifyEntityStatistics);
+        EventManager.StopListening(CombatEvents.ActionCompleted, ActionCompleted);
+        EventManager.StopListening(CombatEvents.EntityDied, EntityDeath);
 
-        EventManager.StopListening(UIEvents.ActionLaunched, processAction);
+        EventManager.StopListening(UIEvents.ActionLaunched, ProcessAction);
+        EventManager.StopListening(UIEvents.AttackCanceled, CancelAttack);
     }
 
     void Update()
@@ -67,10 +70,11 @@ public class BattleManager : MonoBehaviour
         {
             case BattleState.WaitingForAction:
                 if(entityQueue.Count > 0)
-                {      
-                    EventManager.TriggerEvent(CombatEvents.PermitAction, new CombatEventData(entityQueue[0]));
+                {
                     currentAttacker = entitiesInBattle[entityQueue[0]];
                     state = BattleState.WaitingForInput;
+                    EventManager.TriggerEvent(CombatEvents.SuspensionToggle, new CombatEventData());
+                    EventManager.TriggerEvent(CombatEvents.PermitAction, new CombatEventData(entityQueue[0]));
                 }
                 break;
             case BattleState.Action:
@@ -84,32 +88,33 @@ public class BattleManager : MonoBehaviour
     }
 
     //UI -> action launched
-    void processAction(UIEventData data)
+    void ProcessAction(UIEventData data)
     {
         //Data
         string attackerID = data.id;
         List<string> targetIDs = data.targetsId;
         CombatAction action = data.action;
 
-        CombatScript attacker = entitiesInBattle[attackerID];
+        
+        CombatModule attacker = entitiesInBattle[attackerID];
 
-        if (state == BattleState.WaitingForInput)
+        //if (state == BattleState.WaitingForInput)
         {
             state = BattleState.Action;
-            EventManager.TriggerEvent(CombatEvents.SuspensionToggle, new CombatEventData());
+            
 
             foreach (string targetID in targetIDs)
             {
-                CombatScript target = entitiesInBattle[targetID];
+                CombatModule target = entitiesInBattle[targetID];
                 currentTargets.Add(target);
             }
         }
 
-        Vector3 position = entitiesInBattle[targetIDs[0]].gameObject.transform.position;
-        attacker.processAction(action, position);
+        Vector3 position = currentTargets[0].gameObject.transform.position;
+        attacker.ProcessAction(action, position);
     }
 
-    void cancelAttack(UIEventData data)
+    void CancelAttack(UIEventData data)
     {
         
         string attackerID = data.id;
@@ -117,36 +122,37 @@ public class BattleManager : MonoBehaviour
         if(attackerID == currentAttacker.entityName)
         {
             
-            entitiesInBattle[attackerID].cancelAttack();
+            entitiesInBattle[attackerID].CancelAttack();
         }
     }
 
     
 
     //entity -> combat animation finished
-    void modifyEntityStatistics(CombatEventData data)
+    void ModifyEntityStatistics(CombatEventData data)
     {
         CombatAction action = data.action;
 
-        foreach (CombatScript target in currentTargets)
+        foreach (CombatModule target in currentTargets)
         {
-            action.modyfiStatistics(currentAttacker.stats, target.stats);
+            action.ModyfiStatistics(currentAttacker.stats, target.stats);
 
-            float healthChange = action.getHealthChange(currentAttacker.stats, target.stats);
+            float healthChange = action.GetHealthChange(currentAttacker.stats, target.stats);
             EventManager.TriggerEvent(CombatEvents.DamageDealt, new CombatEventData(target.entityName, healthChange));
         }
     }
 
     //Entity -> queu Action
-    void queueAction(CombatEventData data)
+    void QueueAction(CombatEventData data)
     {
         //var readyEntity = entitiesInBattle.Find(entity => entity.entityName == entityName);
         entityQueue.Add(data.id);
+
     }
 
     
     //entity -> action completed
-    void actionCompleted(CombatEventData data)
+    void ActionCompleted(CombatEventData data)
     {
         currentAttacker = null;
         currentTargets.Clear();
@@ -154,15 +160,22 @@ public class BattleManager : MonoBehaviour
         EventManager.TriggerEvent(CombatEvents.SuspensionToggle, new CombatEventData());
         state = BattleState.WaitingForAction;
         entityQueue.RemoveAt(0);
+
+        
     }
 
-    void entityDeath(CombatEventData data)
+    void EntityDeath(CombatEventData data)
     {
-        CombatScript deadEntity = entitiesInBattle[data.id];
-        deadEntity.gameObject.SetActive(false);
+        
+        CombatModule deadEntity = entitiesInBattle[data.id];
+        if(deadEntity.IsCharacter == false)
+        {
+            deadEntity.gameObject.SetActive(false);
 
-        entitiesInBattle.Remove(data.id);
-        entityQueue.Remove(data.id);
+            entitiesInBattle.Remove(data.id);
+            entityQueue.Remove(data.id);
+        }
+        
         
     }
 

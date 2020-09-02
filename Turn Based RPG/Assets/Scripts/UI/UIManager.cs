@@ -1,140 +1,205 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    //Prefabs
-    [SerializeField] GameObject characterBarPrefab;
-    [SerializeField] GameObject targetButtonPrefab;
-    [SerializeField] GameObject selectorPrefab;
-    [SerializeField] GameObject abilityButtonPrefab;
-    [SerializeField] GameObject actionPanelPrefab;
-    [SerializeField] GameObject damageTextPrefab;
+    [SerializeField] InputSystemUIInputModule inputModule;
+    [SerializeField] GameObject firstSelectedPanel;
 
-    //Menus to open/close
+    //Panels Present in the Scene
+    //[SerializeField] GameObject itemPanel;
     [SerializeField] GameObject movePanel;
-    [SerializeField] GameObject enemiesListPanel;
+    [SerializeField] GameObject targetPanel;
+    [SerializeField] GameObject abilityPanel;
     [SerializeField] GameObject attackPanel;
 
-    //Pnales to attach things
-    [SerializeField] Transform characterPanel;
-    [SerializeField] Transform enemyPanel;
+    [SerializeField] GameObject attackBar;
+    [SerializeField] GameObject characterSection;
+
+    [SerializeField] GameObject damageTextPrefab;
+
+    [SerializeField] GameObject menuSelector;
+    [SerializeField] GameObject currentlySelectedButton;
+    [SerializeField] GameObject realCurrentlySelectedButton;
+    
+    GameObject currentluUsedPanel;
+
     
 
-    Dictionary<string, GameObject> selectors = new Dictionary<string, GameObject>();
-    Dictionary<string, GameObject> characterBars = new Dictionary<string, GameObject>();
-    Dictionary<string, GameObject> magicPanels = new Dictionary<string, GameObject>();
+    Stack<GameObject> panelStack = new Stack<GameObject>();
+    Stack<GameObject> previousPanelButtonStack = new Stack<GameObject>();
 
 
-    Dictionary<string, GameObject> enemyBars = new Dictionary<string, GameObject>();
-    //Dictionary<string, GameObject> attackPanels = new Dictionary<string, GameObject>();
+    [SerializeField] List<GameObject> previousPanelButtonList = new List<GameObject>();
+    [SerializeField] List<GameObject> panelList = new List<GameObject>();
 
+    PlayerControls controls;
 
+    //GAMEPLAY
+    //List<GameObject> entities = new List<GameObject>();
+    Dictionary<string, GameObject> entities = new Dictionary<string, GameObject>();
+    Dictionary<string, GameObject> enemies = new Dictionary<string, GameObject>();
+    Dictionary<string, CombatModule> characters = new Dictionary<string, CombatModule>();
+    
 
+    [SerializeField] string currentCharacter;
+    [SerializeField] List<string> currentActionTargets;
+    [SerializeField] CombatAction currentAbilityPicked;
 
-    enum MenuState
+    enum UIMove
     {
-        Idle,
-        PickingMove,
-        PickingAction,
-        PickingTarget,
-        PerformingAbility,
-        PerformingAttack
+        NULL,
+        Attack,
+        Ability,
+        Item,
+        Defend,
+        Escape
     }
-    MenuState menuState;
 
-    [SerializeField]bool pickingAttack = false;
+    UIMove currentUIMove;
+    
+
+    void Awake()
+    {
+        //Init Controls
+        controls = new PlayerControls();
+
+        controls.CombatUI.Cancel.performed += _ => ClosePanel();
+
+        controls.Combat.CancelAttack.performed += _ => AttackCanceled();
+        controls.Combat.LightAttack.performed += _ => BaseAttackPicked(BaseAttackType.Light);
+        controls.Combat.MediumAttack.performed += _ => BaseAttackPicked(BaseAttackType.Medium);
+        controls.Combat.StrongAttack.performed += _ => BaseAttackPicked(BaseAttackType.Strong);
 
 
-    [SerializeField] string currentPicker;
-    [SerializeField] CombatAction currentAction;
-    [SerializeField] string currentAttackTarget;
-
-
-    [SerializeField]  List<CombatScript> entitiesInBattle = new List<CombatScript>();
-    Dictionary<string, CombatScript> charactersInBattleDict = new Dictionary<string, CombatScript>();
-
-
-    Stack<GameObject> menuLayers = new Stack<GameObject>();
+        currentUIMove = UIMove.NULL;
+    }
 
 
     void Start()
     {
 
-        enemiesListPanel.SetActive(true);
-        movePanel.SetActive(false);
-        attackPanel.SetActive(false);
+        inputModule = FindObjectOfType<InputSystemUIInputModule>();
+        //inputModule.actionsAsset = controls.asset;
 
-        var entities = FindObjectsOfType<CombatScript>();
-
-        List<CombatScript> charactersInBattle = new List<CombatScript>();
-        List<string> enemiesInBattle = new List<string>();
-
-        foreach (CombatScript entity in entities)
+        foreach (var entity in FindObjectsOfType<Entity>())
         {
-            entitiesInBattle.Add(entity);
-            if (entity.isCharacter)
+            entities.Add( entity.gameObject.GetComponent<CombatModule>().entityName, entity.gameObject);
+            CombatModule entityCombat = entity.GetComponent<CombatModule>();
+            if (entityCombat.IsCharacter == true)
             {
-                charactersInBattle.Add(entity);
-                charactersInBattleDict.Add(entity.entityName, entity);
+                characters.Add(entityCombat.entityName, entityCombat);
             }
             else
             {
-                enemiesInBattle.Add(entity.entityName);
+                enemies.Add(entityCombat.entityName, entity.gameObject);
             }
         }
 
-        createCharacterUI(charactersInBattle);
-        createEnemyBars(enemiesInBattle);
+        //Init Panels
+        InitItemPanel();
+        InitTargetPanel();
+        InitAbilityPanel();
+        InitCharacterSection();
+        
+        //Init Selector
+        panelStack.Push(firstSelectedPanel);
 
-        menuState = MenuState.Idle;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(panelStack.Peek().GetComponent<RectTransform>());
 
+        currentlySelectedButton = panelStack.Peek().GetComponent<UIPanel>().getFirstButton();
+        EventSystem.current.SetSelectedGameObject(currentlySelectedButton);
+        StartCoroutine(SelectedButtonChanged(currentlySelectedButton));
+
+        menuSelector.SetActive(false);
     }
 
     void OnEnable()
     {
+        controls.CombatUI.Enable();
+        controls.Combat.Disable();
+
         //Events from BattleManager 
-        EventManager.StartListening(CombatEvents.PermitAction, characterReadyToPick);
-        EventManager.StartListening(CombatEvents.ActionCompleted, actionCompleted);
-        EventManager.StartListening(CombatEvents.DamageDealt, displayDamage);
+        EventManager.StartListening(CombatEvents.PermitAction, CharacterReady);
+        EventManager.StartListening(CombatEvents.ActionCompleted, ActionCompletedCleanup);
+        EventManager.StartListening(CombatEvents.DamageDealt, DisplayDamage);
 
         //Events from entities
-        EventManager.StartListening(CombatEvents.EntityDied, removeEntityUI);
-        EventManager.StartListening(CombatEvents.ComboLaunched, resetMenu);
+        EventManager.StartListening(CombatEvents.EntityDied, EntityDied);
+        EventManager.StartListening(CombatEvents.ComboLaunched, ComboLaunched);
 
-        //Events from UI elements
-        EventManager.StartListening(UIEvents.TargetPicked, targetPicked);
-        EventManager.StartListening(UIEvents.AbilityPicked, abilityPicked);
-        
     }
 
     void OnDisable()
     {
-        //Events from BattleManager and Entites
-        EventManager.StopListening(CombatEvents.PermitAction, characterReadyToPick);
-        EventManager.StopListening(CombatEvents.ActionCompleted, actionCompleted);
-        EventManager.StopListening(CombatEvents.DamageDealt, displayDamage);
+        controls.Disable();
+        EventManager.StopListening(CombatEvents.PermitAction, CharacterReady);
+        EventManager.StopListening(CombatEvents.ActionCompleted, ActionCompletedCleanup);
+        EventManager.StopListening(CombatEvents.DamageDealt, DisplayDamage);
 
-        //Eevnts from enities
-        EventManager.StopListening(CombatEvents.EntityDied, removeEntityUI);
-        EventManager.StopListening(CombatEvents.ComboLaunched, resetMenu);
-
-        //Events from UI elements
-        EventManager.StopListening(UIEvents.TargetPicked, targetPicked);
-        EventManager.StopListening(UIEvents.AbilityPicked, abilityPicked);
-        //EventManager.StartListening(UIEvents.ActionLaunched)
+        //Events from entities
+        EventManager.StopListening(CombatEvents.EntityDied, EntityDied);
+        EventManager.StopListening(CombatEvents.ComboLaunched, ComboLaunched);
     }
 
 
-    void Update()
+    private void Update()
     {
-        switch (menuState)
+        //uiControllsEnabled = controls.CombatUI.enabled;
+        //combatControllsEnabled = controls.Combat.enabled;
+        //realCurrentlySelectedButton = EventSystem.current.currentSelectedGameObject;
+
+        //previousPanelButtonList.Clear();
+        //previousPanelButtonList.AddRange(previousPanelButtonStack.ToArray());
+    }
+
+    //GAME LOGIC
+    void CharacterReady(CombatEventData data)
+    {
+        if (characters.ContainsKey(data.id))
         {
-            case MenuState.PickingTarget:
+            currentCharacter = data.id;
+            menuSelector.SetActive(true);
+            SetAttackControles(false); //ui controls
+            EventSystem.current.SetSelectedGameObject(firstSelectedPanel.GetComponent<UIPanel>().getFirstButton());
+            movePanel.GetComponent<MovePanel>().SetActive(true);
+            attackBar.GetComponent<AttackBar>().changeActiveCharacter(characters[data.id]);
+
+        }
+    }
+
+    //Callbacks from panels
+    public void TargetPicked(List<GameObject> targets)
+    {
+        menuSelector.SetActive(false);
+        
+        DisableControls();
+        foreach (GameObject targetGo in targets)
+        {
+            currentActionTargets.Add(targetGo.GetComponent<CombatModule>().entityName);
+        }
+        
+        //Switch:
+        //attacking -> start attack
+        //casting a spell -> start spell action
+        //using item -> use item
+        switch(currentUIMove)
+        {
+            case UIMove.Ability:
+                HidePanel();
+                EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(currentCharacter, currentActionTargets, currentAbilityPicked));
+                break;
+
+            case UIMove.Attack:
+                OpenAttackPanel();
+                break;
+
+            case UIMove.Item:
 
                 break;
         }
@@ -142,336 +207,310 @@ public class UIManager : MonoBehaviour
         
     }
 
-
-
-    //Triggered by BattleManger event PermitAction
-    public void characterReadyToPick(CombatEventData data)
+    public void AbilityPicked(CombatAction ability)
     {
+        currentAbilityPicked = ability;
 
-        if (charactersInBattleDict.ContainsKey(data.id))
+        //get list of targets from ability
+        List<string> targets = ability.GetTargets(currentCharacter, true, new List<GameObject>(entities.Values));
+        if(targets.Count > 0)
         {
-            
-            currentPicker = data.id;
-            selectors[data.id].SetActive(true);
-
-            enemiesListPanel.SetActive(false);
-            movePanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(movePanel.transform.GetChild(0).gameObject);
-            menuLayers.Push(movePanel);
-            
-        }
-
-    }
-
-    //Triggered by clicking attack in move panel
-    public void attackMenu()
-    {
-        //List<string> possibleTargets = new List<CombatScript>(enemiesInBattle);
-        List<string> possibleTargets = new List<string>();
-        foreach (CombatScript entity in entitiesInBattle)
-        {
-            if(entity.isCharacter == false) { possibleTargets.Add(entity.entityName); }
-        }
-
-        if(possibleTargets.Count != 0)
-        {
-            movePanel.SetActive(false);
-            pickingAttack = true;
-            createTargetPanel(possibleTargets);
-        }
-        else
-        {
-            Debug.LogWarning("there are no possible targets");
-            return;
-        }
-
-        
-    }
-
-    //Triggered by clicking a base attack button
-    public void baseAttackPicked(BaseAttackType type)
-
-    {   if (type != BaseAttackType.NULL)
-        {
-            CombatAction attack = charactersInBattleDict[currentPicker].baseAttacks[type];
-            if (attack.isEnoughResource(charactersInBattleDict[currentPicker].stats) == true)
+            List<GameObject> targetsGO = new List<GameObject>();
+            foreach (string target in targets)
             {
-                currentAction = attack;
-                EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(currentPicker, new List<string>() { currentAttackTarget }, attack));
-                
+                targetsGO.Add(entities[target]);
             }
+
+            HidePanel();
+            OpenTargetPanel(targetsGO);
         }
-        else
-        {
-            
-            EventManager.TriggerEvent(UIEvents.AttackCanceled, new UIEventData(currentPicker));
-        }
-    }
-
-    //Triggered by cancel button? check that TO DO
-    public void cancelAttack()
-    {
-        EventManager.TriggerEvent(UIEvents.AttackCanceled, new UIEventData(currentPicker));
-    }
-
-    
-
-    //Triggered by button event
-    public void magicMenu()
-    {
-        movePanel.SetActive(false);
-        magicPanels[currentPicker].SetActive(true);
-        EventSystem.current.SetSelectedGameObject(magicPanels[currentPicker].transform.GetChild(0).gameObject);
-        menuLayers.Push(magicPanels[currentPicker]);
-        magicPanels[currentPicker].transform.SetAsLastSibling();
         
     }
 
-    //Triggrerd by clicking Ability button
-    void abilityPicked(UIEventData data)
+    void AbilityLaunched(CombatAction ability)
     {
-        if(data.action.isEnoughResource( charactersInBattleDict[currentPicker].stats) == true)
-        {
-            currentAction = data.action;
-            List<string> possibleTargets = currentAction.getTargets(currentPicker, true, entitiesInBattle);
 
-            if (possibleTargets.Count != 0)
+    }
+
+    void BaseAttackPicked(BaseAttackType type)
+    {
+        if (currentCharacter != null && currentActionTargets.Count > 0)
+        {
+            
+            CombatAction attack = characters[currentCharacter].baseAttacks[type];
+            if (attack.IsEnoughResource(characters[currentCharacter].stats))
             {
-                magicPanels[currentPicker].SetActive(false);
-                createTargetPanel(possibleTargets);
+                EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(currentCharacter, currentActionTargets, attack));
+                EventManager.TriggerEvent(UIEvents.AttackLaunched, new UIEventData(currentCharacter));
             }
-            else
-            {
-                Debug.LogWarning("There are no possible targets");
-                return;
-            }
+            
         }
-
+        else Debug.LogWarning("base attack picked but no current character or targets");
     }
 
-    //Triggered by Target Buttons event
-    void targetPicked(UIEventData data)
+    void AttackCanceled()
     {
-        if(pickingAttack == true)
-        {
-            currentAttackTarget = data.id;
-            
-            
-
-            attackPanel.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(attackPanel.transform.GetChild(0).gameObject);
-            menuLayers.Pop().SetActive(false);
-            menuLayers.Push(attackPanel);
-        }
-        else
-        {
-            List<string> targets = new List<string>() { data.id };
-            EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(currentPicker, targets, currentAction));
-            resetMenu();
-        }
-
-        
-        
-    }
-
-    void actionCompleted(CombatEventData data)
-    {
-        resetMenu();
-
-        selectors[data.id].SetActive(false);
-        foreach (var bar in characterBars)
-        {
-            bar.Value.GetComponent<CharacterBarScript>().updateStatText();
-        }
-
-        currentAction = null;
-        currentPicker = null;
-        pickingAttack = false;
+        EventManager.TriggerEvent(UIEvents.AttackCanceled, new UIEventData(currentCharacter));
     }
 
     //Battle Manager -> damage delt event
-    void displayDamage(CombatEventData data)
+    void DisplayDamage(CombatEventData data)
     {
         string targetID = data.targetID;
         float damage = data.damage;
 
-        foreach (CombatScript entity in entitiesInBattle)
-        {
-            if(targetID == entity.entityName)
-            {
-                GameObject newDamageText = Instantiate(damageTextPrefab);
-
-                
-                newDamageText.transform.SetParent(entity.gameObject.transform, false);
-                newDamageText.GetComponent<DamageTextScript>().Initialize(damage);
-            }
-        }
+        GameObject newDamageText = Instantiate(damageTextPrefab);
+        newDamageText.SetActive(true);
+        newDamageText.transform.SetParent(entities[targetID].transform, false);
+        newDamageText.GetComponent<DamageTextScript>().Initialize(damage);
 
     }
+
+    void ActionCompletedCleanup(CombatEventData data)
+    {
+        Debug.Log("ACTION COMPLETED CLEANUP");
+        currentAbilityPicked = null;
+        currentCharacter = null;
+        currentActionTargets.Clear();
+
+        currentUIMove = UIMove.NULL;
+        SetAttackControles(false);
+        menuSelector.SetActive(false);
+        ResetPanels();
+
+        movePanel.GetComponent<MovePanel>().SetActive(false);
+        attackBar.GetComponent<AttackBar>().ResetActiveCharacter();
+        
+    }
+
 
     
 
-    void resetMenu()
+    //Main Move Panel Option
+    public void PickAttackMove()
     {
-        while (menuLayers.Count > 0)
+        //Get possible targets
+        if(enemies.Count > 0)
         {
-            menuLayers.Pop().SetActive(false);
+            currentUIMove = UIMove.Attack;
+            EventManager.TriggerEvent(UIEvents.AttackMenuSelected, new UIEventData(currentCharacter));
+            OpenTargetPanel(new List<GameObject>(enemies.Values));
         }
-        enemiesListPanel.SetActive(true);
-    }
-
-    //Entity -> combo launched
-    void resetMenu(CombatEventData data)
-    {
-        if (menuLayers.Peek() == attackPanel)
-        {
-            resetMenu();
-        }
-    }
-
-    void goBack()
-    {
-
-        if(menuLayers.Count > 1)
-        {         
-            menuLayers.Pop().SetActive(false);
-            menuLayers.Peek().SetActive(true);
-            EventSystem.current.SetSelectedGameObject(menuLayers.Peek().transform.GetChild(0).gameObject);
-
-        }
-        //TODO better do it
-        if(menuLayers.Count ==1) { pickingAttack = false; }
         
+    }
+
+    public void OpenAbilityPanel()
+    {
+        //Get character abilities
+        currentUIMove = UIMove.Ability;
+        OpenCharacterAbilityPanel(new List<CombatAction>(characters[currentCharacter].abilities));
+    }
+
+    void OpenAttackPanel()
+    {
+        SetAttackControles(true);
+        OpenPanel(attackPanel);
+    }
+    
+    // Opening Panels With Data they need
+    public void OpenTargetPanel(List<GameObject> entities)
+    {
+        targetPanel.GetComponent<TargetSelectPanel>().Create(entities);
+        OpenPanel(targetPanel);
 
     }
 
-
-    void removeEntityUI(CombatEventData data)
+    public void OpenCharacterAbilityPanel(List<CombatAction> abilities)
     {
-        string id = data.id;
-        for(int i=0; i < entitiesInBattle.Count; i++)
-        {
-            if(entitiesInBattle[i].entityName == id)
-            {
-                entitiesInBattle.RemoveAt(i);
-                break;
-            }
-        }
+        
+        abilityPanel.GetComponent<AbilityPanel>().Create(characters[currentCharacter].stats ,abilities);
+        OpenPanel(abilityPanel);
+    }
 
-        if (charactersInBattleDict.ContainsKey(id))
-        {
-            Destroy(selectors[id], 1);
-            Destroy(characterBars[id], 1);
-            Destroy(magicPanels[id], 1);
+    public void OpenItemPanel()
+    {
+        currentUIMove = UIMove.Item;
+    }
 
-            charactersInBattleDict.Remove(id);
+    void ComboLaunched(CombatEventData data)
+    {
+        DisableControls();
+    }
+
+    void DisableControls()
+    {
+        controls.Combat.Disable();
+        controls.CombatUI.Disable();
+    }
+
+    void SetAttackControles(bool active)
+    {
+        if (active)
+        {
+            controls.Combat.Enable();
+            controls.CombatUI.Disable();
         }
         else
         {
-            Destroy(enemyBars[id], 1);
+            controls.Combat.Disable();
+            controls.CombatUI.Enable();
         }
     }
 
-    void createTargetPanel(List<string> targets)
-    {
-        GameObject newTargetPanel = Instantiate(actionPanelPrefab);
-        newTargetPanel.transform.SetParent(enemyPanel, false);
-        newTargetPanel.transform.SetAsLastSibling();
-        newTargetPanel.name = "TargetPanel";
-        newTargetPanel.GetComponent<ActionPanelScript>().persistant = false;
-
-        foreach (string target in targets)
-        {
-            GameObject newButton = Instantiate(targetButtonPrefab);
-       
-            var buttonScript = newButton.GetComponent<TargetButtonScript>();
-            buttonScript.target = target;
-
-            Text buttonText = newButton.GetComponentInChildren<Text>();
-            buttonText.text = target;
-
-            newButton.transform.SetParent(newTargetPanel.transform, false);
-        }
-
-        menuLayers.Push(newTargetPanel);
-        EventSystem.current.SetSelectedGameObject(newTargetPanel.transform.GetChild(0).gameObject); 
-    }
-
-    void createCharacterUI(List<CombatScript> charactersInBattle)
-    {
-
-        foreach (var character in charactersInBattle)
-        {
-            //Bars
-            GameObject newBar = Instantiate(characterBarPrefab) as GameObject;
-            newBar.name = "Character Bar: " + character.entityName;
-
-            var characterBarScript = newBar.GetComponent<CharacterBarScript>();
-            characterBarScript.character = character;
-            characterBarScript.initialize();
-
-            newBar.transform.SetParent(characterPanel, false);
-            characterBars.Add(character.entityName, newBar);
-
-
-            //Selector
-            GameObject newSelector = Instantiate(selectorPrefab);
-            newSelector.name = "Selector: " + character.entityName;
-            newSelector.SetActive(false);
-            newSelector.transform.SetParent(character.gameObject.transform, false);
-
-            selectors.Add(character.entityName, newSelector);
-
-            //Action Panels
-            
-            GameObject newMagicPanel = Instantiate(actionPanelPrefab);
-
-            newMagicPanel.name = "magic panel: " + character.entityName;
-            newMagicPanel.transform.SetParent(enemyPanel, false);
-
-            //attackPanels.Add(character.Key, newAttackPanel);
-            magicPanels.Add(character.entityName, newMagicPanel);
-
-            var actions = character.abilities;
-            
-
-            foreach (CombatAction action in actions)
-            {
-
-                GameObject newActionButton = Instantiate(abilityButtonPrefab);
-                newActionButton.name = action.actionName + "button";
-                
-                newActionButton.GetComponentInChildren<Text>().text = action.actionName;
-                newActionButton.GetComponent<ActionButtonScript>().action = action;
-                newActionButton.transform.SetParent(newMagicPanel.transform, false); 
-
-            }
-            newMagicPanel.SetActive(false);
-        }
-    }
-
-    void createEnemyBars(List<string> enemyIDs)
-    {
-
-        foreach (string enemy in enemyIDs)
-        {
-            GameObject newButton = Instantiate(targetButtonPrefab) as GameObject;
-            newButton.name = enemy + " Base button";
-            newButton.GetComponent<Button>().interactable = false;
-            var buttonScript = newButton.GetComponent<TargetButtonScript>();
-            buttonScript.target = enemy;
-            
-
-            Text buttonText = newButton.GetComponentInChildren<Text>();
-            buttonText.text = enemy;
-
-            newButton.transform.SetParent(enemiesListPanel.transform, false);
-            enemyBars.Add(enemy, newButton);
-
-            
-
-        }
-    }
 
     
-}    
+
+    void EntityDied(CombatEventData data)
+    {
+        //Characyer death
+        if (characters.ContainsKey(data.id))
+        {
+            //Can be revied still
+        }
+        //Enemy death
+        else
+        {
+            //Dead for good
+            entities.Remove(data.id);
+            enemies.Remove(data.id);
+        }
+    }
+
+    void EntityRevived(CombatEventData data)
+    {
+
+    }
+
+
+    //UI LOGIC
+    void LateUpdate()
+    {
+        if (menuSelector.activeSelf == true)
+        {
+            if (currentlySelectedButton != EventSystem.current.currentSelectedGameObject)
+            {
+                currentlySelectedButton = EventSystem.current.currentSelectedGameObject;
+                EventManager.TriggerEvent(UIEvents.SelectedButtonChanged, new UIEventData(currentlySelectedButton));
+                StartCoroutine(SelectedButtonChanged(currentlySelectedButton));
+            }
+        }
+
+    }
+
+    IEnumerator SelectedButtonChanged(GameObject newButton)
+    {
+        yield return null;
+        yield return new WaitForEndOfFrame();
+        if (newButton != null)
+        {
+
+            menuSelector.transform.position = newButton.transform.Find("PointerPosition").position;
+
+            TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
+
+            menuSelector.transform.localScale = new Vector3(
+                buttonText.fontScale,
+                buttonText.fontScale,
+                buttonText.fontScale
+                );
+        }
+
+    }
+
+    void OpenPanel(GameObject newPanel)
+    {
+
+        //Old panel
+        panelStack.Peek().GetComponent<CanvasGroup>().interactable = false;
+        previousPanelButtonStack.Push(currentlySelectedButton);
+
+        //New Panel
+        newPanel.gameObject.SetActive(true);
+        newPanel.GetComponent<CanvasGroup>().interactable = true;
+        newPanel.transform.SetAsLastSibling();
+
+
+        EventSystem.current.SetSelectedGameObject(newPanel.GetComponent<UIPanel>().getFirstButton());
+
+        currentluUsedPanel = newPanel;
+        panelStack.Push(newPanel);
+
+        Canvas.ForceUpdateCanvases();
+    }
+
+
+    void ClosePanel()
+    {
+        if (panelStack.Count > 1)
+        {
+            
+
+            //Closing panel
+            panelStack.Peek().GetComponent<CanvasGroup>().interactable = false;
+            panelStack.Peek().gameObject.SetActive(false);
+            panelStack.Pop();
+
+            
+
+
+            //Panel underneath
+            while (previousPanelButtonStack.Peek() == null)
+                previousPanelButtonStack.Pop();
+
+            panelStack.Peek().SetActive(true);
+            panelStack.Peek().GetComponent<CanvasGroup>().interactable = true;
+            EventSystem.current.SetSelectedGameObject(previousPanelButtonStack.Pop());
+            currentluUsedPanel = panelStack.Peek();
+
+            if (panelStack.Count == 1)
+            {
+                if(currentUIMove == UIMove.Attack)
+                {
+                    EventManager.TriggerEvent(UIEvents.AttackMenuCanceled, new UIEventData(currentCharacter));
+                }
+
+                currentUIMove = UIMove.NULL;
+            }
+        }
+        
+    }
+
+    void HidePanel()
+    {
+        panelStack.Peek().GetComponent<CanvasGroup>().interactable = false;
+        panelStack.Peek().gameObject.SetActive(false);
+    }
+
+    void ResetPanels()
+    {
+        while (panelStack.Count > 1)
+        {
+            ClosePanel();
+        }
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    //Initialize Panels
+    void InitItemPanel()
+    {
+        
+    }
+
+    void InitTargetPanel()
+    {
+        targetPanel.GetComponent<TargetSelectPanel>().Initialize(this);
+        targetPanel.SetActive(false);
+    }
+
+    void InitAbilityPanel()
+    {
+        abilityPanel.GetComponent<AbilityPanel>().Initialize(this);
+        abilityPanel.SetActive(false);
+    }
+
+    void InitCharacterSection()
+    {
+        characterSection.GetComponent<CharacterSection>().Initialize(characters, this);
+        characterSection.SetActive(true);
+    }
+}

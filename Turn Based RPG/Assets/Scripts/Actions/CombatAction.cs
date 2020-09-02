@@ -12,19 +12,25 @@ public class CombatAction : MonoBehaviour
         Combo
     }
 
-    
+    public enum ActionRange
+    {
+        Single,
+        All
+    }
+
     //CombatScript entity;
 
-    List<IStatisticModifier> statisticModifiers = new List<IStatisticModifier>();
-    List<ElementalModifier> elementalDamages = new List<ElementalModifier>();
-    ITargetType targetType;
-    IUsesResourceStat resourceType;
-    ActionRange actionRange;
-    ComboAction comboAction;
+    public List<IStatisticModifier> StatisticModifiers { get; private set; }
+    public List<ElementalModifier> ElementalDamages { get; private set; }
+    public ITargetType TargetType { get; private set; }
+    public IUsesResourceStat ResourceType { get; private set; }
+
+    public ActionRange actionRange;
+    public ComboAction comboAction;
 
     BaseAttack baseAttack;
 
-    public BaseAttackType baseAttackType
+    public BaseAttackType BaseAttackType
     {
         get
         {
@@ -45,24 +51,31 @@ public class CombatAction : MonoBehaviour
     public float power;
     public float cost;
     public ActionType actionType;
+
+    
+
     //public List<ActionEffect> effects = new List<ActionEffect>();
 
 
     void Awake()
     {
-        statisticModifiers.AddRange(GetComponents<IStatisticModifier>());
-        resourceType = GetComponent<IUsesResourceStat>();
-        elementalDamages.AddRange(GetComponents<ElementalModifier>());
+        StatisticModifiers = new List<IStatisticModifier>();
+        ElementalDamages = new List<ElementalModifier>();
+
+
+        StatisticModifiers.AddRange(GetComponents<IStatisticModifier>());
+        ResourceType = GetComponent<IUsesResourceStat>();
+        ElementalDamages.AddRange(GetComponents<ElementalModifier>());
         actionRange = GetComponent<ActionRange>();
         comboAction = GetComponent<ComboAction>();
         baseAttack = GetComponent<BaseAttack>();
-        targetType = GetComponent<ITargetType>();
+        TargetType = GetComponent<ITargetType>();
 
         if (actionType == ActionType.Attack || actionType == ActionType.Combo)
         {
             gameObject.AddComponent<TargetEnemies>();
-            targetType = GetComponent<ITargetType>();
-            actionRange.thisRange = ActionRange.Range.Single;
+            TargetType = GetComponent<ITargetType>();
+            actionRange = ActionRange.Single;
 
         }
         if(actionType == ActionType.Combo)
@@ -74,7 +87,7 @@ public class CombatAction : MonoBehaviour
 
     }
 
-    public List<BaseAttackType> comboInput
+    public List<BaseAttackType> ComboInput
     {
         get
         {
@@ -83,84 +96,94 @@ public class CombatAction : MonoBehaviour
         }
     }
     
-    public void useResourceStat(EntityStatistics attackerStats)
+    public void UseResourceStat(EntityStatistics attackerStats)
     {
-        if(resourceType != null)
+        if(ResourceType != null)
         {
-            resourceType.useResourceStat(attackerStats, cost);
+            ResourceType.UseResourceStat(attackerStats, cost);
         }
         
     }
 
-    public bool isEnoughResource(EntityStatistics attackerStats)
+    public bool IsEnoughResource(EntityStatistics attackerStats)
     {
-        if (resourceType != null)
+        if (ResourceType != null)
         {
-            return resourceType.isEnoughResource(attackerStats, cost);
+            return ResourceType.IsEnoughResource(attackerStats, cost);
         }
         else return true;
     }
 
-    public void modyfiStatistics(EntityStatistics attackerStats, EntityStatistics targetStats)
+    public void ModyfiStatistics(EntityStatistics attackerStats, EntityStatistics targetStats)
     {
-        foreach (IStatisticModifier modifier in statisticModifiers)
+        foreach (IStatisticModifier modifier in StatisticModifiers)
         {
 
-            float value = calculateModifierValue(modifier, attackerStats, targetStats);
-            modifier.applyStatChange(value, targetStats);
+            float value = CalculateModifierValue(modifier, attackerStats, targetStats);
+            modifier.ApplyStatChange(value, targetStats);
         }
   
     }
 
-    public float getHealthChange(EntityStatistics attackerStats, EntityStatistics targetStats)
+    public float GetHealthChange(EntityStatistics attackerStats, EntityStatistics targetStats)
     {
         float modifiedHealthValue = 0;
 
-        foreach (IStatisticModifier modifier in statisticModifiers)
+        foreach (IStatisticModifier modifier in StatisticModifiers)
         {
             if(modifier is IHealthModifier)
             {
-                modifiedHealthValue += calculateModifierValue(modifier, attackerStats, targetStats);
+                modifiedHealthValue += CalculateModifierValue(modifier, attackerStats, targetStats);
             }
         }
 
         return modifiedHealthValue;
     }
 
-    float calculateModifierValue(IStatisticModifier modifier, EntityStatistics attackerStats, EntityStatistics targetStats)
+    float CalculateModifierValue(IStatisticModifier modifier, EntityStatistics attackerStats, EntityStatistics targetStats)
     {
-        float value = modifier.calculateStatChange(power, attackerStats, targetStats);
+        float value = modifier.CalculateStatChange(power, attackerStats, targetStats);
 
-        foreach (ElementalModifier elementalModifier in elementalDamages)
+        foreach (ElementalModifier elementalModifier in ElementalDamages)
         {
-            value = elementalModifier.calculateElementalModifier(value, targetStats);
+            value = elementalModifier.CalculateElementalModifier(value, targetStats);
         }
         value *=  1 + UnityEngine.Random.Range(0f, 0.1f);
+
+        if(modifier is IStatisticLowerer)
+        {
+            value = Mathf.Clamp(value, -9999, -1);
+        }
+        else if(modifier is IStatisticRaiser)
+        {
+            value = Mathf.Clamp(value, 1, 9999);
+        }
+
         return (float)Math.Round(value);
     }
 
 
-    public List<CombatScript> getTargets(CombatScript attacker, List<CombatScript> potentialTargets)
+    public List<CombatModule> GetTargets(CombatModule attacker, List<CombatModule> potentialTargets)
     {
-        return targetType.getTargets(attacker, potentialTargets);
+        return TargetType.GetTargets(attacker, potentialTargets);
     }
 
-    public List<string> getTargets(string attacker, bool isCharacter, List<CombatScript> potentialTargets)
+    public List<string> GetTargets(string attacker, bool isCharacter, List<CombatModule> potentialTargets)
     {
-        return targetType.getTargetsById(attacker, isCharacter, potentialTargets);
+        return TargetType.GetTargetsById(attacker, isCharacter, potentialTargets);
     }
 
-    public List<string> getTargets(string attacker, bool isCharacter, List<GameObject> potentialTargetsGO)
+    public List<string> GetTargets(string attacker, bool isCharacter, List<GameObject> potentialTargetsGO)
     {
-        List<CombatScript> potentialTargets = new List<CombatScript>();
+        List<CombatModule> potentialTargets = new List<CombatModule>();
         foreach (GameObject target in potentialTargetsGO)
         {
-            potentialTargets.Add(target.GetComponent<CombatScript>());
+            potentialTargets.Add(target.GetComponent<CombatModule>());
         }
-        return targetType.getTargetsById(attacker, isCharacter, potentialTargets);
+        return TargetType.GetTargetsById(attacker, isCharacter, potentialTargets);
     }
 
-    public List<IActionEffect> getEffects()
+    public List<IActionEffect> GetEffects()
     {
         return new List<IActionEffect>();
     }

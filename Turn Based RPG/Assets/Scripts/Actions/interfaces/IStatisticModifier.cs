@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IStatisticModifier
 {
-    float calculateStatChange(float power, EntityStatistics attackerStats, EntityStatistics targetStats);
-    void applyStatChange(float value, EntityStatistics targetStats);
+    float CalculateStatChange(float power, EntityStatistics attackerStats, EntityStatistics targetStats);
+    void ApplyStatChange(float value, EntityStatistics targetStats);
 }

@@ -7,12 +7,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class CombatScript : MonoBehaviour
+public class CombatModule : MonoBehaviour
 {
 
     public string entityName { get; set; }
-    public EntityScript entity { get; set; }
-    public bool isCharacter { get; set; }
+    public Entity entity { get; set; }
+    public bool IsCharacter { get; set; }
 
     
     enum CombatState
@@ -45,17 +45,17 @@ public class CombatScript : MonoBehaviour
     void Awake()
     {
         startPosition = transform.position;
-        entity = gameObject.GetComponent<EntityScript>();
+        entity = gameObject.GetComponent<Entity>();
         entityName = entity.entityName;
 
-        if (GetComponent<CharacterScript>())
+        if (GetComponent<CharacterModule>())
         {
-            isCharacter = true;
+            IsCharacter = true;
         }
-        else isCharacter = false;
+        else IsCharacter = false;
 
         //stats = entity.stats.getStatistics();
-        stats = new EntityStatistics(entity.stats.getStatistics());
+        stats = new EntityStatistics(entity.stats.GetStatistics());
 
     }
     void Start()
@@ -65,14 +65,14 @@ public class CombatScript : MonoBehaviour
         foreach (CombatAction action in availableActions)
         {
             
-            entity.animations.addClip(action.actionName, action.actionAnimation);
+            entity.animations.AddClip(action.actionName, action.actionAnimation);
             switch (action.actionType)
             {
                 case CombatAction.ActionType.Ability:
                     abilities.Add(action);
                     break;
                 case CombatAction.ActionType.Attack:
-                    baseAttacks.Add(action.baseAttackType, action);
+                    baseAttacks.Add(action.BaseAttackType, action);
                     break;
                 case CombatAction.ActionType.Combo:
                     combos.Add(action);
@@ -86,9 +86,9 @@ public class CombatScript : MonoBehaviour
 
     void OnEnable()
     {
-        EventManager.StartListening(CombatEvents.SuspensionToggle, suspensionToggle);
-        EventManager.StartListening(CombatEvents.DamageDealt, clampHpMana);
-        EventManager.StartListening(CombatEvents.ActionCompleted, healthCheck);
+        EventManager.StartListening(CombatEvents.SuspensionToggle, SuspensionToggle);
+        EventManager.StartListening(CombatEvents.DamageDealt, ClampHpMana);
+        EventManager.StartListening(CombatEvents.ActionCompleted, HealthCheck);
 
         EventManager.StartListening(UIEvents.AttackMenuSelected, JumpOnBattlefield);
         EventManager.StartListening(UIEvents.AttackMenuCanceled, RetreatFromBattlefied);
@@ -96,9 +96,9 @@ public class CombatScript : MonoBehaviour
 
     void OnDisable()
     {
-        EventManager.StopListening(CombatEvents.SuspensionToggle, suspensionToggle);
-        EventManager.StopListening(CombatEvents.ActionCompleted, healthCheck);
-        EventManager.StopListening(CombatEvents.ActionCompleted, healthCheck);
+        EventManager.StopListening(CombatEvents.SuspensionToggle, SuspensionToggle);
+        EventManager.StopListening(CombatEvents.DamageDealt, ClampHpMana);
+        EventManager.StopListening(CombatEvents.ActionCompleted, HealthCheck);
 
         EventManager.StopListening(UIEvents.AttackMenuSelected, JumpOnBattlefield);
         EventManager.StopListening(UIEvents.AttackMenuCanceled, RetreatFromBattlefied);
@@ -111,7 +111,7 @@ public class CombatScript : MonoBehaviour
         {
             case CombatState.Charging:
                 
-                updateActionGauge();
+                UpdateActionGauge();
                 if(actionGauge >= 1f) 
                 {
                     EventManager.TriggerEvent(CombatEvents.ReadyForAction, new CombatEventData(entityName));
@@ -133,19 +133,20 @@ public class CombatScript : MonoBehaviour
         }
     }
 
-    public void processAction(CombatAction action, Vector3 position)
+    //Functions directly accesed by Battle Manager
+    public void ProcessAction(CombatAction action, Vector3 position)
     {
-        action.useResourceStat(stats);
+        action.UseResourceStat(stats);
         switch (action.actionType)
         {
             case CombatAction.ActionType.Attack:
-                queueAttack(action);
+                QueueAttack(action);
                 if(state == CombatState.ReadyForAction)
                 {
                     state = CombatState.PerformingAction;
                     EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(entityName));
 
-                    currentPerformingAction = performAttackAction(position);
+                    currentPerformingAction = PerformAttackAction(position);
                     StartCoroutine(currentPerformingAction);
 
                 }
@@ -157,7 +158,7 @@ public class CombatScript : MonoBehaviour
                     state = CombatState.PerformingAction;
                     EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(entityName));
 
-                    currentPerformingAction = performAbilityAction(action, position);
+                    currentPerformingAction = PerformAbilityAction(action, position);
                     StartCoroutine(currentPerformingAction);
                 }
                 break;
@@ -165,28 +166,93 @@ public class CombatScript : MonoBehaviour
 
     }
 
-    public void cancelAttack()
+    public void CancelAttack()
     {
         attackCanceled = true;
         if(state == CombatState.ReadyForAction)
         {
-            completeAction();
+            StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 0f, 10f));
+            CompleteAction();
         }
     }
 
-    void queueAttack(CombatAction action)
+    //Functions that respond to events
+
+    void ClampHpMana(CombatEventData data)
+    {
+        stats.health = Mathf.Clamp(stats.health, 0, stats.maxHealth);
+        stats.mana = Mathf.Clamp(stats.mana, 0, stats.maxMana);
+    }
+
+
+
+    void SuspensionToggle(CombatEventData data)
     {
 
-        attackComboList.Add(action.baseAttackType);
+        if (state == CombatState.Charging)
+        {
+            state = CombatState.Suspension;
+        }
+        else if (state == CombatState.Suspension)
+        {
+            state = CombatState.Charging;
+        }
+    }
+
+    void HealthCheck(CombatEventData data)
+    {
+
+        if (stats.health <= 0)
+        {
+            //Play death animation
+            //start courotine
+            EventManager.TriggerEvent(CombatEvents.EntityDied, new CombatEventData(entityName));
+        }
+    }
+
+    
+
+    void JumpOnBattlefield(UIEventData data)
+    {
+        if (data.id == entityName)
+        {
+            //TO DO: get the position better, maybe a empty and field on battle manager
+            Vector3 battlefiedPosition = new Vector3(
+                transform.position.x - 3,
+                transform.position.y,
+                transform.position.z);
+
+            StartCoroutine(MoveTowardsTargetCoroutine(battlefiedPosition, 0, 10));
+        }
+
+    }
+
+    void RetreatFromBattlefied(UIEventData data)
+    {
+        if (data.id == entityName)
+        {
+            StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 0f, 10f));
+        }
+
+    }
+
+
+
+
+    //Internal functions
+    void QueueAttack(CombatAction action)
+    {
+
+        attackComboList.Add(action.BaseAttackType);
         
         //Check if theres combo if yes do it!
         foreach (CombatAction combo in combos)
         {
-            if (attackComboList.SequenceEqual(combo.comboInput) == true)
+            if (attackComboList.SequenceEqual(combo.ComboInput) == true)
             {
                 
                 action = combo;
-                cancelAttack();
+                CancelAttack();
                 EventManager.TriggerEvent(CombatEvents.ComboLaunched, new CombatEventData(entityName));
             }
         }
@@ -195,10 +261,7 @@ public class CombatScript : MonoBehaviour
     }
 
     
-    
-    
-
-    IEnumerator performAttackAction(Vector3 targetPosition)
+    IEnumerator PerformAttackAction(Vector3 targetPosition)
     {
 
         while (MoveTowardsTarget(targetPosition, 1.5f, 5f)) { yield return null; }
@@ -208,8 +271,8 @@ public class CombatScript : MonoBehaviour
             //there are attack in the queue
             if (attackQueue.Count != 0)
             {
-                entity.animations.play(attackQueue.Peek().actionName);
-                while (entity.animations.isPlaying == true) { yield return null; }
+                entity.animations.Play(attackQueue.Peek().actionName);
+                while (entity.animations.IsPlaying == true) { yield return null; }
                 EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(entityName, attackQueue.Peek()));
                 attackQueue.Dequeue();
             }
@@ -232,26 +295,26 @@ public class CombatScript : MonoBehaviour
         }
 
         while (MoveTowardsTarget(startPosition, 0, 5f)) { yield return null; }
-        completeAction();
+        CompleteAction();
     }
 
-    IEnumerator performAbilityAction(CombatAction action, Vector3 targetPosition)
+    IEnumerator PerformAbilityAction(CombatAction action, Vector3 targetPosition)
     {
         while (MoveTowardsTarget(targetPosition, 1.5f, 5f)) { yield return null; }
 
-        entity.animations.play(action.actionName);
-        while(entity.animations.isPlaying == true) { yield return null; }
+        entity.animations.Play(action.actionName);
+        while(entity.animations.IsPlaying == true) { yield return null; }
 
         EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(entityName, action));
 
         while (MoveTowardsTarget(startPosition, 0, 5f)) { yield return null; }
 
 
-        completeAction();
+        CompleteAction();
     }
 
 
-    void completeAction()
+    void CompleteAction()
     {
         attackCanceled = false;
         stats.actionPoints = stats.maxActionPoints;
@@ -259,35 +322,13 @@ public class CombatScript : MonoBehaviour
         actionGauge = 0;
         attackComboList.Clear();
 
-        entity.animations.playIdle();
+        entity.animations.PlayIdle();
         EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(entityName));
-        
+
         state = CombatState.Charging;
     }
 
-    void JumpOnBattlefield(UIEventData data)
-    {
-        if(data.id == entityName)
-        {
-            //TO DO: get the position better, maybe a empty and field on battle manager
-            Vector3 battlefiedPosition = new Vector3(
-                transform.position.x - 3,
-                transform.position.y,
-                transform.position.z);
 
-            StartCoroutine(MoveTowardsTargetCoroutine(battlefiedPosition, 0, 10));
-        }
-        
-    }
-
-    void RetreatFromBattlefied(UIEventData data)
-    {
-        if(data.id == entityName)
-        {
-            StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 0f, 10f));
-        }
-        
-    }
 
     IEnumerator MoveTowardsTargetCoroutine(Vector3 target, float threshold, float speed)
     {
@@ -302,6 +343,11 @@ public class CombatScript : MonoBehaviour
         
     }
 
+    IEnumerator PerformDeath()
+    {
+        yield return null;
+    }
+
     bool MoveTowardsTarget(Vector3 target, float threshold, float speed)
     {
         float distance = Vector3.Distance(transform.position, target);
@@ -309,42 +355,9 @@ public class CombatScript : MonoBehaviour
         return distance > threshold;
     }
 
-    void clampHpMana(CombatEventData data)
-    {
-        stats.health = Mathf.Clamp(stats.health, 0, stats.maxHealth);
-        stats.mana = Mathf.Clamp(stats.mana, 0, stats.maxMana);
-    }
+    
 
-    void healthCheck(CombatEventData data)
-    {
-
-        if (stats.health <= 0)
-        {
-            //Play death animation
-            //start courotine
-            EventManager.TriggerEvent(CombatEvents.EntityDied, new CombatEventData(entityName));
-        }
-    }
-
-    IEnumerator performDeath()
-    {
-        yield return null;
-    }
-
-    void suspensionToggle(CombatEventData data)
-    {
-
-        if (state == CombatState.Charging)
-        {
-            state = CombatState.Suspension;
-        }
-        else if (state == CombatState.Suspension)
-        {
-            state = CombatState.Charging;
-        }
-    }
-
-    void updateActionGauge()
+    void UpdateActionGauge()
     {
         actionGauge += stats.speed / 100f * Time.deltaTime;
     }

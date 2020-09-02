@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heal : MonoBehaviour, IStatisticModifier, IHealthModifier
+public class Heal : MonoBehaviour, IStatisticModifier, IHealthModifier, IStatisticRaiser
 {
     
 
-    public float calculateStatChange(float power, EntityStatistics attackerStats, EntityStatistics targetStats)
+    public float CalculateStatChange(float power, EntityStatistics attackerStats, EntityStatistics targetStats)
     {
         return targetStats.magic * power;
     }
 
-    public void applyStatChange(float value, EntityStatistics targetStats)
+    public void ApplyStatChange(float value, EntityStatistics targetStats)
     {
         targetStats.health += value;
         

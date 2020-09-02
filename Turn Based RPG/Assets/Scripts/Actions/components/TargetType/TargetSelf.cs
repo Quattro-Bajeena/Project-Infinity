@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TargetSelf : MonoBehaviour, ITargetType
 {
-    public List<CombatScript> getTargets(CombatScript attacker, List<CombatScript> potentialTargets)
+    public List<CombatModule> GetTargets(CombatModule attacker, List<CombatModule> potentialTargets)
     {
-        return new List<CombatScript>() { attacker };
+        return new List<CombatModule>() { attacker };
     }
 
-    public List<string> getTargetsById(string attackerId, bool isCharacter, List<CombatScript> potentialTargets)
+    public List<string> GetTargetsById(string attackerId, bool isCharacter, List<CombatModule> potentialTargets)
     {
         return new List<string>() { attackerId };
     }
