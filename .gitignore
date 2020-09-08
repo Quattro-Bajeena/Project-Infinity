@@ -21,6 +21,13 @@
 
 # Visual Studio cache directory
 .vs/
+#Art stuff that take too much space
+*.mp4
+*.MP4
+*.psd
+*.blend
+*.blend1
+
 
 # Gradle cache directory
 .gradle/

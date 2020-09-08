@@ -10,6 +10,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] Dictionary<string, CombatModule> entitiesInBattle = new Dictionary<string, CombatModule>();
     
     [SerializeField] List<string> entityQueue = new List<string>();
+    [SerializeField] Transform middleOfBattlefied;
 
     //public List<string> characterQueue = new List<string>();
     //public List<string> enemyQueue = new List<string>();
@@ -98,11 +99,11 @@ public class BattleManager : MonoBehaviour
         
         CombatModule attacker = entitiesInBattle[attackerID];
 
-        //if (state == BattleState.WaitingForInput)
+        if (state == BattleState.WaitingForInput)
         {
             state = BattleState.Action;
-            
 
+            currentTargets.Clear();
             foreach (string targetID in targetIDs)
             {
                 CombatModule target = entitiesInBattle[targetID];

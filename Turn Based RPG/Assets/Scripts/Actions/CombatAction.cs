@@ -46,6 +46,7 @@ public class CombatAction : MonoBehaviour
     }
 
     public AnimationClip actionAnimation;
+    public string animationName;
 
     public string actionName;
     public float power;

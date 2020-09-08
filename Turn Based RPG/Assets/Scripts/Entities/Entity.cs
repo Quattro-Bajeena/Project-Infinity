@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
 
     public StatisticsModule stats;
     public CombatModule combat;
+    public AnimationModuleOld_ animationsOld_;
     public AnimationModule animations;
 
 
@@ -17,6 +18,7 @@ public class Entity : MonoBehaviour
     {
         stats = GetComponent<StatisticsModule>();
         combat = GetComponent<CombatModule>();
+        animationsOld_ = GetComponent<AnimationModuleOld_>();
         animations = GetComponent<AnimationModule>();
     }
 
