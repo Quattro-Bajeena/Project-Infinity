@@ -12,8 +12,7 @@ public class BattleManager : MonoBehaviour
     [SerializeField] List<string> entityQueue = new List<string>();
     [SerializeField] Transform middleOfBattlefied;
 
-    //public List<string> characterQueue = new List<string>();
-    //public List<string> enemyQueue = new List<string>();
+    Transform battlefieldCenter;
 
     enum BattleState
     {
@@ -29,6 +28,7 @@ public class BattleManager : MonoBehaviour
     
     void Awake()
     {
+        battlefieldCenter = GameObject.Find("BattlefieldCenter").transform;
         
     }
 
@@ -37,6 +37,7 @@ public class BattleManager : MonoBehaviour
         var entities = FindObjectsOfType<CombatModule>();
         foreach (var entity in entities)
         {
+            entity.battlefieldCenter = battlefieldCenter.position;
             entitiesInBattle.Add(entity.EntityName, entity);
         }
 
@@ -111,7 +112,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        Vector3 position = currentTargets[0].gameObject.transform.position;
+        Vector3 position = currentTargets[0].attackerPosition;
         attacker.ProcessAction(action, position);
     }
 

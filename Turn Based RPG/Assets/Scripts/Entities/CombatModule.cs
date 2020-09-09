@@ -29,6 +29,8 @@ public class CombatModule : MonoBehaviour
     
     Vector3 startPosition;
     Quaternion startRotation;
+    public Vector3 attackerPosition;
+    public Vector3 battlefieldCenter;
 
     public float actionGauge;
     public EntityStatistics stats;
@@ -50,6 +52,7 @@ public class CombatModule : MonoBehaviour
     {
         startPosition = transform.position;
         startRotation = transform.rotation;
+        attackerPosition = transform.Find("AttackerPosition").transform.position;
 
         Entity = gameObject.GetComponent<Entity>();
         EntityName = Entity.entityName;
@@ -180,10 +183,11 @@ public class CombatModule : MonoBehaviour
         attackCanceled = true;
         if(state == CombatState.ReadyForAction)
         {
-            StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 0f, 10f));
+            StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 8f, 1f));
             CompleteAction();
         }
     }
+
 
     //Functions that respond to events
 
@@ -225,13 +229,9 @@ public class CombatModule : MonoBehaviour
     {
         if (data.id == EntityName)
         {
-            //TO DO: get the position better, maybe a empty and field on battle manager
-            Vector3 battlefiedPosition = new Vector3(
-                transform.position.x - 1,
-                transform.position.y,
-                transform.position.z);
 
-            StartCoroutine(MoveTowardsTargetCoroutine(battlefiedPosition, 0, 10));
+
+            StartCoroutine(MoveTowardsTargetCoroutine(battlefieldCenter, 10, 3f));
         }
 
     }
@@ -240,7 +240,7 @@ public class CombatModule : MonoBehaviour
     {
         if (data.id == EntityName)
         {
-            StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 0f, 10f));
+            StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 10f, 3f));
         }
 
     }
@@ -273,7 +273,7 @@ public class CombatModule : MonoBehaviour
     IEnumerator PerformAttackAction(Vector3 targetPosition)
     {
         Entity.animations.SetWalking(true);
-        while (MoveTowardsTarget(targetPosition, 1.5f, 5f)) { yield return null; }
+        while (MoveTowardsTarget(targetPosition, 5f)) { yield return null; }
         Entity.animations.SetWalking(false);
 
         while (true)
@@ -287,7 +287,6 @@ public class CombatModule : MonoBehaviour
                     Entity.animationsOld_.Play(attackQueue.Peek().actionName);
 
                 yield return null;
-                //while (Entity.animationsOld_.IsPlaying == true) { yield return null; }
                 while (Entity.animations.IsAnimationPlaying() == true) { yield return null; }
                 
 
@@ -316,7 +315,7 @@ public class CombatModule : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         Entity.animations.SetWalking(true);
-        while (MoveTowardsTarget(startPosition, 0, 5f)) { yield return null; }
+        while (MoveTowardsTarget(startPosition, 5f)) { yield return null; }
         Entity.animations.SetWalking(false);
         StartCoroutine(TurnInTime(startRotation, 0.3f));
 
@@ -325,14 +324,14 @@ public class CombatModule : MonoBehaviour
 
     IEnumerator PerformAbilityAction(CombatAction action, Vector3 targetPosition)
     {
-        while (MoveTowardsTarget(targetPosition, 1.5f, 5f)) { yield return null; }
+        while (MoveTowardsTarget(targetPosition, 5f)) { yield return null; }
 
         Entity.animationsOld_.Play(action.actionName); 
         while(Entity.animationsOld_.IsPlaying == true) { yield return null; }
 
         EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(EntityName, action));
 
-        while (MoveTowardsTarget(startPosition, 0, 5f)) { yield return null; }
+        while (MoveTowardsTarget(startPosition, 5f)) { yield return null; }
         StartCoroutine(TurnInTime(startRotation, 0.3f));
 
         CompleteAction();
@@ -347,12 +346,8 @@ public class CombatModule : MonoBehaviour
         actionGauge = 0;
         attackComboList.Clear();
 
-        transform.position = startPosition;
-        
-        //Entity.animationsOld_.PlayIdle();
 
         EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(EntityName));
-
         state = CombatState.Charging;
     }
 
@@ -381,21 +376,26 @@ public class CombatModule : MonoBehaviour
         transform.rotation = targetRotation;
 	}
 
-    IEnumerator MoveTowardsTargetCoroutine(Vector3 target, float threshold, float speed)
+    IEnumerator MoveTowardsTargetCoroutine(Vector3 target, float speed, float animationSpeed)
     {
+        Entity.animations.SetWalking(true, animationSpeed);
+
         Vector3 targetGroundPosition = new Vector3(target.x, transform.position.y, target.z);
         float distance = Vector3.Distance(transform.position, targetGroundPosition);
         transform.LookAt(targetGroundPosition);
-        while (distance > threshold)
+        while (distance > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetGroundPosition, speed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, targetGroundPosition);
             yield return null;
         }
+        
+
         StartCoroutine(TurnInTime(startRotation, 0.1f));
+        Entity.animations.SetWalking(false, animationSpeed);
     }
 
-    bool MoveTowardsTarget(Vector3 target, float threshold, float speed)
+    bool MoveTowardsTarget(Vector3 target, float speed)
     {
         Vector3 targetGroundPosition = new Vector3(target.x, transform.position.y, target.z);
         float distance = Vector3.Distance(transform.position, targetGroundPosition);
@@ -404,7 +404,7 @@ public class CombatModule : MonoBehaviour
         //transform.rotation = Quaternion.LookRotation(new Vector3(target.x, transform.position.y, target.z) - transform.position);
 
         transform.position = Vector3.MoveTowards(transform.position, targetGroundPosition, speed * Time.deltaTime);
-        return distance > threshold;
+        return distance > 0.01f;
     }
 
     

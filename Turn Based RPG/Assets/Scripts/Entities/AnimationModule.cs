@@ -54,10 +54,15 @@ public class AnimationModule : MonoBehaviour
         animator.SetBool("Blocking", false);
 	}
 
-    public void SetWalking(bool walking)
+    public void SetWalking(bool walking, float speed = 1f)
 	{
+        animator.SetFloat("WalkingSpeed", speed);
         animator.SetBool("Walking", walking);
-	}
+
+        if (walking == false)
+            animator.SetFloat("WalkingSpeed", 1f);
+
+    }
 
     public bool IsAnimationPlaying()
 	{
