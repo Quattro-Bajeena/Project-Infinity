@@ -241,7 +241,7 @@ public class UIManager : MonoBehaviour
             if (attack.IsEnoughResource(characters[currentCharacter].stats))
             {
                 EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(currentCharacter, currentActionTargets, attack));
-                EventManager.TriggerEvent(UIEvents.AttackLaunched, new UIEventData(currentCharacter));
+                EventManager.TriggerEvent(UIEvents.AttackLaunched, new UIEventData(attack));
             }
             
         }
@@ -409,9 +409,9 @@ public class UIManager : MonoBehaviour
             TextMeshProUGUI buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
 
             menuSelector.transform.localScale = new Vector3(
-                buttonText.fontScale,
-                buttonText.fontScale,
-                buttonText.fontScale
+                buttonText.fontScale * 2,
+                buttonText.fontScale * 2,
+                buttonText.fontScale * 2
                 );
         }
 

@@ -60,7 +60,7 @@ public enum UIEvents
 {
     TargetPicked, //target id
     AbilityPicked, //CombatAction
-    AttackLaunched, //id
+    AttackLaunched, //CombatAction
     ActionLaunched, //attacker id, target id, CombatAction
     AttackCanceled, //id
     SelectedButtonChanged, //buttonSelected
@@ -85,7 +85,7 @@ public struct UIEventData
         
     }
 
-    //action picked
+    //action picked, attack launched
     public UIEventData(CombatAction action)
     {
         this.id = null;
