@@ -100,7 +100,7 @@ public class UIManagerOld : MonoBehaviour
         //Events from BattleManager 
         EventManager.StartListening(CombatEvents.PermitAction, characterReadyToPick);
         EventManager.StartListening(CombatEvents.ActionCompleted, actionCompleted);
-        EventManager.StartListening(CombatEvents.DamageDealt, displayDamage);
+        EventManager.StartListening(CombatEvents.HealthChange, displayDamage);
 
         //Events from entities
         EventManager.StartListening(CombatEvents.EntityDied, removeEntityUI);
@@ -117,7 +117,7 @@ public class UIManagerOld : MonoBehaviour
         //Events from BattleManager and Entites
         EventManager.StopListening(CombatEvents.PermitAction, characterReadyToPick);
         EventManager.StopListening(CombatEvents.ActionCompleted, actionCompleted);
-        EventManager.StopListening(CombatEvents.DamageDealt, displayDamage);
+        EventManager.StopListening(CombatEvents.HealthChange, displayDamage);
 
         //Eevnts from enities
         EventManager.StopListening(CombatEvents.EntityDied, removeEntityUI);
@@ -293,7 +293,7 @@ public class UIManagerOld : MonoBehaviour
     void displayDamage(CombatEventData data)
     {
         string targetID = data.targetID;
-        float damage = data.damage;
+        float damage = data.healthChange;
 
         foreach (CombatModule entity in entitiesInBattle)
         {

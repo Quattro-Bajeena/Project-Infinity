@@ -8,7 +8,7 @@ public enum CombatEvents
     ReadyForAction, // id
     PermitAction, //id
     StartingAction, //id ReadyAction
-    DamageDealt, // target id, damage
+    HealthChange, // target id, damage
     CombatAnimationFinished, //id
     ActionCompleted, // id
     SuspensionToggle,
@@ -24,7 +24,7 @@ public struct CombatEventData
     public string id;
     //public List<string> targetIDs;
     public string targetID;
-    public float damage;
+    public float healthChange;
     public CombatAction action;
 
     //permit action, ready for action, starting action, action completed, entity died
@@ -32,7 +32,7 @@ public struct CombatEventData
     {
         this.id = id;
         this.targetID = null;
-        this.damage = 0;
+        this.healthChange = 0;
         this.action = null;
     }
 
@@ -41,7 +41,7 @@ public struct CombatEventData
     {
         this.id = id;
         this.targetID = null;
-        this.damage = 0;
+        this.healthChange = 0;
         this.action = action;
     }
 
@@ -50,7 +50,7 @@ public struct CombatEventData
     {
         this.id = null;
         this.targetID = targetID;
-        this.damage = damage;
+        this.healthChange = damage;
         this.action = null;
     }
 

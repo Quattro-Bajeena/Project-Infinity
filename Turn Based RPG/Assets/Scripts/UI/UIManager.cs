@@ -127,7 +127,7 @@ public class UIManager : MonoBehaviour
         //Events from BattleManager 
         EventManager.StartListening(CombatEvents.PermitAction, CharacterReady);
         EventManager.StartListening(CombatEvents.ActionCompleted, ActionCompletedCleanup);
-        EventManager.StartListening(CombatEvents.DamageDealt, DisplayDamage);
+        EventManager.StartListening(CombatEvents.HealthChange, DisplayDamage);
 
         //Events from entities
         EventManager.StartListening(CombatEvents.EntityDied, EntityDied);
@@ -140,7 +140,7 @@ public class UIManager : MonoBehaviour
         controls.Disable();
         EventManager.StopListening(CombatEvents.PermitAction, CharacterReady);
         EventManager.StopListening(CombatEvents.ActionCompleted, ActionCompletedCleanup);
-        EventManager.StopListening(CombatEvents.DamageDealt, DisplayDamage);
+        EventManager.StopListening(CombatEvents.HealthChange, DisplayDamage);
 
         //Events from entities
         EventManager.StopListening(CombatEvents.EntityDied, EntityDied);
@@ -257,7 +257,7 @@ public class UIManager : MonoBehaviour
     void DisplayDamage(CombatEventData data)
     {
         string targetID = data.targetID;
-        float damage = data.damage;
+        float damage = data.healthChange;
 
         GameObject newDamageText = Instantiate(damageTextPrefab);
         newDamageText.SetActive(true);
@@ -268,7 +268,7 @@ public class UIManager : MonoBehaviour
 
     void ActionCompletedCleanup(CombatEventData data)
     {
-        Debug.Log("ACTION COMPLETED CLEANUP");
+        
         currentAbilityPicked = null;
         currentCharacter = null;
         currentActionTargets.Clear();

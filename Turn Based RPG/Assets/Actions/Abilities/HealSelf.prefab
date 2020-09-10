@@ -48,12 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionRange: 0
-  comboAction: {fileID: 0}
-  actionAnimation: {fileID: 7400000, guid: 793c996e464660c45a294d65b532e695, type: 2}
-  actionName: Heal Self
-  power: 6
-  cost: 13
   actionType: 0
+  animationName: DefensiveAbility1
+  actionName: Heal Self
+  power: 3
+  cost: 13
 --- !u!114 &4180410392118749082
 MonoBehaviour:
   m_ObjectHideFlags: 0

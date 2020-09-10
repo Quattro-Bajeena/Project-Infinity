@@ -18,17 +18,27 @@ public class CombatAction : MonoBehaviour
         All
     }
 
-    //CombatScript entity;
+    public ActionRange actionRange;
+    public ActionType actionType;
 
     public List<IStatisticModifier> StatisticModifiers { get; private set; }
     public List<ElementalModifier> ElementalDamages { get; private set; }
     public ITargetType TargetType { get; private set; }
     public IUsesResourceStat ResourceType { get; private set; }
-
-    public ActionRange actionRange;
-    public ComboAction comboAction;
+    public ComboAction comboAction { get; private set; }
 
     BaseAttack baseAttack;
+    AbilityMovePosition movePosition;
+
+    public bool IsTargetPositionStationary
+	{
+		get
+		{
+            if (movePosition == false)
+                return true;
+            else return movePosition.movePosition == AbilityMovePosition.TargetMovePosition.StartingPosition;
+        }
+	}
 
     public BaseAttackType BaseAttackType
     {
@@ -45,15 +55,13 @@ public class CombatAction : MonoBehaviour
         }
     }
 
-    public AnimationClip actionAnimation;
     public string animationName;
 
     public string actionName;
     public float power;
     public float cost;
-    public ActionType actionType;
-
     
+
 
     //public List<ActionEffect> effects = new List<ActionEffect>();
 
@@ -70,6 +78,7 @@ public class CombatAction : MonoBehaviour
         comboAction = GetComponent<ComboAction>();
         baseAttack = GetComponent<BaseAttack>();
         TargetType = GetComponent<ITargetType>();
+        movePosition = GetComponent<AbilityMovePosition>();
 
         if (actionType == ActionType.Attack || actionType == ActionType.Combo)
         {
@@ -112,6 +121,33 @@ public class CombatAction : MonoBehaviour
             return ResourceType.IsEnoughResource(attackerStats, cost);
         }
         else return true;
+    }
+
+    public Vector3 GetMovePosition(Vector3 attackerPosition, Vector3 targetPosition, Vector3 battlefiedCenterPosition)
+	{
+        if (actionType == ActionType.Attack || actionType == ActionType.Combo)
+            return targetPosition;
+
+        else
+		{
+            if (movePosition == false)
+                return attackerPosition;
+            
+			switch (movePosition.movePosition)
+			{
+                case AbilityMovePosition.TargetMovePosition.BattlefieldCenter:
+                    return battlefiedCenterPosition;
+
+                case AbilityMovePosition.TargetMovePosition.StartingPosition:
+                    return attackerPosition;
+
+                case AbilityMovePosition.TargetMovePosition.TargetPosition:
+                    return targetPosition;
+            }
+		}
+
+        return attackerPosition;
+
     }
 
     public void ModyfiStatistics(EntityStatistics attackerStats, EntityStatistics targetStats)
@@ -182,6 +218,8 @@ public class CombatAction : MonoBehaviour
         }
         return TargetType.GetTargetsById(attacker, isCharacter, potentialTargets);
     }
+
+
 
     public List<IActionEffect> GetEffects()
     {

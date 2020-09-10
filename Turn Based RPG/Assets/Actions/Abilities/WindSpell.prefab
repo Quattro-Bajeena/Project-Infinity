@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8046859047931070204
+--- !u!1 &8285992919270015217
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8046859047931070205}
-  - component: {fileID: 8046859047931070198}
-  - component: {fileID: 8046859047931070201}
-  - component: {fileID: 8046859047931070200}
-  - component: {fileID: 8046859047931070203}
-  - component: {fileID: 8046859047931070202}
+  - component: {fileID: 8285992919354125507}
+  - component: {fileID: 8285992919270015220}
+  - component: {fileID: 8285992919270015221}
+  - component: {fileID: 8285992919270015218}
+  - component: {fileID: 8285992919270015219}
+  - component: {fileID: 8285992919270015216}
+  - component: {fileID: 8285992919270015223}
   m_Layer: 0
   m_Name: WindSpell
   m_TagString: Untagged
@@ -21,13 +22,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8046859047931070205
+--- !u!4 &8285992919354125507
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8046859047931070204}
+  m_GameObject: {fileID: 8285992919270015217}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,71 +36,83 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8046859047931070198
+--- !u!114 &8285992919270015220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8046859047931070204}
+  m_GameObject: {fileID: 8285992919270015217}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actionRange: 1
-  comboAction: {fileID: 0}
-  actionAnimation: {fileID: 7400000, guid: bbeb4e40c0471fb49a8d56b50c863ecd, type: 2}
-  actionName: Wind Magic
-  power: 6
-  cost: 5
   actionType: 0
---- !u!114 &8046859047931070201
+  animationName: OffensiveAbilityRange2
+  actionName: Wind Magic
+  power: 1
+  cost: 5
+--- !u!114 &8285992919270015221
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8046859047931070204}
+  m_GameObject: {fileID: 8285992919270015217}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thisElement: 3
---- !u!114 &8046859047931070200
+--- !u!114 &8285992919270015218
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8046859047931070204}
+  m_GameObject: {fileID: 8285992919270015217}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f38d4955a339ef3448240d8d99f16001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8046859047931070203
+--- !u!114 &8285992919270015219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8046859047931070204}
+  m_GameObject: {fileID: 8285992919270015217}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75ef1186125d4f64d8b278fd70c11272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8046859047931070202
+--- !u!114 &8285992919270015216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8046859047931070204}
+  m_GameObject: {fileID: 8285992919270015217}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d9ff72d12394a54cbe874e4ea56f0a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8285992919270015223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8285992919270015217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61af7a81455c1e945bdafae69f1f08fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movePosition: 1

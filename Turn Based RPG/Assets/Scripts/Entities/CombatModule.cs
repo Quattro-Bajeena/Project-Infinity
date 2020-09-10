@@ -73,8 +73,6 @@ public class CombatModule : MonoBehaviour
         availableActions.AddRange(gameObject.GetComponentsInChildren<CombatAction>());
         foreach (CombatAction action in availableActions)
         {
-            if(Entity.animationsOld_)
-                Entity.animationsOld_.AddClip(action.actionName, action.actionAnimation);
 
             switch (action.actionType)
             {
@@ -97,7 +95,7 @@ public class CombatModule : MonoBehaviour
     void OnEnable()
     {
         EventManager.StartListening(CombatEvents.SuspensionToggle, SuspensionToggle);
-        EventManager.StartListening(CombatEvents.DamageDealt, ClampHpMana);
+        EventManager.StartListening(CombatEvents.HealthChange, HealthChange);
         EventManager.StartListening(CombatEvents.ActionCompleted, HealthCheck);
 
         EventManager.StartListening(UIEvents.AttackMenuSelected, JumpOnBattlefield);
@@ -107,7 +105,7 @@ public class CombatModule : MonoBehaviour
     void OnDisable()
     {
         EventManager.StopListening(CombatEvents.SuspensionToggle, SuspensionToggle);
-        EventManager.StopListening(CombatEvents.DamageDealt, ClampHpMana);
+        EventManager.StopListening(CombatEvents.HealthChange, HealthChange);
         EventManager.StopListening(CombatEvents.ActionCompleted, HealthCheck);
 
         EventManager.StopListening(UIEvents.AttackMenuSelected, JumpOnBattlefield);
@@ -191,10 +189,21 @@ public class CombatModule : MonoBehaviour
 
     //Functions that respond to events
 
-    void ClampHpMana(CombatEventData data)
+    void HealthChange(CombatEventData data)
     {
-        stats.health = Mathf.Clamp(stats.health, 0, stats.maxHealth);
-        stats.mana = Mathf.Clamp(stats.mana, 0, stats.maxMana);
+        if(data.targetID == EntityName)
+		{
+            stats.health = Mathf.Clamp(stats.health, 0, stats.maxHealth);
+            stats.mana = Mathf.Clamp(stats.mana, 0, stats.maxMana);
+
+            if (data.healthChange < -1)
+			{
+                Entity.animations.ReceivedDamage();
+            }
+
+            
+        }
+        
     }
 
 
@@ -283,9 +292,6 @@ public class CombatModule : MonoBehaviour
             {
                 Entity.animations.TriggerAttack(attackQueue.Peek().animationName);
 
-                if(Entity.animationsOld_)
-                    Entity.animationsOld_.Play(attackQueue.Peek().actionName);
-
                 yield return null;
                 while (Entity.animations.IsAnimationPlaying() == true) { yield return null; }
                 
@@ -324,15 +330,31 @@ public class CombatModule : MonoBehaviour
 
     IEnumerator PerformAbilityAction(CombatAction action, Vector3 targetPosition)
     {
-        while (MoveTowardsTarget(targetPosition, 5f)) { yield return null; }
+        if(action.IsTargetPositionStationary == false)
+		{
+            Entity.animations.SetWalking(true);
+            while (MoveTowardsTarget(targetPosition, 5f)) { yield return null; }
+            
+            Entity.animations.SetWalking(false);
+        }
+        
 
-        Entity.animationsOld_.Play(action.actionName); 
-        while(Entity.animationsOld_.IsPlaying == true) { yield return null; }
-
+        Entity.animations.PerformAbility(action.animationName);
+        yield return null;
+        while (Entity.animations.IsAnimationPlaying() == true) { yield return null; }
+        
         EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(EntityName, action));
 
-        while (MoveTowardsTarget(startPosition, 5f)) { yield return null; }
-        StartCoroutine(TurnInTime(startRotation, 0.3f));
+        Entity.animations.AbilityEnded();
+        yield return new WaitForSeconds(0.5f);
+
+        if (action.IsTargetPositionStationary == false)
+		{
+            Entity.animations.SetWalking(true);
+            while (MoveTowardsTarget(startPosition, 5f)) { yield return null; }
+            Entity.animations.SetWalking(false);
+            StartCoroutine(TurnInTime(startRotation, 0.3f));
+        }
 
         CompleteAction();
     }
@@ -345,7 +367,7 @@ public class CombatModule : MonoBehaviour
 
         actionGauge = 0;
         attackComboList.Clear();
-
+        transform.position = startPosition;
 
         EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(EntityName));
         state = CombatState.Charging;
@@ -383,7 +405,7 @@ public class CombatModule : MonoBehaviour
         Vector3 targetGroundPosition = new Vector3(target.x, transform.position.y, target.z);
         float distance = Vector3.Distance(transform.position, targetGroundPosition);
         transform.LookAt(targetGroundPosition);
-        while (distance > 0.01f)
+        while (distance > 0.02f)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetGroundPosition, speed * Time.deltaTime);
             distance = Vector3.Distance(transform.position, targetGroundPosition);
@@ -397,14 +419,16 @@ public class CombatModule : MonoBehaviour
 
     bool MoveTowardsTarget(Vector3 target, float speed)
     {
+
         Vector3 targetGroundPosition = new Vector3(target.x, transform.position.y, target.z);
-        float distance = Vector3.Distance(transform.position, targetGroundPosition);
         transform.LookAt(targetGroundPosition);
+        float distance = Vector3.Distance(transform.position, targetGroundPosition);
+        
 
         //transform.rotation = Quaternion.LookRotation(new Vector3(target.x, transform.position.y, target.z) - transform.position);
 
         transform.position = Vector3.MoveTowards(transform.position, targetGroundPosition, speed * Time.deltaTime);
-        return distance > 0.01f;
+        return distance > 0.1f;
     }
 
     

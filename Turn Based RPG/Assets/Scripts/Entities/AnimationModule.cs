@@ -64,6 +64,34 @@ public class AnimationModule : MonoBehaviour
 
     }
 
+    public void PerformAbility(string abilityName)
+	{
+        animator.SetBool("PerformingAbility", true);
+        animator.SetTrigger(abilityName);
+	}
+
+    public void AbilityEnded()
+	{
+        animator.SetBool("PerformingAbility", false);
+	}
+
+    public void ReceivedDamage()
+	{
+        animator.SetTrigger("TakeDamage");
+	}
+
+    public void Jump()
+	{
+        animator.SetBool("InAir", true);
+        animator.SetTrigger("JumpStart");
+	}
+
+    public void JumpEnd()
+	{
+        animator.SetBool("InAir", false);
+    }
+
+    //Animation that loops is not playing
     public bool IsAnimationPlaying()
 	{
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && animator.IsInTransition(0) == false)

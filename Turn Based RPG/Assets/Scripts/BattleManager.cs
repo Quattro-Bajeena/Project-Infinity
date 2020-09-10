@@ -112,7 +112,7 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        Vector3 position = currentTargets[0].attackerPosition;
+        Vector3 position = action.GetMovePosition(attacker.transform.position, currentTargets[0].attackerPosition, battlefieldCenter.position);
         attacker.ProcessAction(action, position);
     }
 
@@ -140,7 +140,7 @@ public class BattleManager : MonoBehaviour
             action.ModyfiStatistics(currentAttacker.stats, target.stats);
 
             float healthChange = action.GetHealthChange(currentAttacker.stats, target.stats);
-            EventManager.TriggerEvent(CombatEvents.DamageDealt, new CombatEventData(target.EntityName, healthChange));
+            EventManager.TriggerEvent(CombatEvents.HealthChange, new CombatEventData(target.EntityName, healthChange));
         }
     }
 
