@@ -6,9 +6,7 @@ using UnityEngine.Events;
 
 public class BattleManager : MonoBehaviour
 {
-    
     [SerializeField] Dictionary<string, CombatModule> entitiesInBattle = new Dictionary<string, CombatModule>();
-    
     [SerializeField] List<string> entityQueue = new List<string>();
     [SerializeField] Transform middleOfBattlefied;
 
@@ -139,6 +137,7 @@ public class BattleManager : MonoBehaviour
         {
             action.ModyfiStatistics(currentAttacker.stats, target.stats);
 
+            //THIS EVENT IS CALLED FROM INSIDE STATISITC SCRIPTs
             float healthChange = action.GetHealthChange(currentAttacker.stats, target.stats);
             EventManager.TriggerEvent(CombatEvents.HealthChange, new CombatEventData(target.EntityName, healthChange));
         }

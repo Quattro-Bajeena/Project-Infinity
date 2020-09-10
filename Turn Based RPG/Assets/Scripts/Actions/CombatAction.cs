@@ -21,7 +21,7 @@ public class CombatAction : MonoBehaviour
     public ActionRange actionRange;
     public ActionType actionType;
 
-    public List<IStatisticModifier> StatisticModifiers { get; private set; }
+    public List<IStatisticModyfiyngAction> StatisticModifiers { get; private set; }
     public List<ElementalModifier> ElementalDamages { get; private set; }
     public ITargetType TargetType { get; private set; }
     public IUsesResourceStat ResourceType { get; private set; }
@@ -68,11 +68,11 @@ public class CombatAction : MonoBehaviour
 
     void Awake()
     {
-        StatisticModifiers = new List<IStatisticModifier>();
+        StatisticModifiers = new List<IStatisticModyfiyngAction>();
         ElementalDamages = new List<ElementalModifier>();
 
 
-        StatisticModifiers.AddRange(GetComponents<IStatisticModifier>());
+        StatisticModifiers.AddRange(GetComponents<IStatisticModyfiyngAction>());
         ResourceType = GetComponent<IUsesResourceStat>();
         ElementalDamages.AddRange(GetComponents<ElementalModifier>());
         comboAction = GetComponent<ComboAction>();
@@ -152,7 +152,7 @@ public class CombatAction : MonoBehaviour
 
     public void ModyfiStatistics(EntityStatistics attackerStats, EntityStatistics targetStats)
     {
-        foreach (IStatisticModifier modifier in StatisticModifiers)
+        foreach (IStatisticModyfiyngAction modifier in StatisticModifiers)
         {
 
             float value = CalculateModifierValue(modifier, attackerStats, targetStats);
@@ -161,22 +161,23 @@ public class CombatAction : MonoBehaviour
   
     }
 
+    //FUNCTION OBSOLETE EVENT HEALTH CHANGE WILL BE CALLED INSIDE STATISTIC MODULE
     public float GetHealthChange(EntityStatistics attackerStats, EntityStatistics targetStats)
     {
         float modifiedHealthValue = 0;
 
-        foreach (IStatisticModifier modifier in StatisticModifiers)
+        foreach (IStatisticModyfiyngAction modifier in StatisticModifiers)
         {
-            if(modifier is IHealthModifier)
-            {
-                modifiedHealthValue += CalculateModifierValue(modifier, attackerStats, targetStats);
-            }
+            //if(modifier is IHealthModifier)
+            //{
+            //    modifiedHealthValue += CalculateModifierValue(modifier, attackerStats, targetStats);
+            //}
         }
 
         return modifiedHealthValue;
     }
 
-    float CalculateModifierValue(IStatisticModifier modifier, EntityStatistics attackerStats, EntityStatistics targetStats)
+    float CalculateModifierValue(IStatisticModyfiyngAction modifier, EntityStatistics attackerStats, EntityStatistics targetStats)
     {
         float value = modifier.CalculateStatChange(power, attackerStats, targetStats);
 
@@ -184,18 +185,9 @@ public class CombatAction : MonoBehaviour
         {
             value = elementalModifier.CalculateElementalModifier(value, targetStats);
         }
-        value *=  1 + UnityEngine.Random.Range(0f, 0.1f);
+        
 
-        if(modifier is IStatisticLowerer)
-        {
-            value = Mathf.Clamp(value, -9999, -1);
-        }
-        else if(modifier is IStatisticRaiser)
-        {
-            value = Mathf.Clamp(value, 1, 9999);
-        }
-
-        return (float)Math.Round(value);
+        return value;
     }
 
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicDamage : MonoBehaviour, IStatisticModifier, IHealthModifier, IStatisticLowerer
+public class MagicDamage : MonoBehaviour, IStatisticModyfiyngAction
 {
     
 
@@ -18,4 +18,13 @@ public class MagicDamage : MonoBehaviour, IStatisticModifier, IHealthModifier, I
         
     }
 
+	public float CalculateStatChange(float power, StatisticsModule attackerStats, StatisticsModule targetStats)
+	{
+        return (attackerStats.force.Value - targetStats.composure.Value) * power;
+    }
+
+	public void ApplyStatChange(float value, StatisticsModule targetStats)
+	{
+        targetStats.ApplyDamage(value);
+	}
 }

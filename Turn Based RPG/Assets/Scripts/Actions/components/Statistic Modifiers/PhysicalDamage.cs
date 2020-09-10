@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhysicalDamage : MonoBehaviour ,IStatisticModifier, IHealthModifier , IStatisticLowerer
+public class PhysicalDamage : MonoBehaviour ,IStatisticModyfiyngAction
 {
     
 
@@ -18,4 +18,14 @@ public class PhysicalDamage : MonoBehaviour ,IStatisticModifier, IHealthModifier
         targetStats.health += value;
         
     }
+
+	public float CalculateStatChange(float power, StatisticsModule attackerStats, StatisticsModule targetStats)
+	{
+        return (attackerStats.lighstaber.Value - targetStats.selfDefence.Value) * power;
+    }
+
+	public void ApplyStatChange(float value, StatisticsModule targetStats)
+	{
+        targetStats.ApplyDamage(value);
+	}
 }

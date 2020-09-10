@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 
 public class CombatModule : MonoBehaviour
 {
-
     public string EntityName { get; set; }
     public Entity Entity { get; set; }
     public bool IsCharacter { get; set; }
@@ -56,6 +55,7 @@ public class CombatModule : MonoBehaviour
 
         Entity = gameObject.GetComponent<Entity>();
         EntityName = Entity.entityName;
+        
 
         if (GetComponent<CharacterModule>())
         {

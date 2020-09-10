@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heal : MonoBehaviour, IStatisticModifier, IHealthModifier, IStatisticRaiser
+public class Heal : MonoBehaviour, IStatisticModyfiyngAction
 {
     
 
@@ -15,10 +15,17 @@ public class Heal : MonoBehaviour, IStatisticModifier, IHealthModifier, IStatist
     {
         targetStats.health += value;
         
+        
     }
 
-    //public float getModifiedHealth(float power, EntityStatistics attackerStats, EntityStatistics targetStats)
-    //{
-    //    return calculateStatChange(power, attackerStats, targetStats);
-    //}
+	public float CalculateStatChange(float power, StatisticsModule attackerStats, StatisticsModule targetStats)
+	{
+		return targetStats.force.Value * power;
+	}
+
+	public void ApplyStatChange(float value, StatisticsModule targetStats)
+	{
+		targetStats.Heal(value);
+	}
+
 }
