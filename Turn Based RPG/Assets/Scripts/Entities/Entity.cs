@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public string Name
+    public string Id
 	{
 		get { return name; }
 	}

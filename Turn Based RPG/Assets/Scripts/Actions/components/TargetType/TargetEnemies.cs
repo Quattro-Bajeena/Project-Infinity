@@ -29,7 +29,7 @@ public class TargetEnemies : MonoBehaviour ,ITargetType
         {
             if (potentialTarget.IsCharacter != isCharacter)
             {
-                targets.Add(potentialTarget.Entity.Name);
+                targets.Add(potentialTarget.Entity.Id);
             }
         }
 

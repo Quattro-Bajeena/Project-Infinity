@@ -53,7 +53,7 @@ public class CombatAIModule : MonoBehaviour
 
     void LaunchAbility(CombatEventData data)
     {
-        if(data.id == entity.Name)
+        if(data.id == entity.Id)
         {
             DecideGoals();
             PickAction();
@@ -65,20 +65,20 @@ public class CombatAIModule : MonoBehaviour
 
             if (ability.IsEnoughResource(entity.stats))
             {
-                List<string> potentialTargets = ability.GetTargets(entity.Name, false, entitiesInBattle);
+                List<string> potentialTargets = ability.GetTargets(entity.Id, false, entitiesInBattle);
 
                 if (ability.actionRange == CombatAction.ActionRange.Single)
                 {
                     index = Random.Range(0, potentialTargets.Count - 1);
                     string target = potentialTargets[index];
-                    EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.Name, new List<string>() { target }, ability));
+                    EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.Id, new List<string>() { target }, ability));
                 }
                 else if (ability.actionRange == CombatAction.ActionRange.All)
                 {
-                    EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.Name, new List<string>(potentialTargets), ability));
+                    EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.Id, new List<string>(potentialTargets), ability));
                 }
             }
-            else EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(entity.Name));
+            else EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(entity.Id));
 
             
             

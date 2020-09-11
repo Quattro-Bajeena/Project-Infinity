@@ -778,7 +778,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2622,7 +2622,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 328.1002}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1164, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &918764736
 MonoBehaviour:
@@ -3689,19 +3689,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 99
   currentHealth: 0
+  fitness:
+    baseValue: 5
+    modifiers: []
+  inteligence:
+    baseValue: 5
+    modifiers: []
+  perception:
+    baseValue: 5
+    modifiers: []
   force:
     baseValue: 20
     modifiers: []
   melee:
     baseValue: 10
     modifiers: []
-  lighstaber:
+  selfDefence:
     baseValue: 10
+    modifiers: []
+  guns:
+    baseValue: 10
+    modifiers: []
+  analysis:
+    baseValue: 10
+    modifiers: []
+  computers:
+    baseValue: 10
+    modifiers: []
+  tinkering:
+    baseValue: 10
+    modifiers: []
+  lighstaber:
+    baseValue: 27
     modifiers: []
   composure:
-    baseValue: 10
-    modifiers: []
-  selfDefence:
     baseValue: 10
     modifiers: []
   speed:
@@ -3713,19 +3734,16 @@ MonoBehaviour:
   forcePoints:
     maxValue: 50
     currentValue: 0
-  forceResistance:
+  physicalDefence:
     baseValue: 0
     modifiers: []
-  plasmaResistance:
+  blasterDefence:
     baseValue: 0
     modifiers: []
-  physicalResistance:
+  techDefence:
     baseValue: 0
     modifiers: []
-  fireResistance:
-    baseValue: 0
-    modifiers: []
-  electricityResistance:
+  forceDefence:
     baseValue: 0
     modifiers: []
 --- !u!114 &1110033812
@@ -3744,6 +3762,7 @@ MonoBehaviour:
   attackerPosition: {x: 0, y: 0, z: 0}
   battlefieldCenter: {x: 0, y: 0, z: 0}
   actionGauge: 0
+  _defend: 0
   abilities: []
   attackComboList: 
   attackQueueList: []
@@ -3812,7 +3831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1152041273
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6169,6 +6188,7 @@ MonoBehaviour:
   attackerPosition: {x: 0, y: 0, z: 0}
   battlefieldCenter: {x: 0, y: 0, z: 0}
   actionGauge: 0
+  _defend: 0
   abilities: []
   attackComboList: 
   attackQueueList: []
@@ -6186,19 +6206,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 39
   currentHealth: 0
+  fitness:
+    baseValue: 0
+    modifiers: []
+  inteligence:
+    baseValue: 0
+    modifiers: []
+  perception:
+    baseValue: 0
+    modifiers: []
   force:
     baseValue: 11
     modifiers: []
   melee:
     baseValue: 11
     modifiers: []
+  selfDefence:
+    baseValue: 11
+    modifiers: []
+  guns:
+    baseValue: 0
+    modifiers: []
+  analysis:
+    baseValue: 0
+    modifiers: []
+  computers:
+    baseValue: 0
+    modifiers: []
+  tinkering:
+    baseValue: 0
+    modifiers: []
   lighstaber:
     baseValue: 11
     modifiers: []
   composure:
-    baseValue: 11
-    modifiers: []
-  selfDefence:
     baseValue: 11
     modifiers: []
   speed:
@@ -6210,19 +6251,16 @@ MonoBehaviour:
   forcePoints:
     maxValue: 0
     currentValue: 0
-  forceResistance:
+  physicalDefence:
     baseValue: 0
     modifiers: []
-  plasmaResistance:
+  blasterDefence:
     baseValue: 0
     modifiers: []
-  physicalResistance:
+  techDefence:
     baseValue: 0
     modifiers: []
-  fireResistance:
-    baseValue: 0
-    modifiers: []
-  electricityResistance:
+  forceDefence:
     baseValue: 0
     modifiers: []
 --- !u!114 &1654709409
@@ -6996,6 +7034,7 @@ MonoBehaviour:
   attackerPosition: {x: 0, y: 0, z: 0}
   battlefieldCenter: {x: 0, y: 0, z: 0}
   actionGauge: 0
+  _defend: 0
   abilities: []
   attackComboList: 
   attackQueueList: []
@@ -7013,19 +7052,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 11
   currentHealth: 0
+  fitness:
+    baseValue: 0
+    modifiers: []
+  inteligence:
+    baseValue: 0
+    modifiers: []
+  perception:
+    baseValue: 0
+    modifiers: []
   force:
-    baseValue: 11
+    baseValue: 30
     modifiers: []
   melee:
     baseValue: 11
+    modifiers: []
+  selfDefence:
+    baseValue: 11
+    modifiers: []
+  guns:
+    baseValue: 0
+    modifiers: []
+  analysis:
+    baseValue: 0
+    modifiers: []
+  computers:
+    baseValue: 0
+    modifiers: []
+  tinkering:
+    baseValue: 0
     modifiers: []
   lighstaber:
     baseValue: 11
     modifiers: []
   composure:
-    baseValue: 11
-    modifiers: []
-  selfDefence:
     baseValue: 11
     modifiers: []
   speed:
@@ -7037,19 +7097,16 @@ MonoBehaviour:
   forcePoints:
     maxValue: 62
     currentValue: 0
-  forceResistance:
+  physicalDefence:
     baseValue: 0
     modifiers: []
-  plasmaResistance:
+  blasterDefence:
     baseValue: 0
     modifiers: []
-  physicalResistance:
+  techDefence:
     baseValue: 0
     modifiers: []
-  fireResistance:
-    baseValue: 0
-    modifiers: []
-  electricityResistance:
+  forceDefence:
     baseValue: 0
     modifiers: []
 --- !u!114 &1786545341
@@ -8348,6 +8405,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6528035840401454414, guid: 7855d6ad33456b349a5e1c54d0c34029,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 859128282}
+    - target: {fileID: 6528035840401454414, guid: 7855d6ad33456b349a5e1c54d0c34029,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Defend
       objectReference: {fileID: 0}
     - target: {fileID: 6528035841746878738, guid: 7855d6ad33456b349a5e1c54d0c34029,
         type: 3}
@@ -14024,19 +14091,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 72
   currentHealth: 0
+  fitness:
+    baseValue: 0
+    modifiers: []
+  inteligence:
+    baseValue: 0
+    modifiers: []
+  perception:
+    baseValue: 0
+    modifiers: []
   force:
     baseValue: 11
     modifiers: []
   melee:
     baseValue: 11
     modifiers: []
+  selfDefence:
+    baseValue: 11
+    modifiers: []
+  guns:
+    baseValue: 0
+    modifiers: []
+  analysis:
+    baseValue: 0
+    modifiers: []
+  computers:
+    baseValue: 0
+    modifiers: []
+  tinkering:
+    baseValue: 0
+    modifiers: []
   lighstaber:
     baseValue: 11
     modifiers: []
   composure:
-    baseValue: 11
-    modifiers: []
-  selfDefence:
     baseValue: 11
     modifiers: []
   speed:
@@ -14048,19 +14136,16 @@ MonoBehaviour:
   forcePoints:
     maxValue: 78
     currentValue: 0
-  forceResistance:
+  physicalDefence:
     baseValue: 0
     modifiers: []
-  plasmaResistance:
+  blasterDefence:
     baseValue: 0
     modifiers: []
-  physicalResistance:
+  techDefence:
     baseValue: 0
     modifiers: []
-  fireResistance:
-    baseValue: 0
-    modifiers: []
-  electricityResistance:
+  forceDefence:
     baseValue: 0
     modifiers: []
 --- !u!114 &7377424113306856676
@@ -14079,6 +14164,7 @@ MonoBehaviour:
   attackerPosition: {x: 0, y: 0, z: 0}
   battlefieldCenter: {x: 0, y: 0, z: 0}
   actionGauge: 0
+  _defend: 0
   abilities: []
   attackComboList: 
   attackQueueList: []
@@ -14129,6 +14215,7 @@ MonoBehaviour:
   attackerPosition: {x: 0, y: 0, z: 0}
   battlefieldCenter: {x: 0, y: 0, z: 0}
   actionGauge: 0
+  _defend: 0
   abilities: []
   attackComboList: 
   attackQueueList: []
@@ -14162,19 +14249,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 91
   currentHealth: 0
+  fitness:
+    baseValue: 0
+    modifiers: []
+  inteligence:
+    baseValue: 0
+    modifiers: []
+  perception:
+    baseValue: 10
+    modifiers: []
   force:
     baseValue: 10
     modifiers: []
   melee:
     baseValue: 11
     modifiers: []
+  selfDefence:
+    baseValue: 11
+    modifiers: []
+  guns:
+    baseValue: 0
+    modifiers: []
+  analysis:
+    baseValue: 0
+    modifiers: []
+  computers:
+    baseValue: 0
+    modifiers: []
+  tinkering:
+    baseValue: 0
+    modifiers: []
   lighstaber:
     baseValue: 20
     modifiers: []
   composure:
-    baseValue: 11
-    modifiers: []
-  selfDefence:
     baseValue: 11
     modifiers: []
   speed:
@@ -14186,19 +14294,16 @@ MonoBehaviour:
   forcePoints:
     maxValue: 88
     currentValue: 0
-  forceResistance:
+  physicalDefence:
     baseValue: 0
     modifiers: []
-  plasmaResistance:
+  blasterDefence:
     baseValue: 0
     modifiers: []
-  physicalResistance:
+  techDefence:
     baseValue: 0
     modifiers: []
-  fireResistance:
-    baseValue: 0
-    modifiers: []
-  electricityResistance:
+  forceDefence:
     baseValue: 0
     modifiers: []
 --- !u!114 &7377424113410547246
@@ -14661,19 +14766,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 157
   currentHealth: 0
+  fitness:
+    baseValue: 0
+    modifiers: []
+  inteligence:
+    baseValue: 0
+    modifiers: []
+  perception:
+    baseValue: 0
+    modifiers: []
   force:
     baseValue: 11
     modifiers: []
   melee:
     baseValue: 11
     modifiers: []
+  selfDefence:
+    baseValue: 11
+    modifiers: []
+  guns:
+    baseValue: 0
+    modifiers: []
+  analysis:
+    baseValue: 0
+    modifiers: []
+  computers:
+    baseValue: 0
+    modifiers: []
+  tinkering:
+    baseValue: 0
+    modifiers: []
   lighstaber:
     baseValue: 11
     modifiers: []
   composure:
-    baseValue: 11
-    modifiers: []
-  selfDefence:
     baseValue: 11
     modifiers: []
   speed:
@@ -14685,19 +14811,16 @@ MonoBehaviour:
   forcePoints:
     maxValue: 110
     currentValue: 0
-  forceResistance:
+  physicalDefence:
     baseValue: 0
     modifiers: []
-  plasmaResistance:
+  blasterDefence:
     baseValue: 0
     modifiers: []
-  physicalResistance:
+  techDefence:
     baseValue: 0
     modifiers: []
-  fireResistance:
-    baseValue: 0
-    modifiers: []
-  electricityResistance:
+  forceDefence:
     baseValue: 0
     modifiers: []
 --- !u!114 &7377424114100623518
@@ -14716,6 +14839,7 @@ MonoBehaviour:
   attackerPosition: {x: 0, y: 0, z: 0}
   battlefieldCenter: {x: 0, y: 0, z: 0}
   actionGauge: 0
+  _defend: 0
   abilities: []
   attackComboList: 
   attackQueueList: []

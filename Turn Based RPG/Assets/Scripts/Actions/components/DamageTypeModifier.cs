@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElementalModifier : MonoBehaviour
+public class DamageTypeModifier : MonoBehaviour
 {
-
-
     public StatisticsModule.DamageType thisDamageType;
     public float CalculateElementalModifier(float statChange, StatisticsModule targetStatistics)
     {
-        return statChange * (100f - targetStatistics.resistances[thisDamageType].Value)/100f;
+        return statChange * (100f - targetStatistics.defenses[thisDamageType].Value)/100f;
     }
 }

@@ -51,7 +51,7 @@ public class AnimationModule : MonoBehaviour
 
     public void SetDefend(bool blocking)
 	{
-        animator.SetBool("Blocking", false);
+        animator.SetBool("Blocking", blocking);
 	}
 
     public void SetWalking(bool walking, float speed = 1f)

@@ -89,15 +89,15 @@ public class UIManager : MonoBehaviour
 
         foreach (var entity in FindObjectsOfType<Entity>())
         {
-            entities.Add( entity.gameObject.GetComponent<CombatModule>().Entity.Name, entity.gameObject);
+            entities.Add( entity.gameObject.GetComponent<CombatModule>().Entity.Id, entity.gameObject);
             CombatModule entityCombat = entity.GetComponent<CombatModule>();
             if (entityCombat.IsCharacter == true)
             {
-                characters.Add(entityCombat.Entity.Name, entityCombat);
+                characters.Add(entityCombat.Entity.Id, entityCombat);
             }
             else
             {
-                enemies.Add(entityCombat.Entity.Name, entity.gameObject);
+                enemies.Add(entityCombat.Entity.Id, entity.gameObject);
             }
         }
 
@@ -127,7 +127,8 @@ public class UIManager : MonoBehaviour
         //Events from BattleManager 
         EventManager.StartListening(CombatEvents.PermitAction, CharacterReady);
         EventManager.StartListening(CombatEvents.ActionCompleted, ActionCompletedCleanup);
-        EventManager.StartListening(CombatEvents.HealthChange, DisplayDamage);
+        EventManager.StartListening(CombatEvents.HealthChange, HealthChanged);
+        EventManager.StartListening(CombatEvents.DogdedAction, ActionDoged);
 
         //Events from entities
         EventManager.StartListening(CombatEvents.EntityDied, EntityDied);
@@ -140,7 +141,8 @@ public class UIManager : MonoBehaviour
         controls.Disable();
         EventManager.StopListening(CombatEvents.PermitAction, CharacterReady);
         EventManager.StopListening(CombatEvents.ActionCompleted, ActionCompletedCleanup);
-        EventManager.StopListening(CombatEvents.HealthChange, DisplayDamage);
+        EventManager.StopListening(CombatEvents.HealthChange, HealthChanged);
+        EventManager.StopListening(CombatEvents.DogdedAction, ActionDoged);
 
         //Events from entities
         EventManager.StopListening(CombatEvents.EntityDied, EntityDied);
@@ -181,7 +183,7 @@ public class UIManager : MonoBehaviour
         DisableControls();
         foreach (GameObject targetGo in targets)
         {
-            currentActionTargets.Add(targetGo.GetComponent<CombatModule>().Entity.Name);
+            currentActionTargets.Add(targetGo.GetComponent<CombatModule>().Entity.Id);
         }
         
         //Switch:
@@ -253,11 +255,19 @@ public class UIManager : MonoBehaviour
         EventManager.TriggerEvent(UIEvents.AttackCanceled, new UIEventData(currentCharacter));
     }
 
-    //Battle Manager -> damage delt event
-    void DisplayDamage(CombatEventData data)
+    //Statistic module -> damage delt event
+    void HealthChanged(CombatEventData data)
+	{
+        DisplayDamage(data.targetID, data.healthChange);
+	}
+
+    void ActionDoged(CombatEventData data)
+	{
+        DisplayDamage(data.id, 0);
+	}
+
+    void DisplayDamage(string targetID, float damage)
     {
-        string targetID = data.targetID;
-        float damage = data.healthChange;
 
         GameObject newDamageText = Instantiate(damageTextPrefab);
         newDamageText.SetActive(true);
@@ -265,6 +275,7 @@ public class UIManager : MonoBehaviour
         newDamageText.GetComponent<DamageTextScript>().Initialize(damage);
 
     }
+
 
     void ActionCompletedCleanup(CombatEventData data)
     {

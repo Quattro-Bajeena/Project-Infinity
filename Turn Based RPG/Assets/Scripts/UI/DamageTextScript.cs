@@ -10,6 +10,7 @@ public class DamageTextScript : MonoBehaviour
 {
     public float timeVisible;
     public float speed;
+ 
     Color textColor;
     Camera mainCamera;
 
@@ -21,28 +22,28 @@ public class DamageTextScript : MonoBehaviour
 
     public void Initialize(float amount)
     {
-        
-        if(amount == 0)
+        TextMeshPro text = GetComponent<TextMeshPro>();
+
+        if (amount == 0)
         {
-            Debug.Log("DamageTextScript - no damage, object destroyed");
-            Destroy(this.gameObject);
+            //Attack Miss
+            textColor = Color.white;
+            text.text = "miss";
+
         }
         else if (amount > 0)
         {
             //Heal
             textColor = Color.green;
+            text.text = Math.Abs(amount).ToString();
         }
         else if (amount < 0)
         {
             //Damage
             textColor = Color.red;
+            text.text = Math.Abs(amount).ToString();
         }
-
-        //Text text = GetComponent<Text>();
-        TextMeshPro text = GetComponent<TextMeshPro>();
         
-        
-        text.text = Math.Abs(amount).ToString();
         text.color = textColor;
 
     }

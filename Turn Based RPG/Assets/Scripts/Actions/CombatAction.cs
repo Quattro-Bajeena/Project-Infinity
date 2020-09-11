@@ -22,7 +22,7 @@ public class CombatAction : MonoBehaviour
     public ActionType actionType;
 
     public List<IStatisticModyfiyngAction> StatisticModifiers { get; private set; }
-    public List<ElementalModifier> ElementalDamages { get; private set; }
+    public List<DamageTypeModifier> DamageTypes { get; private set; }
     public ITargetType TargetType { get; private set; }
     public IUsesResourceStat ResourceType { get; private set; }
     public ComboAction comboAction { get; private set; }
@@ -69,12 +69,12 @@ public class CombatAction : MonoBehaviour
     void Awake()
     {
         StatisticModifiers = new List<IStatisticModyfiyngAction>();
-        ElementalDamages = new List<ElementalModifier>();
+        DamageTypes = new List<DamageTypeModifier>();
 
 
         StatisticModifiers.AddRange(GetComponents<IStatisticModyfiyngAction>());
         ResourceType = GetComponent<IUsesResourceStat>();
-        ElementalDamages.AddRange(GetComponents<ElementalModifier>());
+        DamageTypes.AddRange(GetComponents<DamageTypeModifier>());
         comboAction = GetComponent<ComboAction>();
         baseAttack = GetComponent<BaseAttack>();
         TargetType = GetComponent<ITargetType>();
@@ -152,43 +152,40 @@ public class CombatAction : MonoBehaviour
 
     public void ModyfiStatistics(StatisticsModule attackerStats, StatisticsModule targetStats)
     {
+
         foreach (IStatisticModyfiyngAction modifier in StatisticModifiers)
         {
 
             float value = CalculateModifierValue(modifier, attackerStats, targetStats);
             modifier.ApplyStatChange(value, targetStats);
         }
-  
     }
-
-    //FUNCTION OBSOLETE EVENT HEALTH CHANGE WILL BE CALLED INSIDE STATISTIC MODULE
-    public float GetHealthChange(StatisticsModule attackerStats, StatisticsModule targetStats)
+    public bool DodgedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
     {
-        float modifiedHealthValue = 0;
+        int diceRoll = UnityEngine.Random.Range(0, 100);
 
-        foreach (IStatisticModyfiyngAction modifier in StatisticModifiers)
-        {
-            //if(modifier is IHealthModifier)
-            //{
-            //    modifiedHealthValue += CalculateModifierValue(modifier, attackerStats, targetStats);
-            //}
-        }
+        //base chance for hit 95% - perception
+        if(diceRoll > 80 - attackerStats.atributes[StatisticsModule.Atribute.Perception].Value)
+		{
+            return true;
+		}
+        else return false;
 
-        return modifiedHealthValue;
     }
 
     float CalculateModifierValue(IStatisticModyfiyngAction modifier, StatisticsModule attackerStats, StatisticsModule targetStats)
     {
         float value = modifier.CalculateStatChange(power, attackerStats, targetStats);
 
-        foreach (ElementalModifier elementalModifier in ElementalDamages)
+        foreach (DamageTypeModifier damageTypeModifier in DamageTypes)
         {
-            value = elementalModifier.CalculateElementalModifier(value, targetStats);
+            value = damageTypeModifier.CalculateElementalModifier(value, targetStats);
         }
         
-
         return value;
     }
+
+    
 
 
     public List<CombatModule> GetTargets(CombatModule attacker, List<CombatModule> potentialTargets)

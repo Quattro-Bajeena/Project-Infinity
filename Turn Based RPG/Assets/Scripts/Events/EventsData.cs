@@ -13,7 +13,8 @@ public enum CombatEvents
     ActionCompleted, // id
     SuspensionToggle,
     EntityDied, //id
-    ComboLaunched
+    ComboLaunched,
+    DogdedAction //id
     
 }
 

@@ -36,7 +36,7 @@ public class BattleManager : MonoBehaviour
         foreach (var entity in entities)
         {
             entity.battlefieldCenter = battlefieldCenter.position;
-            entitiesInBattle.Add(entity.Entity.Name, entity);
+            entitiesInBattle.Add(entity.Entity.Id, entity);
         }
 
     }
@@ -119,7 +119,7 @@ public class BattleManager : MonoBehaviour
         
         string attackerID = data.id;
         //Shdould be the same but who knows ¯\_(ツ)_/¯ 
-        if(attackerID == currentAttacker.Entity.Name)
+        if(attackerID == currentAttacker.Entity.Id)
         {
             
             entitiesInBattle[attackerID].CancelAttack();
@@ -135,7 +135,12 @@ public class BattleManager : MonoBehaviour
 
         foreach (CombatModule target in currentTargets)
         {
-            action.ModyfiStatistics(currentAttacker.Stats, target.Stats);
+            if (action.DodgedAction(currentAttacker.Stats, target.Stats) == false)
+            {
+                action.ModyfiStatistics(currentAttacker.Stats, target.Stats);
+            }
+            else EventManager.TriggerEvent(CombatEvents.DogdedAction, new CombatEventData(target.Entity.Id));
+            
         }
     }
 

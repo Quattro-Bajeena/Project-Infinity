@@ -51,8 +51,9 @@ MonoBehaviour:
   actionType: 2
   animationName: Combo2
   actionName: Combo Kick
-  power: 15
+  power: 5
   cost: 0
+  description: 
 --- !u!114 &2973043308343107156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisElement: 0
+  thisDamageType: 0
 --- !u!114 &2973043308343107178
 MonoBehaviour:
   m_ObjectHideFlags: 0
