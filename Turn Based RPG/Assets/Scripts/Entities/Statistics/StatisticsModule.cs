@@ -146,9 +146,6 @@ public class StatisticsModule : MonoBehaviour
 
 		value *= 1 + Random.Range(-0.1f, 0.1f);
 		
-
-		// EVADE based on statistic and type of attack
-		//BLOCK based on statistic
 		if(Entity.combat.IsDefending == true)
 		{
 			value *= 0.5f;

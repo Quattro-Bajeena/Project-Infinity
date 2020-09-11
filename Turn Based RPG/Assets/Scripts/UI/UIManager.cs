@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
 
     PlayerControls controls;
 
+    List<DamageTextScript> attackStatusTexts = new List<DamageTextScript>();
     //GAMEPLAY
     //List<GameObject> entities = new List<GameObject>();
     Dictionary<string, GameObject> entities = new Dictionary<string, GameObject>();
@@ -129,6 +130,7 @@ public class UIManager : MonoBehaviour
         EventManager.StartListening(CombatEvents.ActionCompleted, ActionCompletedCleanup);
         EventManager.StartListening(CombatEvents.HealthChange, HealthChanged);
         EventManager.StartListening(CombatEvents.DogdedAction, ActionDoged);
+        EventManager.StartListening(CombatEvents.BlockedAction, ActionBlocked);
 
         //Events from entities
         EventManager.StartListening(CombatEvents.EntityDied, EntityDied);
@@ -147,6 +149,7 @@ public class UIManager : MonoBehaviour
         //Events from entities
         EventManager.StopListening(CombatEvents.EntityDied, EntityDied);
         EventManager.StopListening(CombatEvents.ComboLaunched, ComboLaunched);
+        EventManager.StopListening(CombatEvents.BlockedAction, ActionBlocked);
     }
 
 
@@ -258,21 +261,32 @@ public class UIManager : MonoBehaviour
     //Statistic module -> damage delt event
     void HealthChanged(CombatEventData data)
 	{
-        DisplayDamage(data.targetID, data.healthChange);
+        DisplayAttackStatus(data.targetID, data.healthChange);
 	}
 
     void ActionDoged(CombatEventData data)
 	{
-        DisplayDamage(data.id, 0);
+        DisplayAttackStatus(data.id, 0);
 	}
 
-    void DisplayDamage(string targetID, float damage)
+    void ActionBlocked(CombatEventData data)
+    {
+        GameObject newDamageText = Instantiate(damageTextPrefab);
+        newDamageText.SetActive(true);
+        newDamageText.transform.SetParent(entities[data.id].transform, false);
+        
+        newDamageText.GetComponent<DamageTextScript>().InitializeBlocked();
+        newDamageText.GetComponent<DamageTextScript>().SetPosition(entities[data.id].transform.position);
+    }
+
+    void DisplayAttackStatus(string targetID, float damage)
     {
 
         GameObject newDamageText = Instantiate(damageTextPrefab);
         newDamageText.SetActive(true);
         newDamageText.transform.SetParent(entities[targetID].transform, false);
         newDamageText.GetComponent<DamageTextScript>().Initialize(damage);
+        newDamageText.GetComponent<DamageTextScript>().SetPosition(entities[targetID].transform.position);
 
     }
 

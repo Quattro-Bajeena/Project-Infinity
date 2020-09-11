@@ -8,21 +8,34 @@ using UnityEngine.UI;
 
 public class DamageTextScript : MonoBehaviour
 {
-    public float timeVisible;
-    public float speed;
- 
-    Color textColor;
-    Camera mainCamera;
-
+    [SerializeField] float timeVisible;
+    [SerializeField] float speed;
+    [SerializeField] Vector2 offset;
     
 
-    public Vector2 direction;
-    public Vector2 directionWorld;
 
+
+    Color textColor;
+    Camera mainCamera;
+    TextMeshPro text;
+
+
+    
+   // public Vector2 direction;
+   // public Vector2 directionWorld;
+
+
+    public void SetPosition(Vector3 characterPosition)
+	{
+        Vector3 direction = mainCamera.transform.position - characterPosition;
+
+        transform.position = characterPosition + direction.normalized * offset.x + Vector3.up * offset.y;
+        
+	}
 
     public void Initialize(float amount)
     {
-        TextMeshPro text = GetComponent<TextMeshPro>();
+        text = GetComponent<TextMeshPro>();
 
         if (amount == 0)
         {
@@ -48,14 +61,29 @@ public class DamageTextScript : MonoBehaviour
 
     }
 
-    void Start()
-    {
+    public void InitializeBlocked()
+	{
+        text = GetComponent<TextMeshPro>();
+        text.text = "blocked";
+        text.color = Color.white;
+
+        speed *= 1.05f;
+        offset.y += 0.4f;
+    }
+
+	private void Awake()
+	{
         mainCamera = Camera.main;
+    }
+
+	void Start()
+    {
+        
         Destroy(this.gameObject, timeVisible);
 
-        Vector2 worldPosition = mainCamera.WorldToViewportPoint(transform.position);
-        direction = new Vector2(worldPosition.x, 1);
-        directionWorld = mainCamera.ViewportToWorldPoint(direction);
+        //Vector2 worldPosition = mainCamera.WorldToViewportPoint(transform.position);
+        //direction = new Vector2(worldPosition.x, 1);
+        //directionWorld = mainCamera.ViewportToWorldPoint(direction);
     }
 
     // Update is called once per frame

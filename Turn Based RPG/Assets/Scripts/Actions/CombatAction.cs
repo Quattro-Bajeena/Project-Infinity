@@ -20,6 +20,7 @@ public class CombatAction : MonoBehaviour
 
     public ActionRange actionRange;
     public ActionType actionType;
+    public StatisticsModule.DamageType damageType;
 
     public List<IStatisticModyfiyngAction> StatisticModifiers { get; private set; }
     public List<DamageTypeModifier> DamageTypes { get; private set; }
@@ -61,9 +62,15 @@ public class CombatAction : MonoBehaviour
     public float power;
     public int cost;
 
+    [SerializeField] bool unavoidable = false;
+
     public string description;
 
     //public List<ActionEffect> effects = new List<ActionEffect>();
+
+    //Variables after plugging attacker and target
+    public bool IsDoged { get; private set; }
+    public bool IsBlocked { get; private set; }
 
 
     void Awake()
@@ -150,30 +157,63 @@ public class CombatAction : MonoBehaviour
 
     }
 
+    public void CalculateOutcome(StatisticsModule attackerStats, StatisticsModule targetStats)
+	{
+        IsDoged = DodgedAction(attackerStats, targetStats);
+        IsBlocked = BlockedAction(attackerStats, targetStats);
+	}
+
     public void ModyfiStatistics(StatisticsModule attackerStats, StatisticsModule targetStats)
     {
 
         foreach (IStatisticModyfiyngAction modifier in StatisticModifiers)
         {
-
-            float value = CalculateModifierValue(modifier, attackerStats, targetStats);
+            float value = CalculateBaseModifierValue(modifier, attackerStats, targetStats);
+            if(IsBlocked == true)
+			{
+                value *= 0.75f;
+			}
             modifier.ApplyStatChange(value, targetStats);
         }
     }
-    public bool DodgedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
-    {
-        int diceRoll = UnityEngine.Random.Range(0, 100);
 
-        //base chance for hit 95% - perception
-        if(diceRoll > 80 - attackerStats.atributes[StatisticsModule.Atribute.Perception].Value)
-		{
-            return true;
-		}
+
+    bool DodgedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
+    {
+        if (unavoidable == false)
+        {
+            int diceRoll = UnityEngine.Random.Range(0, 100);
+
+            //base chance for hit 95% - perception
+            if (diceRoll > 80 - attackerStats.atributes[StatisticsModule.Atribute.Perception].Value)
+            {
+                return true;
+            }
+            else return false;
+        }
         else return false;
+        
 
     }
 
-    float CalculateModifierValue(IStatisticModyfiyngAction modifier, StatisticsModule attackerStats, StatisticsModule targetStats)
+    bool BlockedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
+	{
+        if (unavoidable == false)
+        {
+            int diceRoll = UnityEngine.Random.Range(0, 100);
+
+            if (diceRoll > 20f - attackerStats.skills[StatisticsModule.Skill.SelfDefence].Value / 10f)
+            {
+                return true;
+            }
+            else return false;
+        }
+        else return false;
+        
+		
+    }
+
+    float CalculateBaseModifierValue(IStatisticModyfiyngAction modifier, StatisticsModule attackerStats, StatisticsModule targetStats)
     {
         float value = modifier.CalculateStatChange(power, attackerStats, targetStats);
 
