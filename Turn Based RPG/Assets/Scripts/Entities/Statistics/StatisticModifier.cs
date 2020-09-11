@@ -18,7 +18,7 @@ public class StatisticModifier
 		Permament
 	}
 
-
+	public string name;
 	public ValueType valueType;
 	public DurationType durationType;
 	public float value;

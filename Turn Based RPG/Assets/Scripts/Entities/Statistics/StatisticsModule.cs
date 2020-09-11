@@ -2,23 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class StatisticsModule : MonoBehaviour
 {
-	[Range(0, 1000)] 
-	public int maxHealth;
-	public int currentHealth { get; private set; }
+	[SerializeField][Range(0, 1000)] 
+	int maxHealth;
+	public int MaxHealth
+	{
+		get{return maxHealth;}
+	}
+	[SerializeField] int currentHealth;
+	public int CurrentHealth 
+	{
+		get { return currentHealth; }
+	}
 
-	public int maxActionPoints;
-	public int currentActionPoints { get; private set; }
+	[Header("Atributes")]
+	[SerializeField] Statistic force;
+	[Space(5)]
 
-	public Statistic force;
+	[Header("Skills")]
+	[SerializeField] Statistic melee;
+	[SerializeField] Statistic lighstaber;
+	[SerializeField] Statistic composure;
+	[SerializeField] Statistic selfDefence;
+	[SerializeField] Statistic speed;
+	[Space(5)]
 
-	public Statistic melee;
-	public Statistic lighstaber;
-	public Statistic composure;
-	public Statistic selfDefence;
-	public Statistic speed;
+	[Header("Resources")]
+	[SerializeField] ActionResource actionPoints;
+	[SerializeField] ActionResource forcePoints;
 
+
+	[Header("Resistances")]
+	[SerializeField] Statistic forceResistance;
+	[SerializeField] Statistic plasmaResistance;
+	[SerializeField] Statistic physicalResistance;
+	[SerializeField] Statistic fireResistance;
+	[SerializeField] Statistic electricityResistance;
 
 
 	public enum Atribute
@@ -35,12 +56,28 @@ public class StatisticsModule : MonoBehaviour
 		Speed
 	}
 
-	
+	public enum Resource
+	{
+		ActionPoints,
+		ForcePoints,
+		OtherPoints
+	}
+
+	public enum DamageType
+	{
+		Force,
+		Plasma,
+		Physical,
+		Fire,
+		Electricity
+	}
+
+
 	public Dictionary<Atribute, Statistic> atributes = new Dictionary<Atribute, Statistic>();
 	public Dictionary<Skill, Statistic> skills = new Dictionary<Skill, Statistic>();
-
-	[SerializeField]
-	private EntityStatistics baseStats;
+	public Dictionary<DamageType, Statistic> resistances = new Dictionary<DamageType, Statistic>();
+	public Dictionary<Resource, ActionResource> resources = new Dictionary<Resource, ActionResource>();
+	
 
 	public Entity Entity { get; private set; }
 
@@ -49,20 +86,31 @@ public class StatisticsModule : MonoBehaviour
 		Entity = gameObject.GetComponent<Entity>();
 		currentHealth = maxHealth;
 
+		atributes.Add(Atribute.Force, force);
+
 		skills.Add(Skill.Composure, composure);
 		skills.Add(Skill.Melee, melee);
 		skills.Add(Skill.Lightsaber, lighstaber);
 		skills.Add(Skill.SelfDefence, selfDefence);
 		skills.Add(Skill.Speed, speed);
 
-		atributes.Add(Atribute.Force, force);
+		resistances.Add(DamageType.Force, forceResistance);
+		resistances.Add(DamageType.Physical, physicalResistance);
+		resistances.Add(DamageType.Plasma, plasmaResistance);
+		resistances.Add(DamageType.Electricity, electricityResistance);
+		resistances.Add(DamageType.Fire, fireResistance);
+
+		resources.Add(Resource.ActionPoints, actionPoints);
+		resources.Add(Resource.ForcePoints, forcePoints);
+		actionPoints.FullRestore();
+		forcePoints.FullRestore();
 	}
 
 	public bool IsDead
 	{
 		get
 		{
-			return currentHealth <= 0;
+			return CurrentHealth <= 0;
 		}
 	}
 
@@ -78,11 +126,13 @@ public class StatisticsModule : MonoBehaviour
 		value = Mathf.Clamp(value, 1, 9999);
 		//block / evade
 
+		int finalValue = Mathf.RoundToInt(value);
 
-		currentHealth -= Mathf.RoundToInt(value);
+		currentHealth -= finalValue;
 		currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-		EventManager.TriggerEvent(CombatEvents.HealthChange, new CombatEventData(Entity.entityName, -value));
+		Entity.combat.ReceivedDamage(finalValue);
+		EventManager.TriggerEvent(CombatEvents.HealthChange, new CombatEventData(Entity.Name, -finalValue));
 	}
 
 	public void Heal(float value)
@@ -90,19 +140,18 @@ public class StatisticsModule : MonoBehaviour
 		value *= 1 + Random.Range(-0.1f, 0.1f);
 		value = Mathf.Clamp(value, 1, 9999);
 
-		currentHealth += Mathf.RoundToInt(value);
+		int finalValue = Mathf.RoundToInt(value);
+
+		currentHealth += finalValue;
 		currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-		EventManager.TriggerEvent(CombatEvents.HealthChange, new CombatEventData(Entity.entityName, value));
+		EventManager.TriggerEvent(CombatEvents.HealthChange, new CombatEventData(Entity.Name, finalValue));
 	}
+
+
 
 	public void ModifySkillValue(Skill skill, StatisticModifier modifier)
 	{
 		skills[skill].AddModifier(modifier);
 	}
-
-	public EntityStatistics GetStatistics()
-    {
-		return baseStats;
-    }
 }

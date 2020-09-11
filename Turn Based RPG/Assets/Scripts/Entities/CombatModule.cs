@@ -2,16 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
+
 
 public class CombatModule : MonoBehaviour
 {
-    public string EntityName { get; set; }
     public Entity Entity { get; set; }
     public bool IsCharacter { get; set; }
+    public StatisticsModule Stats
+	{
+		get { return Entity.stats; }
+	}
 
     
     enum CombatState
@@ -31,9 +32,10 @@ public class CombatModule : MonoBehaviour
     public Vector3 attackerPosition;
     public Vector3 battlefieldCenter;
 
-    public float actionGauge;
-    public EntityStatistics stats;
+    [SerializeField][Range(0, 1f)] float actionGauge;
+    public float ActionGauge { get { return actionGauge; } }
 
+    public bool IsDefending { get; private set; }
 
     public List<CombatAction> abilities = new List<CombatAction>();
     public Dictionary<BaseAttackType, CombatAction> baseAttacks = new Dictionary<BaseAttackType, CombatAction>();
@@ -49,12 +51,12 @@ public class CombatModule : MonoBehaviour
     
     void Awake()
     {
+
         startPosition = transform.position;
         startRotation = transform.rotation;
         attackerPosition = transform.Find("AttackerPosition").transform.position;
 
         Entity = gameObject.GetComponent<Entity>();
-        EntityName = Entity.entityName;
         
 
         if (GetComponent<CharacterModule>())
@@ -62,9 +64,6 @@ public class CombatModule : MonoBehaviour
             IsCharacter = true;
         }
         else IsCharacter = false;
-
-        //stats = entity.stats.getStatistics();
-        stats = new EntityStatistics(Entity.stats.GetStatistics());
 
     }
     void Start()
@@ -95,21 +94,21 @@ public class CombatModule : MonoBehaviour
     void OnEnable()
     {
         EventManager.StartListening(CombatEvents.SuspensionToggle, SuspensionToggle);
-        EventManager.StartListening(CombatEvents.HealthChange, HealthChange);
         EventManager.StartListening(CombatEvents.ActionCompleted, HealthCheck);
 
         EventManager.StartListening(UIEvents.AttackMenuSelected, JumpOnBattlefield);
         EventManager.StartListening(UIEvents.AttackMenuCanceled, RetreatFromBattlefied);
+        EventManager.StartListening(UIEvents.DefencePicked, DefensePicked);
     }
 
     void OnDisable()
     {
         EventManager.StopListening(CombatEvents.SuspensionToggle, SuspensionToggle);
-        EventManager.StopListening(CombatEvents.HealthChange, HealthChange);
         EventManager.StopListening(CombatEvents.ActionCompleted, HealthCheck);
 
         EventManager.StopListening(UIEvents.AttackMenuSelected, JumpOnBattlefield);
         EventManager.StopListening(UIEvents.AttackMenuCanceled, RetreatFromBattlefied);
+        EventManager.StopListening(UIEvents.DefencePicked, DefensePicked);
     }
 
     
@@ -124,7 +123,7 @@ public class CombatModule : MonoBehaviour
                 UpdateActionGauge();
                 if(actionGauge >= 1f) 
                 {
-                    EventManager.TriggerEvent(CombatEvents.ReadyForAction, new CombatEventData(EntityName));
+                    EventManager.TriggerEvent(CombatEvents.ReadyForAction, new CombatEventData(Entity.Name));
                     state = CombatState.ReadyForAction;
                 }
                 break;
@@ -146,7 +145,8 @@ public class CombatModule : MonoBehaviour
     //Functions directly accesed by Battle Manager
     public void ProcessAction(CombatAction action, Vector3 position)
     {
-        action.UseResourceStat(stats);
+        IsDefending = false;
+        action.UseResourceStat(Entity.stats);
         switch (action.actionType)
         {
             case CombatAction.ActionType.Attack:
@@ -154,7 +154,7 @@ public class CombatModule : MonoBehaviour
                 if(state == CombatState.ReadyForAction)
                 {
                     state = CombatState.PerformingAction;
-                    EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(EntityName));
+                    EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(Entity.Name));
 
                     currentPerformingAction = PerformAttackAction(position);
                     StartCoroutine(currentPerformingAction);
@@ -166,7 +166,7 @@ public class CombatModule : MonoBehaviour
                 if(state == CombatState.ReadyForAction)
                 {
                     state = CombatState.PerformingAction;
-                    EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(EntityName));
+                    EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(Entity.Name));
 
                     currentPerformingAction = PerformAbilityAction(action, position);
                     StartCoroutine(currentPerformingAction);
@@ -186,29 +186,19 @@ public class CombatModule : MonoBehaviour
         }
     }
 
+    //functions accesed by entity modules
 
-    //Functions that respond to events
-
-    void HealthChange(CombatEventData data)
-    {
-        if(data.targetID == EntityName)
+    public void ReceivedDamage(float value)
+	{
+        if(value > 1)
 		{
-            stats.health = Mathf.Clamp(stats.health, 0, stats.maxHealth);
-            stats.mana = Mathf.Clamp(stats.mana, 0, stats.maxMana);
+            Entity.animations.ReceivedDamage();
+		}
+	}
 
-            if (data.healthChange < -1)
-			{
-                Entity.animations.ReceivedDamage();
-            }
+	//Functions that respond to events
 
-            
-        }
-        
-    }
-
-
-
-    void SuspensionToggle(CombatEventData data)
+	void SuspensionToggle(CombatEventData data)
     {
 
         if (state == CombatState.Charging)
@@ -224,11 +214,11 @@ public class CombatModule : MonoBehaviour
     void HealthCheck(CombatEventData data)
     {
 
-        if (stats.health <= 0)
+        if (Entity.stats.CurrentHealth <= 0)
         {
             //Play death animation
             //start courotine
-            EventManager.TriggerEvent(CombatEvents.EntityDied, new CombatEventData(EntityName));
+            EventManager.TriggerEvent(CombatEvents.EntityDied, new CombatEventData(Entity.Name));
         }
     }
 
@@ -236,7 +226,7 @@ public class CombatModule : MonoBehaviour
 
     void JumpOnBattlefield(UIEventData data)
     {
-        if (data.id == EntityName)
+        if (data.id == Entity.Name)
         {
 
 
@@ -247,7 +237,7 @@ public class CombatModule : MonoBehaviour
 
     void RetreatFromBattlefied(UIEventData data)
     {
-        if (data.id == EntityName)
+        if (data.id == Entity.Name)
         {
             StartCoroutine(MoveTowardsTargetCoroutine(startPosition, 10f, 3f));
         }
@@ -271,7 +261,7 @@ public class CombatModule : MonoBehaviour
                 
                 action = combo;
                 CancelAttack();
-                EventManager.TriggerEvent(CombatEvents.ComboLaunched, new CombatEventData(EntityName));
+                EventManager.TriggerEvent(CombatEvents.ComboLaunched, new CombatEventData(Entity.Name));
             }
         }
 
@@ -296,7 +286,7 @@ public class CombatModule : MonoBehaviour
                 while (Entity.animations.IsAnimationPlaying() == true) { yield return null; }
                 
 
-                EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(EntityName, attackQueue.Peek()));
+                EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(Entity.Name, attackQueue.Peek()));
                 attackQueue.Dequeue();
             }
             //no attacks and attacking is canceled
@@ -305,7 +295,7 @@ public class CombatModule : MonoBehaviour
                 break;
             }
             //No action points
-            else if (stats.actionPoints == 0)
+            else if (Entity.stats.resources[StatisticsModule.Resource.ActionPoints].CurrentValue == 0)
             {
                 break;
             }
@@ -343,7 +333,7 @@ public class CombatModule : MonoBehaviour
         yield return null;
         while (Entity.animations.IsAnimationPlaying() == true) { yield return null; }
         
-        EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(EntityName, action));
+        EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(Entity.Name, action));
 
         Entity.animations.AbilityEnded();
         yield return new WaitForSeconds(0.5f);
@@ -363,13 +353,13 @@ public class CombatModule : MonoBehaviour
     void CompleteAction()
     {
         attackCanceled = false;
-        stats.actionPoints = stats.maxActionPoints;
+        Entity.stats.resources[StatisticsModule.Resource.ActionPoints].FullRestore();
 
         actionGauge = 0;
         attackComboList.Clear();
         transform.position = startPosition;
 
-        EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(EntityName));
+        EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(Entity.Name));
         state = CombatState.Charging;
     }
 
@@ -435,8 +425,20 @@ public class CombatModule : MonoBehaviour
 
     void UpdateActionGauge()
     {
-        actionGauge += stats.speed / 100f * Time.deltaTime;
+        actionGauge += Entity.stats.skills[StatisticsModule.Skill.Speed].Value / 100f * Time.deltaTime;
     }
+
+    void DefensePicked(UIEventData data)
+	{
+        if(data.id == Entity.Name)
+		{
+            IsDefending = true;
+            Entity.animations.SetDefend(true);
+            EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(Entity.Name));
+		}
+	}
+
+    
 
     
 

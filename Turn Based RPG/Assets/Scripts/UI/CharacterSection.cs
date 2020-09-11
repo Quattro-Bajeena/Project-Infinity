@@ -33,7 +33,7 @@ public class CharacterSection : MonoBehaviour
     {
         foreach (var panel in characterPanels)
         {
-            panel.Value.updateActionGauge(characters[panel.Key].actionGauge);
+            panel.Value.updateActionGauge(characters[panel.Key].ActionGauge);
         }
     }
 
@@ -41,7 +41,7 @@ public class CharacterSection : MonoBehaviour
     {
         foreach (var panel in characterPanels)
         {
-            panel.Value.updateHealthText(characters[panel.Key].stats.health);
+            panel.Value.updateHealthText(characters[panel.Key].Stats.CurrentHealth);
         }
     }
 
@@ -72,7 +72,7 @@ public class CharacterSection : MonoBehaviour
             newCharacterPanel.SetActive(true);
             CharacterPanel characterPanelScript = newCharacterPanel.GetComponent<CharacterPanel>();
 
-            characterPanelScript.Initialize(null, character.Value.stats.health, character.Value.stats.maxHealth);
+            characterPanelScript.Initialize(null, character.Value.Stats.CurrentHealth, character.Value.Stats.MaxHealth);
             
             newCharacterPanel.transform.SetParent(this.gameObject.transform, false);
 

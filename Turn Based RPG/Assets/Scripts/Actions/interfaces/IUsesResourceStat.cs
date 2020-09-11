@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 public interface IUsesResourceStat
 {
-    void UseResourceStat(EntityStatistics attackerStats, float cost);
-    bool IsEnoughResource(EntityStatistics attackerStats, float cost);
+    void UseResourceStat(StatisticsModule attackerStats, int cost);
+    bool IsEnoughResource(StatisticsModule attackerStats, int cost);
 }
 

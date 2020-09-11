@@ -49,7 +49,7 @@ public class AnimationModule : MonoBehaviour
         animator.SetTrigger("CancelAttack");
 	}
 
-    public void SetBlock(bool blocking)
+    public void SetDefend(bool blocking)
 	{
         animator.SetBool("Blocking", false);
 	}

@@ -53,6 +53,7 @@ MonoBehaviour:
   actionName: Heal Self
   power: 3
   cost: 13
+  description: heaing just yourself? what an asshole
 --- !u!114 &4180410392118749082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisElement: 0
+  thisDamageType: 0
 --- !u!114 &4180410392118749079
 MonoBehaviour:
   m_ObjectHideFlags: 0

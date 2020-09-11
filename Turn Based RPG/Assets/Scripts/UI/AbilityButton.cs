@@ -67,8 +67,10 @@ public class AbilityButton : MonoBehaviour
 
     public void ButtonHighlited(UIEventData data)
     {
+        
         if(data.buttonSelected == this.gameObject)
         {
+            abilityPanel.HighlightedButtonChanged(ability);
             nameText.color *= highlightColor;
             costText.color *= highlightColor;
         }

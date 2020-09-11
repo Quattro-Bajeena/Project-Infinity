@@ -59,9 +59,9 @@ public class CombatAction : MonoBehaviour
 
     public string actionName;
     public float power;
-    public float cost;
-    
+    public int cost;
 
+    public string description;
 
     //public List<ActionEffect> effects = new List<ActionEffect>();
 
@@ -105,7 +105,7 @@ public class CombatAction : MonoBehaviour
         }
     }
     
-    public void UseResourceStat(EntityStatistics attackerStats)
+    public void UseResourceStat(StatisticsModule attackerStats)
     {
         if(ResourceType != null)
         {
@@ -114,7 +114,7 @@ public class CombatAction : MonoBehaviour
         
     }
 
-    public bool IsEnoughResource(EntityStatistics attackerStats)
+    public bool IsEnoughResource(StatisticsModule attackerStats)
     {
         if (ResourceType != null)
         {
@@ -150,7 +150,7 @@ public class CombatAction : MonoBehaviour
 
     }
 
-    public void ModyfiStatistics(EntityStatistics attackerStats, EntityStatistics targetStats)
+    public void ModyfiStatistics(StatisticsModule attackerStats, StatisticsModule targetStats)
     {
         foreach (IStatisticModyfiyngAction modifier in StatisticModifiers)
         {
@@ -162,7 +162,7 @@ public class CombatAction : MonoBehaviour
     }
 
     //FUNCTION OBSOLETE EVENT HEALTH CHANGE WILL BE CALLED INSIDE STATISTIC MODULE
-    public float GetHealthChange(EntityStatistics attackerStats, EntityStatistics targetStats)
+    public float GetHealthChange(StatisticsModule attackerStats, StatisticsModule targetStats)
     {
         float modifiedHealthValue = 0;
 
@@ -177,7 +177,7 @@ public class CombatAction : MonoBehaviour
         return modifiedHealthValue;
     }
 
-    float CalculateModifierValue(IStatisticModyfiyngAction modifier, EntityStatistics attackerStats, EntityStatistics targetStats)
+    float CalculateModifierValue(IStatisticModyfiyngAction modifier, StatisticsModule attackerStats, StatisticsModule targetStats)
     {
         float value = modifier.CalculateStatChange(power, attackerStats, targetStats);
 

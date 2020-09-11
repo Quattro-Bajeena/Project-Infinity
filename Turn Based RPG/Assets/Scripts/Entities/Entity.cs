@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public string entityName;
+    public string Name
+	{
+		get { return name; }
+	}
+    [SerializeField] new string name;
 
     public StatisticsModule stats;
     public CombatModule combat;
@@ -16,6 +20,9 @@ public class Entity : MonoBehaviour
         stats = GetComponent<StatisticsModule>();
         combat = GetComponent<CombatModule>();
         animations = GetComponent<AnimationModule>();
+
+        if (name == "")
+            name = gameObject.name;
     }
 
     

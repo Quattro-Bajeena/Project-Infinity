@@ -51,9 +51,10 @@ MonoBehaviour:
   actionRange: 1
   actionType: 0
   animationName: OffensiveAbilityRange2
-  actionName: Wind Magic
+  actionName: Wind
   power: 1
   cost: 5
+  description: big freaking gust of wind dawg
 --- !u!114 &8285992919270015221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisElement: 3
+  thisDamageType: 0
 --- !u!114 &8285992919270015218
 MonoBehaviour:
   m_ObjectHideFlags: 0

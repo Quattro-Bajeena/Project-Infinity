@@ -27,7 +27,7 @@ public class AttackBar : MonoBehaviour
     public void changeActiveCharacter(CombatModule newCharacter)
     {
         currentCharacter = newCharacter;
-        slider.value = currentCharacter.stats.actionPoints / currentCharacter.stats.maxActionPoints;
+        slider.value = currentCharacter.Stats.resources[StatisticsModule.Resource.ActionPoints].CurrentPercentage;
     }
 
     public void ResetActiveCharacter()
@@ -38,7 +38,7 @@ public class AttackBar : MonoBehaviour
 
     void updateAttackBar(UIEventData data)
     {
-        slider.value = currentCharacter.stats.actionPoints / currentCharacter.stats.maxActionPoints;
+        slider.value = currentCharacter.Stats.resources[StatisticsModule.Resource.ActionPoints].CurrentPercentage;
     }
 
 }

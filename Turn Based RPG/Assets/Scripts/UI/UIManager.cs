@@ -89,15 +89,15 @@ public class UIManager : MonoBehaviour
 
         foreach (var entity in FindObjectsOfType<Entity>())
         {
-            entities.Add( entity.gameObject.GetComponent<CombatModule>().EntityName, entity.gameObject);
+            entities.Add( entity.gameObject.GetComponent<CombatModule>().Entity.Name, entity.gameObject);
             CombatModule entityCombat = entity.GetComponent<CombatModule>();
             if (entityCombat.IsCharacter == true)
             {
-                characters.Add(entityCombat.EntityName, entityCombat);
+                characters.Add(entityCombat.Entity.Name, entityCombat);
             }
             else
             {
-                enemies.Add(entityCombat.EntityName, entity.gameObject);
+                enemies.Add(entityCombat.Entity.Name, entity.gameObject);
             }
         }
 
@@ -181,7 +181,7 @@ public class UIManager : MonoBehaviour
         DisableControls();
         foreach (GameObject targetGo in targets)
         {
-            currentActionTargets.Add(targetGo.GetComponent<CombatModule>().EntityName);
+            currentActionTargets.Add(targetGo.GetComponent<CombatModule>().Entity.Name);
         }
         
         //Switch:
@@ -238,7 +238,7 @@ public class UIManager : MonoBehaviour
         {
             
             CombatAction attack = characters[currentCharacter].baseAttacks[type];
-            if (attack.IsEnoughResource(characters[currentCharacter].stats))
+            if (attack.IsEnoughResource(characters[currentCharacter].Stats))
             {
                 EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(currentCharacter, currentActionTargets, attack));
                 EventManager.TriggerEvent(UIEvents.AttackLaunched, new UIEventData(attack));
@@ -306,6 +306,17 @@ public class UIManager : MonoBehaviour
         OpenCharacterAbilityPanel(new List<CombatAction>(characters[currentCharacter].abilities));
     }
 
+    public void OpenItemPanel()
+    {
+        currentUIMove = UIMove.Item;
+    }
+
+    public void Defend()
+	{
+        currentUIMove = UIMove.Defend;
+        EventManager.TriggerEvent(UIEvents.DefencePicked, new UIEventData(currentCharacter));
+	}
+
     void OpenAttackPanel()
     {
         SetAttackControles(true);
@@ -313,24 +324,21 @@ public class UIManager : MonoBehaviour
     }
     
     // Opening Panels With Data they need
-    public void OpenTargetPanel(List<GameObject> entities, CombatAction.ActionRange range)
+    void OpenTargetPanel(List<GameObject> entities, CombatAction.ActionRange range)
     {
         targetPanel.GetComponent<TargetSelectPanel>().Create(entities, range);
         OpenPanel(targetPanel);
 
     }
 
-    public void OpenCharacterAbilityPanel(List<CombatAction> abilities)
+    void OpenCharacterAbilityPanel(List<CombatAction> abilities)
     {
         
-        abilityPanel.GetComponent<AbilityPanel>().Create(characters[currentCharacter].stats ,abilities);
+        abilityPanel.GetComponent<AbilityPanel>().Create(characters[currentCharacter].Stats ,abilities);
         OpenPanel(abilityPanel);
     }
 
-    public void OpenItemPanel()
-    {
-        currentUIMove = UIMove.Item;
-    }
+    
 
     void ComboLaunched(CombatEventData data)
     {

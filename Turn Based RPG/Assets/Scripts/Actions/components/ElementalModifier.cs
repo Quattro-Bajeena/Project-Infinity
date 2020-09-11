@@ -5,19 +5,10 @@ using UnityEngine;
 public class ElementalModifier : MonoBehaviour
 {
 
-    public enum Element
-    {
-        Fire,
-        Water,
-        Earth,
-        Wind,
-        Light,
-        Dark
-    }
 
-    public Element thisElement;
-    public float CalculateElementalModifier(float statChange, EntityStatistics targetStatistics)
+    public StatisticsModule.DamageType thisDamageType;
+    public float CalculateElementalModifier(float statChange, StatisticsModule targetStatistics)
     {
-        return statChange * (1 - targetStatistics.resistances[thisElement]);
+        return statChange * (100f - targetStatistics.resistances[thisDamageType].Value)/100f;
     }
 }

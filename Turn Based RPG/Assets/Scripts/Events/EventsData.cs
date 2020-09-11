@@ -65,7 +65,8 @@ public enum UIEvents
     AttackCanceled, //id
     SelectedButtonChanged, //buttonSelected
     AttackMenuSelected, //id
-    AttackMenuCanceled
+    AttackMenuCanceled,
+    DefencePicked //id
 
 }
 public struct UIEventData

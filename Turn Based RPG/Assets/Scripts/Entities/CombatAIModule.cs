@@ -53,27 +53,34 @@ public class CombatAIModule : MonoBehaviour
 
     void LaunchAbility(CombatEventData data)
     {
-        if(data.id == entity.entityName)
+        if(data.id == entity.Name)
         {
             DecideGoals();
             PickAction();
 
+			
             int index = Random.Range(0, entity.combat.abilities.Count - 1);
 
             CombatAction ability = entity.combat.abilities[index];
 
-            List<string> potentialTargets = ability.GetTargets(entity.entityName, false, entitiesInBattle);
+            if (ability.IsEnoughResource(entity.stats))
+            {
+                List<string> potentialTargets = ability.GetTargets(entity.Name, false, entitiesInBattle);
 
-            if(ability.actionRange == CombatAction.ActionRange.Single)
-			{
-                index = Random.Range(0, potentialTargets.Count - 1);
-                string target = potentialTargets[index];
-                EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.entityName, new List<string>() { target }, ability));
+                if (ability.actionRange == CombatAction.ActionRange.Single)
+                {
+                    index = Random.Range(0, potentialTargets.Count - 1);
+                    string target = potentialTargets[index];
+                    EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.Name, new List<string>() { target }, ability));
+                }
+                else if (ability.actionRange == CombatAction.ActionRange.All)
+                {
+                    EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.Name, new List<string>(potentialTargets), ability));
+                }
             }
-            else if(ability.actionRange == CombatAction.ActionRange.All)
-			{
-                EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.entityName, new List<string>(potentialTargets), ability));
-            }
+            else EventManager.TriggerEvent(CombatEvents.ActionCompleted, new CombatEventData(entity.Name));
+
+            
             
 
 

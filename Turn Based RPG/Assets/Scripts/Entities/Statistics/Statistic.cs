@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Statistic
 {
-    [SerializeField] int baseValue;
-	List<StatisticModifier> modifiers;
+    [SerializeField] [Range(0, 100)]int baseValue;
+	[SerializeField] List<StatisticModifier> modifiers = new List<StatisticModifier>();
 
     public int Value
 	{
