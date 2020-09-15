@@ -10,9 +10,12 @@ public class AnimationModule : MonoBehaviour
     [SerializeField] bool animatiorIsTransitioning = false;
     [SerializeField] bool animationPlaying;
 
+    GameObject lightsaber;
     void Awake()
     {
         animator = GetComponent<Animator>();
+        lightsaber = transform.Find("Lightsaber").gameObject;
+
     }
 
 	private void Start()
@@ -32,6 +35,11 @@ public class AnimationModule : MonoBehaviour
         }
         else animationPlaying = true;
     }
+
+    void ActivateLightsaber()
+	{
+        StartCoroutine(ActivateLightsaberCoroutine(lightsaber.GetComponent<SkinnedMeshRenderer>()));
+	}
 
     public void SetCombatState(bool combat)
 	{
@@ -105,5 +113,17 @@ public class AnimationModule : MonoBehaviour
     public bool IsAnimationPlaying(string animationName)
     {
         return animator.GetCurrentAnimatorStateInfo(0).IsName(animationName);
+    }
+
+    IEnumerator ActivateLightsaberCoroutine(SkinnedMeshRenderer lightsaberMesh)
+	{
+        float value = lightsaberMesh.GetBlendShapeWeight(0);
+        while(value > 0)
+		{
+            value -= 250 * Time.deltaTime;
+            lightsaberMesh.SetBlendShapeWeight(0, value);
+            yield return null;
+        }
+        lightsaberMesh.SetBlendShapeWeight(0, 0);
     }
 }
