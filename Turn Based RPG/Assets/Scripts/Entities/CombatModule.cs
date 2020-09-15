@@ -327,11 +327,8 @@ public class CombatModule : MonoBehaviour
     {
         if (action.IsTargetPositionStationary == false)
         {
-
             Entity.movement.MoveToTarget(targetPosition);
             while (Entity.movement.IsMoving == true) { yield return null; }
-
-
         }
 
 
@@ -346,10 +343,8 @@ public class CombatModule : MonoBehaviour
 
         if (action.IsTargetPositionStationary == false)
         {
-
             Entity.movement.ReturnToDefault();
             while (Entity.movement.IsMoving == true) { yield return null; }
-
         }
 
         CompleteAction();
