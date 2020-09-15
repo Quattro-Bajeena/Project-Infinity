@@ -18,9 +18,20 @@ public class CombatAction : MonoBehaviour
         All
     }
 
+    
+
     public ActionRange actionRange;
     public ActionType actionType;
     public StatisticsModule.DamageType damageType;
+    [SerializeField] bool unavoidable = false;
+
+    public string animationName;
+
+    public string actionName;
+    public float power;
+    public int cost;
+
+    public string description;
 
     public List<IStatisticModyfiyngAction> StatisticModifiers { get; private set; }
     public List<DamageTypeModifier> DamageTypes { get; private set; }
@@ -30,14 +41,17 @@ public class CombatAction : MonoBehaviour
 
     BaseAttack baseAttack;
     AbilityMovePosition movePosition;
+    
+
+
 
     public bool IsTargetPositionStationary
 	{
 		get
 		{
-            if (movePosition == false)
+            if (movePosition == null)
                 return true;
-            else return movePosition.movePosition == AbilityMovePosition.TargetMovePosition.StartingPosition;
+            else return movePosition.position == AbilityMovePosition.Position.StartingPosition;
         }
 	}
 
@@ -56,15 +70,7 @@ public class CombatAction : MonoBehaviour
         }
     }
 
-    public string animationName;
-
-    public string actionName;
-    public float power;
-    public int cost;
-
-    [SerializeField] bool unavoidable = false;
-
-    public string description;
+    
 
     //public List<ActionEffect> effects = new List<ActionEffect>();
 
@@ -89,7 +95,10 @@ public class CombatAction : MonoBehaviour
 
         if (actionType == ActionType.Attack || actionType == ActionType.Combo)
         {
-            gameObject.AddComponent<TargetEnemies>();
+            if(TargetType == null)
+                gameObject.AddComponent<TargetEnemies>();
+            if(movePosition == null)
+                gameObject.AddComponent<AbilityMovePosition>().position = AbilityMovePosition.Position.TargetPosition;
             TargetType = GetComponent<ITargetType>();
             actionRange = ActionRange.Single;
 
@@ -137,18 +146,18 @@ public class CombatAction : MonoBehaviour
 
         else
 		{
-            if (movePosition == false)
+            if (movePosition == null)
                 return attackerPosition;
             
-			switch (movePosition.movePosition)
+			switch (movePosition.position)
 			{
-                case AbilityMovePosition.TargetMovePosition.BattlefieldCenter:
+                case AbilityMovePosition.Position.BattlefieldCenter:
                     return battlefiedCenterPosition;
 
-                case AbilityMovePosition.TargetMovePosition.StartingPosition:
+                case AbilityMovePosition.Position.StartingPosition:
                     return attackerPosition;
 
-                case AbilityMovePosition.TargetMovePosition.TargetPosition:
+                case AbilityMovePosition.Position.TargetPosition:
                     return targetPosition;
             }
 		}
@@ -180,7 +189,7 @@ public class CombatAction : MonoBehaviour
 
     bool DodgedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
     {
-        if (unavoidable == false)
+        if (unavoidable == false || damageType == StatisticsModule.DamageType.Force)
         {
             int diceRoll = UnityEngine.Random.Range(0, 100);
 
@@ -198,7 +207,7 @@ public class CombatAction : MonoBehaviour
 
     bool BlockedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
 	{
-        if (unavoidable == false)
+        if (unavoidable == false || damageType == StatisticsModule.DamageType.Blaster)
         {
             int diceRoll = UnityEngine.Random.Range(0, 100);
 

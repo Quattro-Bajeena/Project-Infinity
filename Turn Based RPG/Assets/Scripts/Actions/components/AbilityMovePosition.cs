@@ -1,15 +1,17 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AbilityMovePosition : MonoBehaviour
 {
-    public enum TargetMovePosition
-	{
-		StartingPosition,
-		BattlefieldCenter,
-		TargetPosition
-	}
+    public enum Position
+    {
+        StartingPosition,
+        BattlefieldCenter,
+        TargetPosition
+    }
 
-	public TargetMovePosition movePosition;
+    public Position position;
 }
+

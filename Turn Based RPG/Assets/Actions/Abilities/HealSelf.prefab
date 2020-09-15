@@ -49,10 +49,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 0
   actionType: 0
+  damageType: 3
   animationName: DefensiveAbility1
   actionName: Heal Self
   power: 3
   cost: 13
+  unavoidable: 1
   description: heaing just yourself? what an asshole
 --- !u!114 &4180410392118749082
 MonoBehaviour:

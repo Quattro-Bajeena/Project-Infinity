@@ -50,6 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 0
   actionType: 0
+  damageType: 3
+  unavoidable: 0
   animationName: OffensiveAbilityRange1
   actionName: Fire Ball
   power: 2
@@ -113,7 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7039786119953707675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61af7a81455c1e945bdafae69f1f08fd, type: 3}
+  m_Script: {fileID: 11500000, guid: d10474f3bee9b1c4a9eb8387979cb1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePosition: 0
+  position: 0
