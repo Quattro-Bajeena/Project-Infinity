@@ -1,0 +1,1142 @@
+fileFormatVersion: 2
+guid: 73b4f4ed981875245b01f0df53a4833f
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      74: -5798763935121213388
+    second: ClonetrooperRig|Idle
+  - first:
+      74: -8586870659644686667
+    second: ClonetrooperRig|LightAttack
+  - first:
+      74: -5909907156790880941
+    second: ClonetrooperRig|Block
+  - first:
+      74: 524462116381604000
+    second: ClonetrooperRig|Defence
+  - first:
+      74: -3472376498034453887
+    second: ClonetrooperRig|DefensiveAbility1
+  - first:
+      74: 2993895163811948474
+    second: ClonetrooperRig|Doge
+  - first:
+      74: 6744202154102668250
+    second: ClonetrooperRig|ClonetrooperLib
+  - first:
+      74: -7357662741463678178
+    second: ClonetrooperRig|Introduction
+  - first:
+      74: 6250567926257334939
+    second: ClonetrooperRig|MediumAttack
+  - first:
+      74: -1733257370214965805
+    second: ClonetrooperRig|MediumAttack1
+  - first:
+      74: -3481050912944834325
+    second: ClonetrooperRig|MediumAttack2
+  - first:
+      74: 3169388255376677657
+    second: ClonetrooperRig|OffensiveAbilityRange1
+  - first:
+      74: 2500217942695936991
+    second: ClonetrooperRig|StrongAttack
+  - first:
+      74: 1729322476695936526
+    second: ClonetrooperRig|TakeDamage
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TextureMaterial
+    second: {fileID: 2100000, guid: eab6501761216804c9c0d470b788b191, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'ClonetrooperRig|Block' has import animation
+      warnings that might lower retargeting quality:\n\t'DEF-thigh.L' has scale animation
+      that will be discarded.\n\t'DEF-shin.L' has scale animation that will be discarded.\n\t'DEF-foot.L'
+      has scale animation that will be discarded.\n\t'DEF-thigh.R' has scale animation
+      that will be discarded.\n\t'DEF-shin.R' has scale animation that will be discarded.\n\t'DEF-upper_arm.L'
+      has scale animation that will be discarded.\n\t'DEF-forearm.L' has scale animation
+      that will be discarded.\n\t'DEF-hand.L' has scale animation that will be discarded.\n\t'DEF-upper_arm.R'
+      has scale animation that will be discarded.\n\t'DEF-forearm.R' has scale animation
+      that will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\t'DEF-spine.004'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'ClonetrooperRig|Defence' has import animation warnings that might lower retargeting
+      quality:\n\t'DEF-thigh.L' has scale animation that will be discarded.\n\t'DEF-shin.L'
+      has scale animation that will be discarded.\n\t'DEF-foot.L' has scale animation
+      that will be discarded.\n\t'DEF-thigh.R' has scale animation that will be discarded.\n\t'DEF-shin.R'
+      has scale animation that will be discarded.\n\t'DEF-foot.R' has scale animation
+      that will be discarded.\n\t'DEF-upper_arm.L' has scale animation that will
+      be discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-forearm.R' has scale animation that
+      will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\nClip
+      'ClonetrooperRig|DefensiveAbility1' has import animation warnings that might
+      lower retargeting quality:\n\t'DEF-upper_arm.L' has scale animation that will
+      be discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-forearm.R' has scale animation that
+      will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\t'DEF-spine.004'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'ClonetrooperRig|Doge' has import animation warnings that might lower retargeting
+      quality:\n\t'DEF-thigh.L' has scale animation that will be discarded.\n\t'DEF-shin.L'
+      has scale animation that will be discarded.\n\t'DEF-foot.L' has scale animation
+      that will be discarded.\n\t'DEF-thigh.R' has scale animation that will be discarded.\n\t'DEF-shin.R'
+      has scale animation that will be discarded.\n\t'DEF-foot.R' has scale animation
+      that will be discarded.\n\t'DEF-spine.001' has scale animation that will be
+      discarded.\n\t'DEF-spine.002' has scale animation that will be discarded.\n\t'DEF-spine.003'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.L' has scale
+      animation that will be discarded.\n\t'DEF-forearm.L' has scale animation that
+      will be discarded.\n\t'DEF-hand.L' has scale animation that will be discarded.\n\t'DEF-upper_arm.R'
+      has scale animation that will be discarded.\n\t'DEF-forearm.R' has scale animation
+      that will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\t'DEF-spine.004'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'ClonetrooperRig|Idle' has import animation warnings that might lower retargeting
+      quality:\n\t'DEF-thigh.L' has scale animation that will be discarded.\n\t'DEF-shin.L'
+      has scale animation that will be discarded.\n\t'DEF-foot.L' has scale animation
+      that will be discarded.\n\t'DEF-thigh.R' has scale animation that will be discarded.\n\t'DEF-shin.R'
+      has scale animation that will be discarded.\n\t'DEF-foot.R' has scale animation
+      that will be discarded.\n\t'DEF-upper_arm.L' has scale animation that will
+      be discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-forearm.R' has scale animation that
+      will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\t'DEF-spine.004'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'ClonetrooperRig|ClonetrooperLib' has import animation warnings that might
+      lower retargeting quality:\n\t'DEF-upper_arm.L' has scale animation that will
+      be discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-forearm.R' has scale animation that
+      will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\nClip
+      'ClonetrooperRig|Introduction' has import animation warnings that might lower
+      retargeting quality:\n\t'DEF-thigh.L' has scale animation that will be discarded.\n\t'DEF-shin.L'
+      has scale animation that will be discarded.\n\t'DEF-foot.L' has scale animation
+      that will be discarded.\n\t'DEF-thigh.R' has scale animation that will be discarded.\n\t'DEF-shin.R'
+      has scale animation that will be discarded.\n\t'DEF-foot.R' has scale animation
+      that will be discarded.\n\t'DEF-upper_arm.L' has scale animation that will
+      be discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-forearm.R' has scale animation that
+      will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\nClip
+      'ClonetrooperRig|LightAttack' has import animation warnings that might lower
+      retargeting quality:\n\t'DEF-upper_arm.L' has scale animation that will be
+      discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-hand.R' has scale animation that
+      will be discarded.\n\t'DEF-spine.004' is inbetween humanoid transforms and
+      has rotation animation that will be discarded.\n\nClip 'ClonetrooperRig|MediumAttack'
+      has import animation warnings that might lower retargeting quality:\n\t'DEF-thigh.L'
+      has scale animation that will be discarded.\n\t'DEF-shin.L' has scale animation
+      that will be discarded.\n\t'DEF-foot.L' has scale animation that will be discarded.\n\t'DEF-thigh.R'
+      has scale animation that will be discarded.\n\t'DEF-shin.R' has scale animation
+      that will be discarded.\n\t'DEF-foot.R' has scale animation that will be discarded.\n\t'DEF-spine.001'
+      has scale animation that will be discarded.\n\t'DEF-spine.002' has scale animation
+      that will be discarded.\n\t'DEF-spine.003' has scale animation that will be
+      discarded.\n\t'DEF-upper_arm.L' has scale animation that will be discarded.\n\t'DEF-forearm.L'
+      has scale animation that will be discarded.\n\t'DEF-hand.L' has scale animation
+      that will be discarded.\n\t'DEF-upper_arm.R' has scale animation that will
+      be discarded.\n\t'DEF-forearm.R' has scale animation that will be discarded.\n\t'DEF-hand.R'
+      has scale animation that will be discarded.\n\t'DEF-spine.004' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'ClonetrooperRig|MediumAttack1' has import animation warnings that might lower
+      retargeting quality:\n\t'DEF-thigh.L' has scale animation that will be discarded.\n\t'DEF-shin.L'
+      has scale animation that will be discarded.\n\t'DEF-foot.L' has scale animation
+      that will be discarded.\n\t'DEF-thigh.R' has scale animation that will be discarded.\n\t'DEF-shin.R'
+      has scale animation that will be discarded.\n\t'DEF-foot.R' has scale animation
+      that will be discarded.\n\t'DEF-spine.001' has scale animation that will be
+      discarded.\n\t'DEF-spine.002' has scale animation that will be discarded.\n\t'DEF-spine.003'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.L' has scale
+      animation that will be discarded.\n\t'DEF-forearm.L' has scale animation that
+      will be discarded.\n\t'DEF-hand.L' has scale animation that will be discarded.\n\t'DEF-upper_arm.R'
+      has scale animation that will be discarded.\n\t'DEF-forearm.R' has scale animation
+      that will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\t'DEF-spine.004'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'ClonetrooperRig|MediumAttack2' has import animation warnings that might lower
+      retargeting quality:\n\t'DEF-thigh.L' has scale animation that will be discarded.\n\t'DEF-spine.001'
+      has scale animation that will be discarded.\n\t'DEF-spine.002' has scale animation
+      that will be discarded.\n\t'DEF-spine.003' has scale animation that will be
+      discarded.\n\t'DEF-upper_arm.L' has scale animation that will be discarded.\n\t'DEF-forearm.L'
+      has scale animation that will be discarded.\n\t'DEF-hand.L' has scale animation
+      that will be discarded.\n\t'DEF-upper_arm.R' has scale animation that will
+      be discarded.\n\t'DEF-forearm.R' has scale animation that will be discarded.\n\t'DEF-hand.R'
+      has scale animation that will be discarded.\n\t'DEF-spine.004' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'ClonetrooperRig|OffensiveAbilityRange1' has import animation warnings that
+      might lower retargeting quality:\n\t'DEF-thigh.L' has scale animation that
+      will be discarded.\n\t'DEF-shin.L' has scale animation that will be discarded.\n\t'DEF-foot.L'
+      has scale animation that will be discarded.\n\t'DEF-shin.R' has scale animation
+      that will be discarded.\n\t'DEF-upper_arm.L' has scale animation that will
+      be discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-forearm.R' has scale animation that
+      will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\nClip
+      'ClonetrooperRig|StrongAttack' has import animation warnings that might lower
+      retargeting quality:\n\t'DEF-thigh.L' has scale animation that will be discarded.\n\t'DEF-shin.L'
+      has scale animation that will be discarded.\n\t'DEF-foot.L' has scale animation
+      that will be discarded.\n\t'DEF-thigh.R' has scale animation that will be discarded.\n\t'DEF-shin.R'
+      has scale animation that will be discarded.\n\t'DEF-foot.R' has scale animation
+      that will be discarded.\n\t'DEF-upper_arm.L' has scale animation that will
+      be discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-forearm.R' has scale animation that
+      will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\t'DEF-spine.004'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n\nClip
+      'ClonetrooperRig|TakeDamage' has import animation warnings that might lower
+      retargeting quality:\n\t'DEF-thigh.L' has scale animation that will be discarded.\n\t'DEF-shin.L'
+      has scale animation that will be discarded.\n\t'DEF-foot.L' has scale animation
+      that will be discarded.\n\t'DEF-thigh.R' has scale animation that will be discarded.\n\t'DEF-shin.R'
+      has scale animation that will be discarded.\n\t'DEF-foot.R' has scale animation
+      that will be discarded.\n\t'DEF-upper_arm.L' has scale animation that will
+      be discarded.\n\t'DEF-forearm.L' has scale animation that will be discarded.\n\t'DEF-hand.L'
+      has scale animation that will be discarded.\n\t'DEF-upper_arm.R' has scale
+      animation that will be discarded.\n\t'DEF-forearm.R' has scale animation that
+      will be discarded.\n\t'DEF-hand.R' has scale animation that will be discarded.\n\t'DEF-spine.004'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'ClonetrooperRig|Block':\n\tLeftLowerArm
+      average position error 1.6 mm and maximum position error 2.2 mm at time 1:12
+      (75.0%) Frame 36\n\tLeftHand average position error 2.0 mm and maximum position
+      error 2.7 mm at time 1: 5 (60.4%) Frame 29\n\tRightLowerArm average position
+      error 0.6 mm and maximum position error 1.2 mm at time 1: 2 (54.2%) Frame 26\n\tRightHand
+      average position error 1.2 mm and maximum position error 2.2 mm at time 0:12
+      (25.0%) Frame 12\n\nRetargeting quality report for clip 'ClonetrooperRig|Defence':\n\tLeftFoot
+      average position error 0.6 mm and maximum position error 1.1 mm at time 0:20
+      (100.0%) Frame 20\n\tRightLowerLeg average position error 0.7 mm and maximum
+      position error 1.0 mm at time 0:20 (100.0%) Frame 20\n\tRightFoot average position
+      error 1.2 mm and maximum position error 1.6 mm at time 0:20 (100.0%) Frame
+      20\n\tLeftLowerArm average position error 1.3 mm and maximum position error
+      2.4 mm at time 0:20 (100.0%) Frame 20\n\tLeftHand average position error 1.4
+      mm and maximum position error 2.0 mm at time 0:12 (60.0%) Frame 12\n\tRightHand
+      average position error 0.9 mm and maximum position error 1.3 mm at time 0:20
+      (100.0%) Frame 20\n\nRetargeting quality report for clip 'ClonetrooperRig|DefensiveAbility1':\n\tRightLowerArm
+      average position error 1.3 mm and maximum position error 2.4 mm at time 1:
+      7 (51.7%) Frame 31\n\tRightHand average position error 2.6 mm and maximum position
+      error 4.6 mm at time 1: 7 (51.7%) Frame 31\n\nRetargeting quality report for
+      clip 'ClonetrooperRig|Doge':\n\tRightFoot average position error 1.1 mm and
+      maximum position error 1.9 mm at time 0:19 (51.4%) Frame 19\n\tLeftUpperArm
+      average position error 2.7 mm and maximum position error 6.8 mm at time 0:22
+      (59.5%) Frame 22\n\tLeftLowerArm average position error 3.4 mm and maximum
+      position error 7.5 mm at time 0:22 (59.5%) Frame 22\n\tLeftHand average position
+      error 4.1 mm and maximum position error 10.7 mm at time 0:22 (59.5%) Frame
+      22\n\tRightUpperArm average position error 2.7 mm and maximum position error
+      6.8 mm at time 0:22 (59.5%) Frame 22\n\tRightLowerArm average position error
+      2.0 mm and maximum position error 4.8 mm at time 0:23 (62.2%) Frame 23\n\tRightHand
+      average position error 3.0 mm and maximum position error 7.2 mm at time 0:22
+      (59.5%) Frame 22\n\tHead average position error 3.1 mm and maximum position
+      error 7.8 mm at time 0:22 (59.5%) Frame 22\n\nRetargeting quality report for
+      clip 'ClonetrooperRig|Idle':\n\tLeftLowerLeg average position error 0.9 mm
+      and maximum position error 1.4 mm at time 1:17 (67.2%) Frame 41\n\tLeftFoot
+      average position error 1.7 mm and maximum position error 2.7 mm at time 1:17
+      (67.2%) Frame 41\n\tRightLowerLeg average position error 1.0 mm and maximum
+      position error 1.6 mm at time 1:15 (63.9%) Frame 39\n\tRightFoot average position
+      error 1.9 mm and maximum position error 3.1 mm at time 1:15 (63.9%) Frame 39\n\tLeftLowerArm
+      average position error 0.9 mm and maximum position error 2.5 mm at time 2:
+      2 (82.0%) Frame 50\n\tLeftHand average position error 2.4 mm and maximum position
+      error 12.3 mm at time 2: 5 (86.9%) Frame 53\n\nRetargeting quality report for
+      clip 'ClonetrooperRig|ClonetrooperLib':\n\tLeftLowerArm average position error
+      1.7 mm and maximum position error 3.2 mm at time 0: 0 (0.0%) Frame 0\n\tLeftHand
+      average position error 1.9 mm and maximum position error 3.2 mm at time 0:
+      0 (0.0%) Frame 0\n\nRetargeting quality report for clip 'ClonetrooperRig|Introduction':\n\tLeftLowerLeg
+      average position error 0.5 mm and maximum position error 1.3 mm at time 0:11
+      (22.0%) Frame 11\n\tLeftFoot average position error 1.1 mm and maximum position
+      error 2.9 mm at time 0:11 (22.0%) Frame 11\n\tRightLowerLeg average position
+      error 0.6 mm and maximum position error 1.6 mm at time 0:15 (30.0%) Frame 15\n\tRightFoot
+      average position error 1.1 mm and maximum position error 3.5 mm at time 0:15
+      (30.0%) Frame 15\n\tLeftLowerArm average position error 0.9 mm and maximum
+      position error 1.7 mm at time 0:23 (46.0%) Frame 23\n\tLeftHand average position
+      error 1.3 mm and maximum position error 3.4 mm at time 0: 0 (0.0%) Frame 0\n\tRightLowerArm
+      average position error 0.7 mm and maximum position error 2.1 mm at time 0:
+      0 (0.0%) Frame 0\n\tRightHand average position error 1.7 mm and maximum position
+      error 3.9 mm at time 0: 0 (0.0%) Frame 0\n\nRetargeting quality report for
+      clip 'ClonetrooperRig|LightAttack':\n\tLeftHand average position error 0.6
+      mm and maximum position error 1.5 mm at time 0: 3 (17.6%) Frame 3\n\nRetargeting
+      quality report for clip 'ClonetrooperRig|MediumAttack':\n\tRightFoot average
+      position error 0.4 mm and maximum position error 1.3 mm at time 0:16 (11.7%)
+      Frame 16\n\tLeftUpperArm average position error 3.4 mm and maximum position
+      error 5.4 mm at time 1:22 (33.6%) Frame 46\n\tLeftLowerArm average position
+      error 3.8 mm and maximum position error 15.6 mm at time 3: 4 (55.5%) Frame
+      76\n\tLeftHand average position error 4.7 mm and maximum position error 30.8
+      mm at time 3: 4 (55.5%) Frame 76\n\tRightUpperArm average position error 3.2
+      mm and maximum position error 5.0 mm at time 1:22 (33.6%) Frame 46\n\tRightLowerArm
+      average position error 2.6 mm and maximum position error 4.0 mm at time 1:15
+      (28.5%) Frame 39\n\tRightHand average position error 2.5 mm and maximum position
+      error 4.0 mm at time 1:17 (29.9%) Frame 41\n\tHead average position error 3.7
+      mm and maximum position error 5.9 mm at time 1:22 (33.6%) Frame 46\n\nRetargeting
+      quality report for clip 'ClonetrooperRig|MediumAttack1':\n\tRightFoot average
+      position error 0.6 mm and maximum position error 1.3 mm at time 0:16 (23.9%)
+      Frame 16\n\tLeftUpperArm average position error 3.8 mm and maximum position
+      error 5.8 mm at time 2:19 (100.0%) Frame 67\n\tLeftLowerArm average position
+      error 3.3 mm and maximum position error 5.1 mm at time 1:12 (53.7%) Frame 36\n\tLeftHand
+      average position error 3.0 mm and maximum position error 5.1 mm at time 1:13
+      (55.2%) Frame 37\n\tRightUpperArm average position error 3.6 mm and maximum
+      position error 5.5 mm at time 2:19 (100.0%) Frame 67\n\tRightLowerArm average
+      position error 2.9 mm and maximum position error 4.7 mm at time 2:19 (100.0%)
+      Frame 67\n\tRightHand average position error 2.9 mm and maximum position error
+      4.7 mm at time 2:19 (100.0%) Frame 67\n\tHead average position error 4.2 mm
+      and maximum position error 6.4 mm at time 2:19 (100.0%) Frame 67\n\nRetargeting
+      quality report for clip 'ClonetrooperRig|MediumAttack2':\n\tLeftUpperArm average
+      position error 3.3 mm and maximum position error 5.8 mm at time 0: 0 (0.0%)
+      Frame 0\n\tLeftLowerArm average position error 4.5 mm and maximum position
+      error 15.7 mm at time 0: 9 (12.9%) Frame 9\n\tLeftHand average position error
+      6.6 mm and maximum position error 31.4 mm at time 0: 9 (12.9%) Frame 9\n\tRightUpperArm
+      average position error 3.2 mm and maximum position error 5.5 mm at time 0:
+      0 (0.0%) Frame 0\n\tRightLowerArm average position error 2.5 mm and maximum
+      position error 4.7 mm at time 0: 0 (0.0%) Frame 0\n\tRightHand average position
+      error 2.4 mm and maximum position error 4.7 mm at time 0: 0 (0.0%) Frame 0\n\tHead
+      average position error 3.6 mm and maximum position error 6.4 mm at time 0:
+      0 (0.0%) Frame 0\n\nRetargeting quality report for clip 'ClonetrooperRig|OffensiveAbilityRange1':\n\tLeftHand
+      average position error 0.7 mm and maximum position error 1.1 mm at time 1:15
+      (40.2%) Frame 39\n\tRightLowerArm average position error 0.5 mm and maximum
+      position error 1.1 mm at time 0:10 (10.3%) Frame 10\n\tRightHand average position
+      error 2.0 mm and maximum position error 3.2 mm at time 2: 9 (58.8%) Frame 57\n\nRetargeting
+      quality report for clip 'ClonetrooperRig|StrongAttack':\n\tLeftLowerLeg average
+      position error 1.4 mm and maximum position error 3.2 mm at time 0:23 (29.1%)
+      Frame 23\n\tLeftFoot average position error 2.2 mm and maximum position error
+      5.3 mm at time 0:23 (29.1%) Frame 23\n\tRightLowerLeg average position error
+      1.1 mm and maximum position error 2.3 mm at time 2: 6 (68.4%) Frame 54\n\tRightFoot
+      average position error 2.1 mm and maximum position error 4.2 mm at time 2:
+      6 (68.4%) Frame 54\n\tLeftLowerArm average position error 6.8 mm and maximum
+      position error 32.7 mm at time 1:17 (51.9%) Frame 41\n\tLeftHand average position
+      error 14.1 mm and maximum position error 65.3 mm at time 1:17 (51.9%) Frame
+      41\n\tRightLowerArm average position error 0.4 mm and maximum position error
+      1.1 mm at time 1:11 (44.3%) Frame 35\n\tRightHand average position error 1.1
+      mm and maximum position error 2.6 mm at time 1:11 (44.3%) Frame 35\n\nRetargeting
+      quality report for clip 'ClonetrooperRig|TakeDamage':\n\tLeftFoot average position
+      error 0.5 mm and maximum position error 1.3 mm at time 0:11 (25.6%) Frame 11\n\tRightFoot
+      average position error 0.6 mm and maximum position error 1.3 mm at time 0:
+      5 (11.6%) Frame 5\n\tLeftLowerArm average position error 0.6 mm and maximum
+      position error 3.1 mm at time 0: 8 (18.6%) Frame 8\n\tLeftHand average position
+      error 2.2 mm and maximum position error 27.3 mm at time 0: 8 (18.6%) Frame
+      8\n\tRightLowerArm average position error 0.4 mm and maximum position error
+      1.2 mm at time 0:12 (27.9%) Frame 12\n\tRightHand average position error 1.1
+      mm and maximum position error 2.5 mm at time 0:12 (27.9%) Frame 12\n"
+    animationDoRetargetingWarnings: 1
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: ClonetrooperRig|Block
+      takeName: ClonetrooperRig|Block
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|Defence
+      takeName: ClonetrooperRig|Defence
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|DefensiveAbility1
+      takeName: ClonetrooperRig|DefensiveAbility1
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|Doge
+      takeName: ClonetrooperRig|Doge
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 37
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|Idle
+      takeName: ClonetrooperRig|Idle
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 61
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|ClonetrooperLib
+      takeName: ClonetrooperRig|ClonetrooperLib
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 2
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|Introduction
+      takeName: ClonetrooperRig|Introduction
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|LightAttack
+      takeName: ClonetrooperRig|LightAttack
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 17
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|MediumAttack
+      takeName: ClonetrooperRig|MediumAttack
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 137
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|MediumAttack1
+      takeName: ClonetrooperRig|MediumAttack1
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 67
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|MediumAttack2
+      takeName: ClonetrooperRig|MediumAttack2
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 70
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|OffensiveAbilityRange1
+      takeName: ClonetrooperRig|OffensiveAbilityRange1
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 97
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|StrongAttack
+      takeName: ClonetrooperRig|StrongAttack
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 79
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ClonetrooperRig|TakeDamage
+      takeName: ClonetrooperRig|TakeDamage
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 43
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: DEF-spine
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-thigh.L
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-thigh.R
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-shin.L
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-shin.R
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-foot.L
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-foot.R
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-spine.001
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-spine.002
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-shoulder.L
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-shoulder.R
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-upper_arm.L
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-upper_arm.R
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-forearm.L
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-forearm.R
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-hand.L
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-hand.R
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-toe.L
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-toe.R
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: DEF-spine.003
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Clonetrooper(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Clonetrooper
+      parentName: Clonetrooper(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: ClonetrooperRig
+      parentName: Clonetrooper(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: root
+      parentName: ClonetrooperRig
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 0.99999976, z: 0.9999999}
+    - name: DEF-spine
+      parentName: root
+      position: {x: 0.000013456215, y: 0.0010086348, z: 0.041085336}
+      rotation: {x: 0.49902093, y: -0.5009772, z: -0.49902087, w: 0.5009773}
+      scale: {x: 1, y: 0.9999999, z: 1.0000001}
+    - name: DEF-thigh.L
+      parentName: DEF-spine
+      position: {x: 0.0003316073, y: 0.00091935333, z: 0.004949364}
+      rotation: {x: 0.77659583, y: 0.03026184, z: -0.6238746, w: 0.08224118}
+      scale: {x: 1.006419, y: 0.98728645, z: 1.0064193}
+    - name: DEF-shin.L
+      parentName: DEF-thigh.L
+      position: {x: 8.9406965e-10, y: 0.015465743, z: -0.0000000011920929}
+      rotation: {x: 0.15287215, y: -0.0000001156004, z: -0.000000014901159, w: 0.98824596}
+      scale: {x: 0.99806154, y: 1.0022528, z: 0.9999349}
+    - name: DEF-foot.L
+      parentName: DEF-shin.L
+      position: {x: -3.72529e-10, y: 0.023121588, z: -1.4901161e-10}
+      rotation: {x: -0.5319569, y: -0.08967655, z: -0.07050825, w: 0.83905226}
+      scale: {x: 0.9956178, y: 1.0020636, z: 1.0023055}
+    - name: DEF-toe.L
+      parentName: DEF-foot.L
+      position: {x: 4.9360094e-10, y: 0.0057854108, z: 0}
+      rotation: {x: -0.00000013038515, y: 0.96620506, z: -0.25777465, w: -0.00000030174849}
+      scale: {x: 1, y: 0.9926621, z: 1.0073987}
+    - name: DEF-toe.L_end
+      parentName: DEF-toe.L
+      position: {x: -0, y: 0.0046398044, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-thigh.R
+      parentName: DEF-spine
+      position: {x: 0.00033160797, y: 0.00091935456, z: -0.0049224505}
+      rotation: {x: 0.6238749, y: 0.082242124, z: -0.77659553, w: 0.030261066}
+      scale: {x: 1.0076717, y: 0.9848325, z: 1.0076718}
+    - name: DEF-shin.R
+      parentName: DEF-thigh.R
+      position: {x: -5.2154064e-10, y: 0.015465742, z: 8.9406965e-10}
+      rotation: {x: 0.15287207, y: 0.000000032130625, z: 0.0000000074505797, w: 0.98824596}
+      scale: {x: 0.9977085, y: 1.0026599, z: 0.9999605}
+    - name: DEF-foot.R
+      parentName: DEF-shin.R
+      position: {x: -6.0303135e-10, y: 0.023121579, z: -1.3969838e-10}
+      rotation: {x: -0.53195703, y: 0.08967632, z: 0.07050824, w: 0.83905214}
+      scale: {x: 0.994733, y: 1.0025308, z: 1.0028635}
+    - name: DEF-toe.R
+      parentName: DEF-foot.R
+      position: {x: -3.72529e-10, y: 0.0057854103, z: 8.5681673e-10}
+      rotation: {x: 0.00000013038515, y: 0.9662053, z: -0.25777406, w: 0.00000032782552}
+      scale: {x: 1.0000004, y: 0.9912261, z: 1.0089437}
+    - name: DEF-toe.R_end
+      parentName: DEF-toe.R
+      position: {x: -0, y: 0.0046398044, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine.001
+      parentName: DEF-spine
+      position: {x: -1.6771634e-11, y: 0.006161809, z: 3.130651e-13}
+      rotation: {x: 0.001431033, y: -0.0000974834, z: -0.068002015, w: 0.99768424}
+      scale: {x: 1.0000002, y: 0.9999999, z: 1.0000006}
+    - name: DEF-spine.002
+      parentName: DEF-spine.001
+      position: {x: -3.72529e-10, y: 0.0046910355, z: 6.0390646e-12}
+      rotation: {x: -0.0013944883, y: 0.00033563975, z: 0.23405805, w: 0.9722216}
+      scale: {x: 1.0000004, y: 1.0000001, z: 1.0000002}
+    - name: DEF-spine.003
+      parentName: DEF-spine.002
+      position: {x: 8.9406965e-10, y: 0.005315005, z: -1.7763568e-17}
+      rotation: {x: -0.000000015948896, y: -0.000000064115724, z: -0.19148974, w: 0.98149467}
+      scale: {x: 1.0000006, y: 1.0000001, z: 1.0000002}
+    - name: DEF-shoulder.L
+      parentName: DEF-spine.003
+      position: {x: -0.00022160275, y: 0.0091600735, z: 0.0015717453}
+      rotation: {x: 0.48879135, y: 0.56650877, z: 0.50231004, w: 0.43340006}
+      scale: {x: 1, y: 0.9999999, z: 0.9999998}
+    - name: DEF-upper_arm.L
+      parentName: DEF-shoulder.L
+      position: {x: -0.00057965866, y: 0.007262637, z: -0.0008282081}
+      rotation: {x: -0.05652487, y: -0.23415451, z: 0.030889567, w: 0.97006315}
+      scale: {x: 1.0073782, y: 0.98540735, z: 1.0073771}
+    - name: DEF-forearm.L
+      parentName: DEF-upper_arm.L
+      position: {x: 0.0000000011920929, y: 0.0111136185, z: -0.000000001490116}
+      rotation: {x: 0.026288867, y: 0.0020485057, z: -0.012536558, w: 0.9995737}
+      scale: {x: 0.9965971, y: 1.0049016, z: 0.9987965}
+    - name: DEF-hand.L
+      parentName: DEF-forearm.L
+      position: {x: 0.000000006109476, y: 0.013512772, z: 0.0000000015646219}
+      rotation: {x: -0.049398053, y: 0.004412658, z: 0.0888644, w: 0.9948083}
+      scale: {x: 0.9966523, y: 1.0086505, z: 0.99489224}
+    - name: DEF-hand.L_end
+      parentName: DEF-hand.L
+      position: {x: -0, y: 0.007388009, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-shoulder.R
+      parentName: DEF-spine.003
+      position: {x: -0.00022160323, y: 0.0091600735, z: -0.0015717455}
+      rotation: {x: -0.50231016, y: 0.4334, z: -0.4887914, w: 0.5665086}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: DEF-upper_arm.R
+      parentName: DEF-shoulder.R
+      position: {x: 0.00057966006, y: 0.007262638, z: -0.0008282088}
+      rotation: {x: 0.056524564, y: -0.23415491, z: 0.030889489, w: -0.9700631}
+      scale: {x: 1.0154291, y: 0.96984357, z: 1.0154277}
+    - name: DEF-forearm.R
+      parentName: DEF-upper_arm.R
+      position: {x: 0.0000000019371509, y: 0.01111362, z: -0.0000000049918887}
+      rotation: {x: 0.022541024, y: -0.0021547507, z: 0.012618068, w: 0.99966395}
+      scale: {x: 0.9988541, y: 0.99869156, z: 1.0038178}
+    - name: DEF-hand.R
+      parentName: DEF-forearm.R
+      position: {x: -2.9802322e-10, y: 0.013512771, z: 0.000000003892928}
+      rotation: {x: -0.04939793, y: -0.0044124294, z: -0.08886413, w: 0.9948084}
+      scale: {x: 0.9879229, y: 1.0299252, z: 0.9837967}
+    - name: DEF-hand.R_end
+      parentName: DEF-hand.R
+      position: {x: -0, y: 0.0073880097, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: DEF-spine.004
+      parentName: DEF-spine.003
+      position: {x: 2.509104e-16, y: 0.008574804, z: 0}
+      rotation: {x: 0.0039341697, y: 0.00003196839, z: 0.008127554, w: 0.9999593}
+      scale: {x: 0.9999987, y: 1.0000027, z: 0.999999}
+    - name: DEF-neck
+      parentName: DEF-spine.004
+      position: {x: 2.964926e-10, y: 0.0017358781, z: -1.3860699e-11}
+      rotation: {x: -0.0059212795, y: -0.0003449649, z: -0.18746634, w: 0.9822532}
+      scale: {x: 1.0000017, y: 0.9999967, z: 1.0000021}
+    - name: DEF-head
+      parentName: DEF-neck
+      position: {x: 7.4505824e-10, y: 0.0032616348, z: -1.9019807e-12}
+      rotation: {x: 0.002051192, y: -0.00042075576, z: 0.20094045, w: 0.9796012}
+      scale: {x: 1.000001, y: 1.0000001, z: 0.99999976}
+    - name: DEF-head_end
+      parentName: DEF-head
+      position: {x: -0, y: 0.011327548, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 1
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -8,6 +8,11 @@ public class Weapon : MonoBehaviour
     [SerializeField] Transform weaponHandle;
     [SerializeField]  Vector3 offset;
 
+
+    [SerializeField] Vector3 posOffset;
+    [SerializeField] Vector3 rotOffset;
+    [SerializeField] Transform handTransform;
+
     void Awake()
     {
         
@@ -16,6 +21,8 @@ public class Weapon : MonoBehaviour
 	private void Start()
 	{
         //offset = gameObject.transform.position - weaponHandle.transform.position;
+        posOffset = transform.position - handTransform.position; //where were we relative to it?
+        rotOffset = transform.eulerAngles - handTransform.eulerAngles; //how were we rotated relative to it?
     }
 
 	// Update is called once per frame
