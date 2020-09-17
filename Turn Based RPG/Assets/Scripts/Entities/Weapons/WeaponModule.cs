@@ -6,6 +6,7 @@ public class WeaponModule : MonoBehaviour
 {
 	Animator animator;
 
+	[SerializeField] Weapon defaultWeapon;
 	[SerializeField] Weapon currentWeapon;
     [SerializeField] List<Weapon> avaiableWeapons = new List<Weapon>();
 
@@ -15,6 +16,7 @@ public class WeaponModule : MonoBehaviour
 	[SerializeField] RuntimeAnimatorController lightsaberAnimatorController;
 	[SerializeField] RuntimeAnimatorController rifleAnimatorController;
 
+	[Space(15)]
 
 	[SerializeField] bool secondHandIKActive = false;
 	[SerializeField] Transform leftHandTarget = null;
@@ -25,23 +27,36 @@ public class WeaponModule : MonoBehaviour
         animator = GetComponent<Animator>();
         avaiableWeapons.AddRange(GetComponentsInChildren<Weapon>());
 
-        currentWeapon = avaiableWeapons[0];
+		if (defaultWeapon)
+			ChangeWeapon(defaultWeapon);
+		else
+			ChangeWeapon(avaiableWeapons[0]);
 
-		if(currentWeapon.type == Weapon.Type.Lightsaber)
+		foreach (Weapon weapon in avaiableWeapons)
 		{
-			animator.runtimeAnimatorController = lightsaberAnimatorController;
-			rightHandTarget = currentWeapon.SetHand(handLightsaberPos);
-			
-
-		}
-		else if(currentWeapon.type == Weapon.Type.Rifle)
-		{
-			animator.runtimeAnimatorController = rifleAnimatorController;
-			leftHandTarget = currentWeapon.SetHand(handRiflePos);
+			if (weapon != currentWeapon)
+				weapon.gameObject.SetActive(false);
 		}
     }
 
-    
+    void ChangeWeapon(Weapon newWeapon)
+	{
+		currentWeapon = newWeapon;
+		switch (newWeapon.type)
+		{
+			case Weapon.Type.Lightsaber:
+				animator.runtimeAnimatorController = lightsaberAnimatorController;
+				rightHandTarget = currentWeapon.SetHand(handLightsaberPos);
+				break;
+
+			case Weapon.Type.Rifle:
+				animator.runtimeAnimatorController = rifleAnimatorController;
+				leftHandTarget = currentWeapon.SetHand(handRiflePos);
+				break;
+		}
+	}
+
+
     void Update()
     {
         

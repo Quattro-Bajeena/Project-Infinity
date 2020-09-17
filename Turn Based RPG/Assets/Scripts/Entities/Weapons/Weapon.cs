@@ -5,35 +5,26 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
 
-    public enum Range
-	{
-        Melee,
-        Gun
-	}
-
-    public enum Handle
-	{
-        OneHanded,
-        TwoHanded
-	}
-
     public enum Type
 	{
+        Blaster,
         Rifle,
+        Blade,
+        Staff,
         Lightsaber
 	}
-    [SerializeField] Transform secondHandHandle = null;
 
-    [SerializeField] Range range;
-    [SerializeField] Handle handle;
     public Type type;
-    IWeaponBehaviour weaponBehaviour;
 
-    [SerializeField] Transform handTransform;
-    
+    [SerializeField] Transform secondHandHandle = null;
+    Transform handTransform;
+
+    WeaponStatistics statistics;
+    IWeaponBehaviour weaponBehaviour;
 
     void Awake()
     {
+        statistics = GetComponent<WeaponStatistics>();
         weaponBehaviour = GetComponent<IWeaponBehaviour>();
     }
 
