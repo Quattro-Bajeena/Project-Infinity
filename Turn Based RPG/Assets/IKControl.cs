@@ -19,6 +19,19 @@ public class IKControl : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+
+	void DisableIK()
+	{
+		ikActive = false;
+
+	}
+
+	void EnableIK()
+	{
+		ikActive = true;
+	}
+
+
 	//a callback for calculating IK
 	void OnAnimatorIK()
 	{
@@ -60,6 +73,8 @@ public class IKControl : MonoBehaviour
 			{
 				animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
 				animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
+				animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+				animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
 				animator.SetLookAtWeight(0);
 			}
 		}

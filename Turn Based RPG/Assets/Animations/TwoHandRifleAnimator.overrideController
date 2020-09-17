@@ -6,7 +6,7 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ClonetrooperAnimator
+  m_Name: TwoHandRifleAnimator
   m_Controller: {fileID: 9100000, guid: b5833467875c7c44f9919a428109f894, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: -9181384420221718352, guid: 492f9eca3277f5442a7996a7ffc12b09,
@@ -67,9 +67,5 @@ AnimatorOverrideController:
       type: 3}
   - m_OriginalClip: {fileID: 8609256966619723813, guid: 492f9eca3277f5442a7996a7ffc12b09,
       type: 3}
-    m_OverrideClip: {fileID: 8609256966619723813, guid: 492f9eca3277f5442a7996a7ffc12b09,
-      type: 3}
-  - m_OriginalClip: {fileID: -6057728895619561379, guid: 492f9eca3277f5442a7996a7ffc12b09,
-      type: 3}
-    m_OverrideClip: {fileID: -6057728895619561379, guid: 492f9eca3277f5442a7996a7ffc12b09,
+    m_OverrideClip: {fileID: 1729322476695936526, guid: 73b4f4ed981875245b01f0df53a4833f,
       type: 3}

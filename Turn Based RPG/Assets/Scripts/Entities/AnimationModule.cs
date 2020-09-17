@@ -10,11 +10,10 @@ public class AnimationModule : MonoBehaviour
     [SerializeField] bool animatiorIsTransitioning = false;
     [SerializeField] bool animationPlaying;
 
-    GameObject lightsaber;
+
     void Awake()
     {
         animator = GetComponent<Animator>();
-        lightsaber = transform.Find("Lightsaber").gameObject;
 
     }
 
@@ -36,10 +35,6 @@ public class AnimationModule : MonoBehaviour
         else animationPlaying = true;
     }
 
-    void ActivateLightsaber()
-	{
-        StartCoroutine(ActivateLightsaberCoroutine(lightsaber.GetComponent<SkinnedMeshRenderer>()));
-	}
 
     public void SetCombatState(bool combat)
 	{
@@ -48,7 +43,7 @@ public class AnimationModule : MonoBehaviour
 
     public void TriggerAttack(string attackAnimationName)
 	{
-        animator.SetBool("Blocking", false);
+        animator.SetBool("Defending", false);
         animator.SetTrigger(attackAnimationName);
 	}
 
@@ -57,9 +52,9 @@ public class AnimationModule : MonoBehaviour
         animator.SetTrigger("CancelAttack");
 	}
 
-    public void SetDefend(bool blocking)
+    public void SetDefend(bool defending)
 	{
-        animator.SetBool("Blocking", blocking);
+        animator.SetBool("Defending", defending);
 	}
 
     public void SetWalking(bool walking, float speed = 1f)
@@ -88,6 +83,16 @@ public class AnimationModule : MonoBehaviour
         animator.SetTrigger("TakeDamage");
 	}
 
+    public void BlockedAttack()
+	{
+        animator.SetTrigger("Block");
+	}
+
+    public void AvoidedAttack()
+	{
+        animator.SetTrigger("Evade");
+    }
+
     public void Jump()
 	{
         animator.SetBool("InAir", true);
@@ -115,15 +120,5 @@ public class AnimationModule : MonoBehaviour
         return animator.GetCurrentAnimatorStateInfo(0).IsName(animationName);
     }
 
-    IEnumerator ActivateLightsaberCoroutine(SkinnedMeshRenderer lightsaberMesh)
-	{
-        float value = lightsaberMesh.GetBlendShapeWeight(0);
-        while(value > 0)
-		{
-            value -= 250 * Time.deltaTime;
-            lightsaberMesh.SetBlendShapeWeight(0, value);
-            yield return null;
-        }
-        lightsaberMesh.SetBlendShapeWeight(0, 0);
-    }
+    
 }
