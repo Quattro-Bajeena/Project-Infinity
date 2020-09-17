@@ -2353,28 +2353,28 @@ MonoBehaviour:
     baseValue: 3
     modifiers: []
   melee:
-    baseValue: 10
+    baseValue: 17
     modifiers: []
   selfDefence:
-    baseValue: 11
+    baseValue: 16
     modifiers: []
   guns:
-    baseValue: 11
+    baseValue: 17
     modifiers: []
   analysis:
-    baseValue: 11
+    baseValue: 19
     modifiers: []
   computers:
-    baseValue: 11
+    baseValue: 17
     modifiers: []
   tinkering:
-    baseValue: 11
+    baseValue: 21
     modifiers: []
   lighstaber:
-    baseValue: 11
+    baseValue: 16
     modifiers: []
   composure:
-    baseValue: 11
+    baseValue: 15
     modifiers: []
   speed:
     baseValue: 30
@@ -5800,6 +5800,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MediumAttackRifle
       objectReference: {fileID: 0}
+    - target: {fileID: 1946152755956683901, guid: 167d904982600c445a75b6ef9800a805,
+        type: 3}
+      propertyPath: position
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 167d904982600c445a75b6ef9800a805, type: 3}
 --- !u!4 &982150583 stripped
@@ -7403,6 +7408,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: StrongAttackRifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946152755956683901, guid: a299574209583484fbc92a5b1952fa4e,
+        type: 3}
+      propertyPath: position
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a299574209583484fbc92a5b1952fa4e, type: 3}
@@ -12683,6 +12693,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LightAttackRifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946152755956683901, guid: 52a006104922cdc45a3e06038e4bf781,
+        type: 3}
+      propertyPath: position
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52a006104922cdc45a3e06038e4bf781, type: 3}

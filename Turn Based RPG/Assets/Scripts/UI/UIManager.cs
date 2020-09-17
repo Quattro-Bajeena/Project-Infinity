@@ -273,7 +273,8 @@ public class UIManager : MonoBehaviour
     {
         GameObject newDamageText = Instantiate(damageTextPrefab);
         newDamageText.SetActive(true);
-        newDamageText.transform.SetParent(entities[data.id].transform, false);
+        newDamageText.transform.SetParent(entities[data.id].transform.parent, false);
+        
         
         newDamageText.GetComponent<DamageTextScript>().InitializeBlocked();
         newDamageText.GetComponent<DamageTextScript>().SetPosition(entities[data.id].transform.position);
@@ -284,7 +285,7 @@ public class UIManager : MonoBehaviour
 
         GameObject newDamageText = Instantiate(damageTextPrefab);
         newDamageText.SetActive(true);
-        newDamageText.transform.SetParent(entities[targetID].transform, false);
+        newDamageText.transform.SetParent(entities[targetID].transform.parent, false);
         newDamageText.GetComponent<DamageTextScript>().Initialize(damage);
         newDamageText.GetComponent<DamageTextScript>().SetPosition(entities[targetID].transform.position);
 

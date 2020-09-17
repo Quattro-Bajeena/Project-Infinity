@@ -14,8 +14,9 @@ public enum CombatEvents
     SuspensionToggle,
     EntityDied, //id
     ComboLaunched,
+    ReceivedDamage, //id
     DogdedAction, //id
-    BlockedAction 
+    BlockedAction //id
     
 }
 

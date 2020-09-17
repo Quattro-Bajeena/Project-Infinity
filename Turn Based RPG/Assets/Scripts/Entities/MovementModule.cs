@@ -101,7 +101,7 @@ public class MovementModule : MonoBehaviour
             yield return null;
         }
 
-        transform.LookAt(target);
+        //transform.LookAt(target);
         controller.Move(target - transform.position);
 
         entity.animations.SetWalking(false);

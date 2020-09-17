@@ -158,6 +158,10 @@ public class StatisticsModule : MonoBehaviour
 		currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
 		Entity.combat.ReceivedDamage(finalValue);
+		if(finalValue > 1)
+		{
+			EventManager.TriggerEvent(CombatEvents.ReceivedDamage, new CombatEventData(Entity.Id));
+		}
 		EventManager.TriggerEvent(CombatEvents.HealthChange, new CombatEventData(Entity.Id, -finalValue));
 	}
 

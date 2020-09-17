@@ -136,12 +136,19 @@ public class BattleManager : MonoBehaviour
         foreach (CombatModule target in currentTargets)
         {
             action.CalculateOutcome(currentAttacker.Stats, target.Stats);
-            if (action.IsDoged == true)
+            if (action.IsAvoided == true)
+			{
                 EventManager.TriggerEvent(CombatEvents.DogdedAction, new CombatEventData(target.Entity.Id));
+                target.AvoidedAttack();
+            } 
             else
             {
                 if (action.IsBlocked == true)
+				{
                     EventManager.TriggerEvent(CombatEvents.BlockedAction, new CombatEventData(target.Entity.Id));
+                    target.BlockedAttack();
+                }
+                    
                 action.ModyfiStatistics(currentAttacker.Stats, target.Stats);
             }
             

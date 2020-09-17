@@ -5,17 +5,22 @@ using UnityEngine;
 public class AnimationModule : MonoBehaviour
 {
 
+    Entity entity;
+
     Animator animator;
     [SerializeField] float normalizedTime = 0f;
     [SerializeField] bool animatiorIsTransitioning = false;
     [SerializeField] bool animationPlaying;
+    [SerializeField] string currentAnimation;
 
 
     void Awake()
     {
+        entity = GetComponent<Entity>();
         animator = GetComponent<Animator>();
 
     }
+
 
 	private void Start()
 	{
@@ -33,8 +38,9 @@ public class AnimationModule : MonoBehaviour
             animationPlaying = false;
         }
         else animationPlaying = true;
-    }
 
+        currentAnimation = animator.GetCurrentAnimatorStateInfo(0).ToString();
+    }
 
     public void SetCombatState(bool combat)
 	{
@@ -111,6 +117,14 @@ public class AnimationModule : MonoBehaviour
         {
             return false;
         }
+  //      else if(animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") == true)
+		//{
+  //          return false;
+		//}
+  //      else if(animator.GetCurrentAnimatorStateInfo(0).IsName("Abilities Idle") == true)
+		//{
+  //          return false;
+		//}
         else return true;
 
 	}

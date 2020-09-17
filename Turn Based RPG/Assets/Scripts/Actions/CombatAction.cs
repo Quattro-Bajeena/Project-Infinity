@@ -75,7 +75,7 @@ public class CombatAction : MonoBehaviour
     //public List<ActionEffect> effects = new List<ActionEffect>();
 
     //Variables after plugging attacker and target
-    public bool IsDoged { get; private set; }
+    public bool IsAvoided { get; private set; }
     public bool IsBlocked { get; private set; }
 
 
@@ -168,7 +168,7 @@ public class CombatAction : MonoBehaviour
 
     public void CalculateOutcome(StatisticsModule attackerStats, StatisticsModule targetStats)
 	{
-        IsDoged = DodgedAction(attackerStats, targetStats);
+        IsAvoided = DodgedAction(attackerStats, targetStats);
         IsBlocked = BlockedAction(attackerStats, targetStats);
 	}
 

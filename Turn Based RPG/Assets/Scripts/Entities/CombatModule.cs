@@ -42,6 +42,8 @@ public class CombatModule : MonoBehaviour
         private set { _defend = value; Entity.animations.SetDefend(value); } 
     }
 
+    bool blockedAttack = false;
+
     public List<CombatAction> abilities = new List<CombatAction>();
     public Dictionary<BaseAttackType, CombatAction> baseAttacks = new Dictionary<BaseAttackType, CombatAction>();
     List<CombatAction> combos = new List<CombatAction>();
@@ -196,10 +198,25 @@ public class CombatModule : MonoBehaviour
 
     public void ReceivedDamage(float value)
 	{
-        if(value > 1 && IsDefending == false)
+        if(IsDefending == true || blockedAttack == true)
 		{
-            Entity.animations.ReceivedDamage();
+            Entity.animations.BlockedAttack();
+        }
+		else if (value > 1)
+		{
+			Entity.animations.ReceivedDamage();
 		}
+        blockedAttack = false;
+	}
+
+    public void BlockedAttack()
+	{
+        blockedAttack = true;
+	}
+
+    public void AvoidedAttack()
+	{
+        Entity.animations.AvoidedAttack();
 	}
 
 	//Functions that respond to events
@@ -293,6 +310,7 @@ public class CombatModule : MonoBehaviour
 
                 EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(Entity.Id, attackQueue.Peek()));
                 attackQueue.Dequeue();
+                yield return new WaitForSeconds(0.3f);
             }
             //no attacks and attacking is canceled
             else if (attackCanceled == true)
