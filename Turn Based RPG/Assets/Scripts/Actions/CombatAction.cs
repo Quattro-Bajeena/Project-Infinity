@@ -141,26 +141,26 @@ public class CombatAction : MonoBehaviour
 
     public Vector3 GetMovePosition(Vector3 attackerPosition, Vector3 targetPosition, Vector3 battlefiedCenterPosition)
 	{
-        if (actionType == ActionType.Attack || actionType == ActionType.Combo)
-            return targetPosition;
+        //if (actionType == ActionType.Attack || actionType == ActionType.Combo)
+        //    return targetPosition;
 
-        else
-		{
-            if (movePosition == null)
-                return attackerPosition;
+        
+		
+        if (movePosition == null)
+            return attackerPosition;
             
-			switch (movePosition.position)
-			{
-                case AbilityMovePosition.Position.BattlefieldCenter:
-                    return battlefiedCenterPosition;
+		switch (movePosition.position)
+		{
+            case AbilityMovePosition.Position.BattlefieldCenter:
+                return battlefiedCenterPosition;
 
-                case AbilityMovePosition.Position.StartingPosition:
-                    return attackerPosition;
+            case AbilityMovePosition.Position.StartingPosition:
+                return attackerPosition;
 
-                case AbilityMovePosition.Position.TargetPosition:
-                    return targetPosition;
-            }
-		}
+            case AbilityMovePosition.Position.TargetPosition:
+                return targetPosition;
+        }
+		
 
         return attackerPosition;
 

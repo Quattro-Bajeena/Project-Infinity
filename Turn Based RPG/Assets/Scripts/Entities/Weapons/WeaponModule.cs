@@ -22,7 +22,7 @@ public class WeaponModule : MonoBehaviour
 	[SerializeField] Transform leftHandTarget = null;
 	[SerializeField] Transform rightHandTarget = null;
 
-	void Start()
+	void Awake()
     {
         animator = GetComponent<Animator>();
         avaiableWeapons.AddRange(GetComponentsInChildren<Weapon>());

@@ -275,7 +275,7 @@ public class CombatModule : MonoBehaviour
 
     IEnumerator PerformAttackAction(Vector3 targetPosition)
     {
-
+        
         Entity.movement.MoveToTarget(targetPosition);
         while (Entity.movement.IsMoving == true) { yield return null; }
 
