@@ -50,12 +50,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 0
   actionType: 1
-  damageType: 1
+  damageType: 2
   unavoidable: 0
   animationName: LightAttack
   actionName: Character 1 Light Attack
   power: 0.5
   cost: 1
+  baseHitChance: 20
   description: 
 --- !u!114 &1870294219188194545
 MonoBehaviour:

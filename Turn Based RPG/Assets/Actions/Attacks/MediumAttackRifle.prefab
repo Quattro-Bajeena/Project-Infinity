@@ -50,12 +50,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 0
   actionType: 1
-  damageType: 1
+  damageType: 2
   unavoidable: 0
   animationName: MediumAttack
   actionName: Rifle Medium Attack
   power: 1
   cost: 2
+  baseHitChance: 20
   description: 
 --- !u!114 &1870294219188194545
 MonoBehaviour:

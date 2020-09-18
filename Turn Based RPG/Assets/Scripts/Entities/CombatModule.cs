@@ -29,8 +29,8 @@ public class CombatModule : MonoBehaviour
     
     Vector3 startPosition;
     Quaternion startRotation;
-    public Vector3 attackerPosition;
-    public Vector3 battlefieldCenter;
+    public Vector3 attackerPosition { get; private set; }
+    public Vector3 battlefieldCenter { get; set; }
 
     [SerializeField][Range(0, 1f)] float actionGauge;
     public float ActionGauge { get { return actionGauge; } }
@@ -44,8 +44,8 @@ public class CombatModule : MonoBehaviour
 
     bool blockedAttack = false;
 
-    public List<CombatAction> abilities = new List<CombatAction>();
-    public Dictionary<BaseAttackType, CombatAction> baseAttacks = new Dictionary<BaseAttackType, CombatAction>();
+    public List<CombatAction> abilities { get; private set; } = new List<CombatAction>();
+    public Dictionary<BaseAttackType, CombatAction> baseAttacks { get; private set; } = new Dictionary<BaseAttackType, CombatAction>();
     List<CombatAction> combos = new List<CombatAction>();
 
 
@@ -54,7 +54,6 @@ public class CombatModule : MonoBehaviour
     [SerializeField] List<CombatAction> attackQueueList = new List<CombatAction>();
     bool attackCanceled = false;
 
-    IEnumerator currentPerformingAction;
     
     void Awake()
     {
@@ -75,26 +74,6 @@ public class CombatModule : MonoBehaviour
     }
     void Start()
     {
-        List<CombatAction> availableActions = new List<CombatAction>();
-        availableActions.AddRange(gameObject.GetComponentsInChildren<CombatAction>());
-        foreach (CombatAction action in availableActions)
-        {
-
-            switch (action.actionType)
-            {
-                case CombatAction.ActionType.Ability:
-                    abilities.Add(action);
-                    break;
-                case CombatAction.ActionType.Attack:
-                    baseAttacks.Add(action.BaseAttackType, action);
-                    break;
-                case CombatAction.ActionType.Combo:
-                    combos.Add(action);
-                    break;
-            }
-        }
-        
-        
 
     }
 
@@ -157,32 +136,32 @@ public class CombatModule : MonoBehaviour
         action.UseResourceStat(Entity.stats);
         switch (action.actionType)
         {
-            case CombatAction.ActionType.Attack:
+            case CombatAction.Type.Attack:
                 QueueAttack(action);
                 if(state == CombatState.ReadyForAction)
                 {
                     state = CombatState.PerformingAction;
                     EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(Entity.Id));
 
-                    currentPerformingAction = PerformAttackAction(position);
-                    StartCoroutine(currentPerformingAction);
+                    StartCoroutine(PerformAttackAction(position));
 
                 }
                 break;
 
-            case CombatAction.ActionType.Ability:
+            case CombatAction.Type.Ability:
                 if(state == CombatState.ReadyForAction)
                 {
                     state = CombatState.PerformingAction;
                     EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(Entity.Id));
 
-                    currentPerformingAction = PerformAbilityAction(action, position);
-                    StartCoroutine(currentPerformingAction);
+                    StartCoroutine(PerformAbilityAction(action, position));
                 }
                 break;
         }
 
     }
+
+    
 
     public void CancelAttack()
     {
@@ -194,7 +173,13 @@ public class CombatModule : MonoBehaviour
         }
     }
 
-    //functions accesed by entity modules
+    //functions accesed by entity modules --
+    public void ChangeWeapon(List<CombatAction> newAbilities, Dictionary<BaseAttackType, CombatAction> newAttacks, List<CombatAction> newCombos)
+    {
+        abilities = newAbilities;
+        baseAttacks = newAttacks;
+        combos = newCombos;
+    }
 
     public void ReceivedDamage(float value)
 	{
@@ -219,8 +204,9 @@ public class CombatModule : MonoBehaviour
         Entity.animations.AvoidedAttack();
 	}
 
-	//Functions that respond to events
 
+    
+	//Functions that respond to events
 	void SuspensionToggle(CombatEventData data)
     {
 

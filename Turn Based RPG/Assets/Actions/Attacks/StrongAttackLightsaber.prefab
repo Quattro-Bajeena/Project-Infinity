@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7039786119953707675
+--- !u!1 &5891561262986754794
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,114 +8,115 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7039786119429638004}
-  - component: {fileID: 7039786119953707664}
-  - component: {fileID: 7039786119953707679}
-  - component: {fileID: 7039786119953707678}
-  - component: {fileID: 7039786119953707677}
-  - component: {fileID: 7039786119953707676}
-  - component: {fileID: 7039786119953707665}
+  - component: {fileID: 5891561261581047946}
+  - component: {fileID: 5891561262986754801}
+  - component: {fileID: 5891561262986754798}
+  - component: {fileID: 5891561262986754799}
+  - component: {fileID: 5891561262986754796}
+  - component: {fileID: 5891561262986754797}
+  - component: {fileID: 5115140030252449350}
   m_Layer: 0
-  m_Name: FireSpell
+  m_Name: StrongAttackLightsaber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7039786119429638004
+--- !u!4 &5891561261581047946
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039786119953707675}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 5891561262986754794}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7039786119953707664
+--- !u!114 &5891561262986754801
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039786119953707675}
+  m_GameObject: {fileID: 5891561262986754794}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   actionRange: 0
-  actionType: 0
-  damageType: 3
+  actionType: 1
+  damageType: 1
   unavoidable: 0
-  animationName: OffensiveAbilityRange1
-  actionName: Fire Ball
-  power: 2
-  cost: 5
-  description: fire balls
---- !u!114 &7039786119953707679
+  animationName: StrongAttack
+  actionName: Character 1 Strong Attack
+  power: 1.5
+  cost: 3
+  baseHitChance: 20
+  description: 
+--- !u!114 &5891561262986754798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039786119953707675}
+  m_GameObject: {fileID: 5891561262986754794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
+  m_Script: {fileID: 11500000, guid: bc98e533f17d11e49bc04f2405859900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisDamageType: 0
---- !u!114 &7039786119953707678
+  attackType: 2
+--- !u!114 &5891561262986754799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039786119953707675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f38d4955a339ef3448240d8d99f16001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7039786119953707677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039786119953707675}
+  m_GameObject: {fileID: 5891561262986754794}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75ef1186125d4f64d8b278fd70c11272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7039786119953707676
+--- !u!114 &5891561262986754796
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039786119953707675}
+  m_GameObject: {fileID: 5891561262986754794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9ff72d12394a54cbe874e4ea56f0a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 125669d110ae7aa4da31070c11a23384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7039786119953707665
+--- !u!114 &5891561262986754797
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7039786119953707675}
+  m_GameObject: {fileID: 5891561262986754794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bee73da1b619aca43a9adbcd6febf50f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5115140030252449350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891561262986754794}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d10474f3bee9b1c4a9eb8387979cb1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: 0
+  position: 2

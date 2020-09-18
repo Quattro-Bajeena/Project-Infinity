@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class WeaponModule : MonoBehaviour
 {
+	Entity entity;
 	Animator animator;
 
 	[SerializeField] Weapon defaultWeapon;
-	[SerializeField] Weapon currentWeapon;
+	public Weapon currentWeapon;
     [SerializeField] List<Weapon> avaiableWeapons = new List<Weapon>();
 
 	[SerializeField] Transform handRiflePos;
 	[SerializeField] Transform handLightsaberPos;
 
-	[SerializeField] RuntimeAnimatorController lightsaberAnimatorController;
-	[SerializeField] RuntimeAnimatorController rifleAnimatorController;
+
 
 	[Space(15)]
 
@@ -24,6 +24,7 @@ public class WeaponModule : MonoBehaviour
 
 	void Awake()
     {
+		entity = GetComponent<Entity>();
         animator = GetComponent<Animator>();
         avaiableWeapons.AddRange(GetComponentsInChildren<Weapon>());
 
@@ -42,18 +43,18 @@ public class WeaponModule : MonoBehaviour
     void ChangeWeapon(Weapon newWeapon)
 	{
 		currentWeapon = newWeapon;
+		animator.runtimeAnimatorController = currentWeapon.animatorOverride;
 		switch (newWeapon.type)
 		{
 			case Weapon.Type.Lightsaber:
-				animator.runtimeAnimatorController = lightsaberAnimatorController;
 				rightHandTarget = currentWeapon.SetHand(handLightsaberPos);
 				break;
 
 			case Weapon.Type.Rifle:
-				animator.runtimeAnimatorController = rifleAnimatorController;
 				leftHandTarget = currentWeapon.SetHand(handRiflePos);
 				break;
 		}
+		entity.combat.ChangeWeapon(currentWeapon.abilities, currentWeapon.attacks, currentWeapon.combos);
 	}
 
 

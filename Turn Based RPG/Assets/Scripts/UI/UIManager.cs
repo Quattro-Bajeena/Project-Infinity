@@ -320,7 +320,7 @@ public class UIManager : MonoBehaviour
         {
             currentUIMove = UIMove.Attack;
             EventManager.TriggerEvent(UIEvents.AttackMenuSelected, new UIEventData(currentCharacter));
-            OpenTargetPanel(new List<GameObject>(enemies.Values), CombatAction.ActionRange.Single);
+            OpenTargetPanel(new List<GameObject>(enemies.Values), CombatAction.Range.Single);
         }
         
     }
@@ -350,7 +350,7 @@ public class UIManager : MonoBehaviour
     }
     
     // Opening Panels With Data they need
-    void OpenTargetPanel(List<GameObject> entities, CombatAction.ActionRange range)
+    void OpenTargetPanel(List<GameObject> entities, CombatAction.Range range)
     {
         targetPanel.GetComponent<TargetSelectPanel>().Create(entities, range);
         OpenPanel(targetPanel);

@@ -10,10 +10,11 @@ public class Entity : MonoBehaviour
 	}
     [SerializeField] new string name;
 
-    public StatisticsModule stats;
-    public CombatModule combat;
-    public AnimationModule animations;
-    public MovementModule movement;
+    public StatisticsModule stats { get; private set; }
+    public CombatModule combat { get; private set; }
+    public AnimationModule animations { get; private set; }
+    public MovementModule movement { get; private set; }
+    public WeaponModule weapon { get; private set; }
 
 
     void Awake()
@@ -22,6 +23,7 @@ public class Entity : MonoBehaviour
         combat = GetComponent<CombatModule>();
         animations = GetComponent<AnimationModule>();
         movement = GetComponent<MovementModule>();
+        weapon = GetComponent<WeaponModule>();
 
         if (name == "")
             name = gameObject.name;

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2453806081442596673
+--- !u!1 &2973043308343107176
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2453806080882695515}
-  - component: {fileID: 2453806081442596698}
-  - component: {fileID: 2453806081442596701}
-  - component: {fileID: 2453806081442596700}
-  - component: {fileID: 2453806081442596703}
-  - component: {fileID: 2453806081442596702}
+  - component: {fileID: 2973043308782308721}
+  - component: {fileID: 2973043308343107159}
+  - component: {fileID: 2973043308343107156}
+  - component: {fileID: 2973043308343107178}
+  - component: {fileID: 2973043308343107179}
   m_Layer: 0
-  m_Name: ComboPunch
+  m_Name: ComboKick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2453806080882695515
+--- !u!4 &2973043308782308721
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2453806081442596673}
+  m_GameObject: {fileID: 2973043308343107176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -35,13 +34,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2453806081442596698
+--- !u!114 &2973043308343107159
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2453806081442596673}
+  m_GameObject: {fileID: 2973043308343107176}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
@@ -49,58 +48,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 0
   actionType: 2
-  animationName: Combo1
-  actionName: Combo Punch
-  power: 4
+  damageType: 1
+  unavoidable: 0
+  animationName: Combo2
+  actionName: Combo Kick
+  power: 5
   cost: 0
+  baseHitChance: 20
   description: 
---- !u!114 &2453806081442596701
+--- !u!114 &2973043308343107156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2453806081442596673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 859ef6f421c34d54384b8cac02227253, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  requiredInput: 000000000000000001000000
---- !u!114 &2453806081442596700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2453806081442596673}
+  m_GameObject: {fileID: 2973043308343107176}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 125669d110ae7aa4da31070c11a23384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2453806081442596703
+--- !u!114 &2973043308343107178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2453806081442596673}
+  m_GameObject: {fileID: 2973043308343107176}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75ef1186125d4f64d8b278fd70c11272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2453806081442596702
+--- !u!114 &2973043308343107179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2453806081442596673}
+  m_GameObject: {fileID: 2973043308343107176}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
+  m_Script: {fileID: 11500000, guid: 859ef6f421c34d54384b8cac02227253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thisDamageType: 0
+  requiredInput: 02000000000000000000000000000000

@@ -67,13 +67,13 @@ public class CombatAIModule : MonoBehaviour
             {
                 List<string> potentialTargets = ability.GetTargets(entity.Id, false, entitiesInBattle);
 
-                if (ability.actionRange == CombatAction.ActionRange.Single)
+                if (ability.actionRange == CombatAction.Range.Single)
                 {
                     index = Random.Range(0, potentialTargets.Count - 1);
                     string target = potentialTargets[index];
                     EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.Id, new List<string>() { target }, ability));
                 }
-                else if (ability.actionRange == CombatAction.ActionRange.All)
+                else if (ability.actionRange == CombatAction.Range.All)
                 {
                     EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(entity.Id, new List<string>(potentialTargets), ability));
                 }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2453806081442596701}
   - component: {fileID: 2453806081442596700}
   - component: {fileID: 2453806081442596703}
-  - component: {fileID: 2453806081442596702}
   m_Layer: 0
   m_Name: ComboShooting
   m_TagString: Untagged
@@ -49,12 +48,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 0
   actionType: 2
-  damageType: 1
+  damageType: 2
   unavoidable: 0
   animationName: Combo1
   actionName: Combo Punch
   power: 4
   cost: 0
+  baseHitChance: 20
   description: 
 --- !u!114 &2453806081442596701
 MonoBehaviour:
@@ -93,16 +93,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ef1186125d4f64d8b278fd70c11272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2453806081442596702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2453806081442596673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisDamageType: 1

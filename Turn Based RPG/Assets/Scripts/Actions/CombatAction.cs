@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class CombatAction : MonoBehaviour
 {
-    public enum ActionType
+    public enum Type
     {
         Ability,
         Attack,
         Combo
     }
 
-    public enum ActionRange
+    public enum Range
     {
         Single,
         All
@@ -20,29 +20,29 @@ public class CombatAction : MonoBehaviour
 
     
 
-    public ActionRange actionRange;
-    public ActionType actionType;
+    public Range actionRange;
+    public Type actionType;
     public StatisticsModule.DamageType damageType;
     [SerializeField] bool unavoidable = false;
 
     public string animationName;
 
     public string actionName;
-    public float power;
+    [SerializeField] float power;
     public int cost;
+    [SerializeField] [Range(0,100)] int baseHitChance = 20;
 
     public string description;
 
-    public List<IStatisticModyfiyngAction> StatisticModifiers { get; private set; }
-    public List<DamageTypeModifier> DamageTypes { get; private set; }
-    public ITargetType TargetType { get; private set; }
-    public IUsesResourceStat ResourceType { get; private set; }
-    public ComboAction comboAction { get; private set; }
 
-    BaseAttack baseAttack;
+    ITargetType TargetType;
+    IUsesResourceStat ResourceType;
+    ComboAction comboAction;
+    BaseAttackComponent baseAttack;
     AbilityMovePosition movePosition;
-    
 
+    List<IStatisticModyfiyngAction> StatisticModifiers;
+    List<ElementalModifier> Elements;
 
 
     public bool IsTargetPositionStationary
@@ -70,11 +70,6 @@ public class CombatAction : MonoBehaviour
         }
     }
 
-    
-
-    //public List<ActionEffect> effects = new List<ActionEffect>();
-
-    //Variables after plugging attacker and target
     public bool IsAvoided { get; private set; }
     public bool IsBlocked { get; private set; }
 
@@ -82,28 +77,28 @@ public class CombatAction : MonoBehaviour
     void Awake()
     {
         StatisticModifiers = new List<IStatisticModyfiyngAction>();
-        DamageTypes = new List<DamageTypeModifier>();
+        Elements = new List<ElementalModifier>();
 
 
         StatisticModifiers.AddRange(GetComponents<IStatisticModyfiyngAction>());
         ResourceType = GetComponent<IUsesResourceStat>();
-        DamageTypes.AddRange(GetComponents<DamageTypeModifier>());
+        Elements.AddRange(GetComponents<ElementalModifier>());
         comboAction = GetComponent<ComboAction>();
-        baseAttack = GetComponent<BaseAttack>();
+        baseAttack = GetComponent<BaseAttackComponent>();
         TargetType = GetComponent<ITargetType>();
         movePosition = GetComponent<AbilityMovePosition>();
 
-        if (actionType == ActionType.Attack || actionType == ActionType.Combo)
+        if (actionType == Type.Attack || actionType == Type.Combo)
         {
             if(TargetType == null)
                 gameObject.AddComponent<TargetEnemies>();
             if(movePosition == null)
                 gameObject.AddComponent<AbilityMovePosition>().position = AbilityMovePosition.Position.TargetPosition;
             TargetType = GetComponent<ITargetType>();
-            actionRange = ActionRange.Single;
+            actionRange = Range.Single;
 
         }
-        if (actionType == ActionType.Combo)
+        if (actionType == Type.Combo)
         {
             cost = 0;
         }
@@ -159,11 +154,12 @@ public class CombatAction : MonoBehaviour
 
             case AbilityMovePosition.Position.TargetPosition:
                 return targetPosition;
+
+            default:
+                return attackerPosition;
+                
         }
-		
-
-        return attackerPosition;
-
+	
     }
 
     public void CalculateOutcome(StatisticsModule attackerStats, StatisticsModule targetStats)
@@ -180,7 +176,7 @@ public class CombatAction : MonoBehaviour
             float value = CalculateBaseModifierValue(modifier, attackerStats, targetStats);
             if(IsBlocked == true)
 			{
-                value *= 0.75f;
+                value *= 0.5f;
 			}
             modifier.ApplyStatChange(value, targetStats);
         }
@@ -189,12 +185,14 @@ public class CombatAction : MonoBehaviour
 
     bool DodgedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
     {
-        if (unavoidable == false || damageType == StatisticsModule.DamageType.Force)
+        if (unavoidable == false && damageType != StatisticsModule.DamageType.Force)
         {
+
+            float chance = baseHitChance - targetStats.atributes[StatisticsModule.Atribute.Perception].Value;
             int diceRoll = UnityEngine.Random.Range(0, 100);
 
-            //base chance for hit 95% - perception
-            if (diceRoll > 80 - attackerStats.atributes[StatisticsModule.Atribute.Perception].Value)
+
+            if (diceRoll < chance)
             {
                 return true;
             }
@@ -207,11 +205,18 @@ public class CombatAction : MonoBehaviour
 
     bool BlockedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
 	{
-        if (unavoidable == false || damageType == StatisticsModule.DamageType.Blaster)
+
+
+        if (unavoidable == false && damageType != StatisticsModule.DamageType.Blaster)
         {
+            //10 to 0 % chance
+            float chance = baseHitChance - targetStats.skills[StatisticsModule.Skill.SelfDefence].Value / 10f;
+            if (targetStats.Entity.combat.IsDefending == true)
+                chance = 90f;
+
             int diceRoll = UnityEngine.Random.Range(0, 100);
 
-            if (diceRoll > 20f - attackerStats.skills[StatisticsModule.Skill.SelfDefence].Value / 10f)
+            if (diceRoll < chance)
             {
                 return true;
             }
@@ -226,7 +231,7 @@ public class CombatAction : MonoBehaviour
     {
         float value = modifier.CalculateStatChange(power, attackerStats, targetStats);
 
-        foreach (DamageTypeModifier damageTypeModifier in DamageTypes)
+        foreach (ElementalModifier damageTypeModifier in Elements)
         {
             value = damageTypeModifier.CalculateElementalModifier(value, targetStats);
         }

@@ -20,7 +20,7 @@ public class TargetSelectPanel : MonoBehaviour
     [SerializeField] bool active;
     [SerializeField] Camera overviewCamera;
 
-    CombatAction.ActionRange selectingRange;
+    CombatAction.Range selectingRange;
 
     void Start()
     {
@@ -57,7 +57,7 @@ public class TargetSelectPanel : MonoBehaviour
         
     }
 
-    public void Create(List<GameObject> targets, CombatAction.ActionRange range)
+    public void Create(List<GameObject> targets, CombatAction.Range range)
     {
         availableTargets = targets;
         ClearTargets();
@@ -79,11 +79,11 @@ public class TargetSelectPanel : MonoBehaviour
         selectingRange = range;
         switch (range)
         {
-            case CombatAction.ActionRange.Single:
+            case CombatAction.Range.Single:
                 mainSelector.SetActive(true);
                 break;
 
-            case CombatAction.ActionRange.All:
+            case CombatAction.Range.All:
                 foreach (GameObject target in targets)
                 {
                     GameObject newSelector = Instantiate(mainSelector, mainSelector.transform.parent);
@@ -102,11 +102,11 @@ public class TargetSelectPanel : MonoBehaviour
     {
         switch (selectingRange)
         {
-            case CombatAction.ActionRange.Single:
+            case CombatAction.Range.Single:
                 ChangeSelectorPosition(mainSelector, target);
                 break;
 
-            case CombatAction.ActionRange.All:
+            case CombatAction.Range.All:
                 
                 break;
         }
@@ -126,17 +126,17 @@ public class TargetSelectPanel : MonoBehaviour
     {
         switch (selectingRange)
         {
-            case CombatAction.ActionRange.Single:
+            case CombatAction.Range.Single:
                 uiManager.TargetPicked(new List<GameObject>() { target });
                 break;
 
-            case CombatAction.ActionRange.All:
+            case CombatAction.Range.All:
                 uiManager.TargetPicked(new List<GameObject>(availableTargets));
                 break;
         }
         
 
-        selectingRange = CombatAction.ActionRange.Single;
+        selectingRange = CombatAction.Range.Single;
         availableTargets = null;
     }
 

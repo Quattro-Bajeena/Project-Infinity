@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2011012889317215715}
   - component: {fileID: 2011012889317215716}
   - component: {fileID: 2011012889317215717}
-  - component: {fileID: 2011012889317215718}
   - component: {fileID: 2011012889317215736}
   - component: {fileID: 2628901986191770351}
   m_Layer: 0
@@ -50,12 +49,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 0
   actionType: 0
-  damageType: 0
+  damageType: 2
   unavoidable: 0
   animationName: OffensiveAbilityClose1
   actionName: Super Punch
   power: 1
   cost: 5
+  baseHitChance: 20
   description: like, super hard punch
 --- !u!114 &2011012889317215716
 MonoBehaviour:
@@ -81,19 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ef1186125d4f64d8b278fd70c11272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2011012889317215718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2011012889317215738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisDamageType: 0
 --- !u!114 &2011012889317215736
 MonoBehaviour:
   m_ObjectHideFlags: 0

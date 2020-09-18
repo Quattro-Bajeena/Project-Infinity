@@ -11,7 +11,7 @@ public enum BaseAttackType
     NULL
 }
 
-public class BaseAttack : MonoBehaviour
+public class BaseAttackComponent : MonoBehaviour
 {
     public BaseAttackType attackType;
 }

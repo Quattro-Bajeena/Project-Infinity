@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8285992919354125507}
   - component: {fileID: 8285992919270015220}
-  - component: {fileID: 8285992919270015221}
   - component: {fileID: 8285992919270015218}
   - component: {fileID: 8285992919270015219}
   - component: {fileID: 8285992919270015216}
@@ -50,26 +49,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 1
   actionType: 0
-  damageType: 3
+  damageType: 4
   unavoidable: 0
   animationName: OffensiveAbilityRange2
-  actionName: Wind
+  actionName: ForceStorm
   power: 1
   cost: 5
+  baseHitChance: 20
   description: big freaking gust of wind dawg
---- !u!114 &8285992919270015221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8285992919270015217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bb62a74ea7c1cc45ad70b3484db069c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thisDamageType: 0
 --- !u!114 &8285992919270015218
 MonoBehaviour:
   m_ObjectHideFlags: 0

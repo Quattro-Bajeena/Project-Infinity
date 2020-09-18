@@ -45,11 +45,20 @@ public class StatisticsModule : MonoBehaviour
 	[SerializeField] ActionResource forcePoints;
 	[Space(5)]
 
-	[Header("Resistances")]
+	[Header("Defences")]
 	[SerializeField] Statistic physicalDefence;
+	[SerializeField] Statistic lighsaberDefence;
 	[SerializeField] Statistic blasterDefence;
 	[SerializeField] Statistic techDefence;
 	[SerializeField] Statistic forceDefence;
+	[Space(5)]
+
+	[Header("Resistances")]
+	[SerializeField] Statistic fireResistance;
+	[SerializeField] Statistic iceResistance;
+	[SerializeField] Statistic electricityResistance;
+	[SerializeField] Statistic lightSideResistance;
+	[SerializeField] Statistic darkSideResistance;
 
 
 	public enum Atribute
@@ -83,15 +92,28 @@ public class StatisticsModule : MonoBehaviour
 	public enum DamageType
 	{
 		Physical,
+		Lightsaber,
 		Blaster,
 		Tech,
 		Force
 	}
 
+	public enum Elements
+	{
+		Fire,
+		Ice,
+		Electricity,
+		LightSide,
+		DarkSide
+	}
+
+
+
 
 	public Dictionary<Atribute, Statistic> atributes = new Dictionary<Atribute, Statistic>();
 	public Dictionary<Skill, Statistic> skills = new Dictionary<Skill, Statistic>();
 	public Dictionary<DamageType, Statistic> defenses = new Dictionary<DamageType, Statistic>();
+	public Dictionary<Elements, Statistic> resistances = new Dictionary<Elements, Statistic>();
 	public Dictionary<Resource, ActionResource> resources = new Dictionary<Resource, ActionResource>();
 	
 
@@ -118,9 +140,16 @@ public class StatisticsModule : MonoBehaviour
 		skills.Add(Skill.Speed, speed);
 
 		defenses.Add(DamageType.Force, forceDefence);
+		defenses.Add(DamageType.Lightsaber, lighsaberDefence);
 		defenses.Add(DamageType.Physical, physicalDefence);
 		defenses.Add(DamageType.Blaster, blasterDefence);
 		defenses.Add(DamageType.Tech, techDefence);
+
+		resistances.Add(Elements.Fire, fireResistance);
+		resistances.Add(Elements.Ice, iceResistance);
+		resistances.Add(Elements.Electricity, electricityResistance);
+		resistances.Add(Elements.LightSide, lightSideResistance);
+		resistances.Add(Elements.DarkSide, darkSideResistance);
 
 		resources.Add(Resource.ActionPoints, actionPoints);
 		resources.Add(Resource.ForcePoints, forcePoints);
@@ -145,11 +174,6 @@ public class StatisticsModule : MonoBehaviour
 		//Clamp health
 
 		value *= 1 + Random.Range(-0.1f, 0.1f);
-		
-		if(Entity.combat.IsDefending == true)
-		{
-			value *= 0.5f;
-		}
 
 		value = Mathf.Clamp(value, 1, 9999);
 		int finalValue = Mathf.RoundToInt(value);
@@ -158,10 +182,6 @@ public class StatisticsModule : MonoBehaviour
 		currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
 		Entity.combat.ReceivedDamage(finalValue);
-		if(finalValue > 1)
-		{
-			EventManager.TriggerEvent(CombatEvents.ReceivedDamage, new CombatEventData(Entity.Id));
-		}
 		EventManager.TriggerEvent(CombatEvents.HealthChange, new CombatEventData(Entity.Id, -finalValue));
 	}
 
