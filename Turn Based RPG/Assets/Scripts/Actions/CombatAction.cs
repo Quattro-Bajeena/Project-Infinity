@@ -25,7 +25,8 @@ public class CombatAction : MonoBehaviour
     public StatisticsModule.DamageType damageType;
     [SerializeField] bool unavoidable = false;
 
-    public string animationName;
+    public ActionAnimationInfo animationInfo;
+    public AnimationClip animationClip;
 
     public string actionName;
     [SerializeField] float power;

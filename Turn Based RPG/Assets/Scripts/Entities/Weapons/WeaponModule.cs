@@ -43,7 +43,6 @@ public class WeaponModule : MonoBehaviour
     void ChangeWeapon(Weapon newWeapon)
 	{
 		currentWeapon = newWeapon;
-		animator.runtimeAnimatorController = currentWeapon.animatorOverride;
 		switch (newWeapon.type)
 		{
 			case Weapon.Type.Lightsaber:
@@ -54,6 +53,7 @@ public class WeaponModule : MonoBehaviour
 				leftHandTarget = currentWeapon.SetHand(handRiflePos);
 				break;
 		}
+		entity.animations.ChangeWeapon(currentWeapon.animatorOverride);
 		entity.combat.ChangeWeapon(currentWeapon.abilities, currentWeapon.attacks, currentWeapon.combos);
 	}
 

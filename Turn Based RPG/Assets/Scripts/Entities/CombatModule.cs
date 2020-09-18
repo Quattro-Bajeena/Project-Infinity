@@ -288,7 +288,7 @@ public class CombatModule : MonoBehaviour
             //there are attack in the queue
             if (attackQueue.Count != 0)
             {
-                Entity.animations.TriggerAttack(attackQueue.Peek().animationName);
+                Entity.animations.TriggerAttack(attackQueue.Peek().BaseAttackType);
 
                 yield return null;
                 while (Entity.animations.IsAnimationPlaying() == true) { yield return null; }
@@ -336,7 +336,7 @@ public class CombatModule : MonoBehaviour
         }
 
 
-        Entity.animations.PerformAbility(action.animationName);
+        Entity.animations.PerformAbility(action.animationClip);
         yield return null;
         while (Entity.animations.IsAnimationPlaying() == true) { yield return null; }
 

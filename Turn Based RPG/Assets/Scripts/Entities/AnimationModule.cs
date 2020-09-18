@@ -8,10 +8,16 @@ public class AnimationModule : MonoBehaviour
     Entity entity;
 
     Animator animator;
+    AnimatorOverrideController overrideController;
+
+    [SerializeField] AnimationClip defaultAbilityAnimation;
+
     [SerializeField] float normalizedTime = 0f;
     [SerializeField] bool animatiorIsTransitioning = false;
     [SerializeField] bool animationPlaying;
     [SerializeField] string currentAnimation;
+
+
 
 
     void Awake()
@@ -42,15 +48,39 @@ public class AnimationModule : MonoBehaviour
         currentAnimation = animator.GetCurrentAnimatorStateInfo(0).ToString();
     }
 
+    public void ChangeWeapon(AnimatorOverrideController newOverrideController)
+	{
+        animator.runtimeAnimatorController = newOverrideController;
+        overrideController = newOverrideController;
+	}
+
     public void SetCombatState(bool combat)
 	{
         animator.SetBool("InCombat", combat);
 	}
 
-    public void TriggerAttack(string attackAnimationName)
+    public void TriggerAttack(BaseAttackType type)
 	{
         animator.SetBool("Defending", false);
-        animator.SetTrigger(attackAnimationName);
+        string animationName = "";
+		switch (type)
+		{
+            case BaseAttackType.Light:
+                animationName = "LightAttack";
+                break;
+            case BaseAttackType.Medium:
+                animationName = "MediumAttack";
+                break;
+            case BaseAttackType.Strong:
+                animationName = "StrongAttack";
+                break;
+
+            case BaseAttackType.NULL:
+            default:
+                return;
+
+		}
+		animator.SetTrigger(animationName);
 	}
 
     public void CancelAttack()
@@ -73,11 +103,23 @@ public class AnimationModule : MonoBehaviour
 
     }
 
-    public void PerformAbility(string abilityName)
+    public void PerformAbility(AnimationClip animation)
+	{
+        
+        overrideController[defaultAbilityAnimation] = animation;
+        animator.SetBool("PerformingAbility", true);
+    }
+
+    public void PerformAbility(ActionAnimationInfo animationInfo)
 	{
         animator.SetBool("PerformingAbility", true);
-        animator.SetTrigger(abilityName);
-	}
+        //animator.SetTrigger(abilityName);
+
+        
+        animator.SetFloat("ActionAnimationID", (int)animationInfo.source);
+        animator.SetFloat("ActionAnimationID", (int)animationInfo.category);
+        animator.SetFloat("ActionAnimationID", animationInfo.id);
+    }
 
     public void AbilityEnded()
 	{
@@ -110,21 +152,13 @@ public class AnimationModule : MonoBehaviour
         animator.SetBool("InAir", false);
     }
 
-    //Animation that loops is not playing
+    //Animation that loops is not playing but only after first loop
     public bool IsAnimationPlaying()
 	{
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && animator.IsInTransition(0) == false)
         {
             return false;
         }
-  //      else if(animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") == true)
-		//{
-  //          return false;
-		//}
-  //      else if(animator.GetCurrentAnimatorStateInfo(0).IsName("Abilities Idle") == true)
-		//{
-  //          return false;
-		//}
         else return true;
 
 	}

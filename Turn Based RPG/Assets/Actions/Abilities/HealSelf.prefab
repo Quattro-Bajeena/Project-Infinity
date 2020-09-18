@@ -50,7 +50,12 @@ MonoBehaviour:
   actionType: 0
   damageType: 4
   unavoidable: 1
-  animationName: DefensiveAbility1
+  animationInfo:
+    source: 0
+    category: 1
+    id: 0
+  actionAnimation: {fileID: -3472376498034453887, guid: 73b4f4ed981875245b01f0df53a4833f,
+    type: 3}
   actionName: Heal Self
   power: 3
   cost: 13

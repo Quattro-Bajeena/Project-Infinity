@@ -51,10 +51,14 @@ MonoBehaviour:
   actionType: 0
   damageType: 0
   unavoidable: 0
-  animationName: OffensiveAbilityClose1
+  animationInfo:
+    source: 1
+    category: 0
+    id: 3
   actionName: Tackle
   power: 1
   cost: 5
+  baseHitChance: 20
   description: tackle your opponent
 --- !u!114 &2011012889317215716
 MonoBehaviour:

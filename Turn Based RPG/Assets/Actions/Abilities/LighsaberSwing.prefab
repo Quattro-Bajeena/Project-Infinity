@@ -51,8 +51,13 @@ MonoBehaviour:
   actionType: 0
   damageType: 1
   unavoidable: 0
-  animationName: OffensiveAbilityClose1
-  actionName: Tackle
+  animationInfo:
+    source: 1
+    category: 0
+    id: 0
+  animationClip: {fileID: 6891081409679799474, guid: 492f9eca3277f5442a7996a7ffc12b09,
+    type: 3}
+  actionName: Lightsaber Swoing
   power: 1
   cost: 5
   baseHitChance: 20

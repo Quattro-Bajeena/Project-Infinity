@@ -51,7 +51,10 @@ MonoBehaviour:
   actionType: 0
   damageType: 2
   unavoidable: 0
-  animationName: OffensiveAbilityRange3
+  animationInfo:
+    source: 1
+    category: 0
+    id: 2
   actionName: s.shot
   power: 1.5
   cost: 10

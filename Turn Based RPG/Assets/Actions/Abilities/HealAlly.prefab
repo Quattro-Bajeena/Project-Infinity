@@ -50,7 +50,12 @@ MonoBehaviour:
   actionType: 0
   damageType: 4
   unavoidable: 1
-  animationName: DefensiveAbility1
+  animationInfo:
+    source: 0
+    category: 1
+    id: 0
+  actionAnimation: {fileID: -6495878906448352753, guid: 492f9eca3277f5442a7996a7ffc12b09,
+    type: 3}
   actionName: Bless
   power: 2
   cost: 5

@@ -51,7 +51,12 @@ MonoBehaviour:
   actionType: 0
   damageType: 4
   unavoidable: 0
-  animationName: OffensiveAbilityRange1
+  animationInfo:
+    source: 0
+    category: 0
+    id: 0
+  actionAnimation: {fileID: 6060332349333817591, guid: 492f9eca3277f5442a7996a7ffc12b09,
+    type: 3}
   actionName: Force Push
   power: 2
   cost: 5
