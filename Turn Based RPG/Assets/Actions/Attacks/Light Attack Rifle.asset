@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
+  m_Name: Light Attack Rifle
+  m_EditorClassIdentifier: 
+  actionRange: 0
+  actionType: 1
+  damageType: 2
+  unavoidable: 0
+  power: 0.5
+  cost: 1
+  baseHitChance: 20
+  actionName: Light Attack Rifle
+  description: 
+  animationClip: {fileID: 0}
+  TargetType: {fileID: 11400000, guid: 30648abe7908f234a83b8dc67067a28c, type: 2}
+  ResourceType: {fileID: 11400000, guid: 85260e0f4e740b44d9b699e8c82be514, type: 2}
+  movePosition:
+    position: 2
+  StatisticModifiers:
+  - {fileID: 11400000, guid: 133da6761801e104480e5739793d3e36, type: 2}
+  Elements: []
+  comboAction:
+    requiredInput: 
+  baseAttack:
+    attackType: 1

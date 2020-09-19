@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class AbilityMovePosition : MonoBehaviour
+[System.Serializable]
+public class AbilityMovePosition
 {
     public enum Position
     {

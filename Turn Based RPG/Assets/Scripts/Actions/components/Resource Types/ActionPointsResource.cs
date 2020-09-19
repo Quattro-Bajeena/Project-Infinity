@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionPointsResource : MonoBehaviour, IUsesResourceStat
+[CreateAssetMenu(fileName = "Action Point Resource", menuName = "ScriptableObjects/Action Components/Resource Types/Action Points")]
+public class ActionPointsResource : UsesResourceStat
 {
-    public bool IsEnoughResource(StatisticsModule attackerStats, int cost)
+    public override bool IsEnoughResource(StatisticsModule attackerStats, int cost)
     {
         return attackerStats.resources[StatisticsModule.Resource.ActionPoints].IsEnough(cost);
     }
 
-    public void UseResourceStat(StatisticsModule attackerStats, int cost)
+    public override void UseResourceStat(StatisticsModule attackerStats, int cost)
     {
         attackerStats.resources[StatisticsModule.Resource.ActionPoints].Use(cost);
     }

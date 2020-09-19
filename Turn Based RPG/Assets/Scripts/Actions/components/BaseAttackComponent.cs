@@ -5,13 +5,14 @@ using UnityEngine;
 
 public enum BaseAttackType
 {
+    NULL,
     Light,
     Medium,
-    Strong,
-    NULL
+    Strong
 }
 
-public class BaseAttackComponent : MonoBehaviour
+[System.Serializable]
+public class BaseAttackComponent
 {
     public BaseAttackType attackType;
 }

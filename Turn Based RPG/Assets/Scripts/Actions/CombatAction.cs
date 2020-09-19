@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatAction : MonoBehaviour
+[CreateAssetMenu(fileName = "Action", menuName = "ScriptableObjects/Action")]
+public class CombatAction : ScriptableObject
 {
     public enum Type
     {
@@ -25,88 +26,27 @@ public class CombatAction : MonoBehaviour
     public StatisticsModule.DamageType damageType;
     [SerializeField] bool unavoidable = false;
 
-    public ActionAnimationInfo animationInfo;
-    public AnimationClip animationClip;
-
-    public string actionName;
+    
     [SerializeField] float power;
     public int cost;
     [SerializeField] [Range(0,100)] int baseHitChance = 20;
 
+    public string actionName;
     public string description;
+    public AnimationClip animationClip;
+    
 
+    [SerializeField] TargetType TargetType;
+    [SerializeField] UsesResourceStat ResourceType;
+    [SerializeField] AbilityMovePosition movePosition;
+    [SerializeField] List<StatisticModyfiyngAction> StatisticModifiers = new List<StatisticModyfiyngAction>();
+    [SerializeField] List<ElementalModifier> Elements = new List<ElementalModifier>();
 
-    ITargetType TargetType;
-    IUsesResourceStat ResourceType;
-    ComboAction comboAction;
-    BaseAttackComponent baseAttack;
-    AbilityMovePosition movePosition;
+    [Space(10)]
+    [Header("OPTIONAL")]
+    [SerializeField] ComboAction comboAction; //optional
+    [SerializeField] BaseAttackComponent baseAttack; //optional
 
-    List<IStatisticModyfiyngAction> StatisticModifiers;
-    List<ElementalModifier> Elements;
-
-
-    public bool IsTargetPositionStationary
-	{
-		get
-		{
-            if (movePosition == null)
-                return true;
-            else return movePosition.position == AbilityMovePosition.Position.StartingPosition;
-        }
-	}
-
-    public BaseAttackType BaseAttackType
-    {
-        get
-        {
-            if (baseAttack)
-            {
-                return baseAttack.attackType;
-            }
-            else
-            {
-                return BaseAttackType.NULL;
-            }
-        }
-    }
-
-    public bool IsAvoided { get; private set; }
-    public bool IsBlocked { get; private set; }
-
-
-    void Awake()
-    {
-        StatisticModifiers = new List<IStatisticModyfiyngAction>();
-        Elements = new List<ElementalModifier>();
-
-
-        StatisticModifiers.AddRange(GetComponents<IStatisticModyfiyngAction>());
-        ResourceType = GetComponent<IUsesResourceStat>();
-        Elements.AddRange(GetComponents<ElementalModifier>());
-        comboAction = GetComponent<ComboAction>();
-        baseAttack = GetComponent<BaseAttackComponent>();
-        TargetType = GetComponent<ITargetType>();
-        movePosition = GetComponent<AbilityMovePosition>();
-
-        if (actionType == Type.Attack || actionType == Type.Combo)
-        {
-            if(TargetType == null)
-                gameObject.AddComponent<TargetEnemies>();
-            if(movePosition == null)
-                gameObject.AddComponent<AbilityMovePosition>().position = AbilityMovePosition.Position.TargetPosition;
-            TargetType = GetComponent<ITargetType>();
-            actionRange = Range.Single;
-
-        }
-        if (actionType == Type.Combo)
-        {
-            cost = 0;
-        }
-
-        
-
-    }
 
     public List<BaseAttackType> ComboInput
     {
@@ -116,7 +56,22 @@ public class CombatAction : MonoBehaviour
             else return null;
         }
     }
-    
+    public BaseAttackType BaseAttackType
+    {
+		get { return baseAttack.attackType; }
+    }
+
+    public bool IsTargetPositionStationary
+    {
+        get
+        {
+            if (movePosition == null)
+                return true;
+            else return movePosition.position == AbilityMovePosition.Position.StartingPosition;
+        }
+    }
+
+
     public void UseResourceStat(StatisticsModule attackerStats)
     {
         if(ResourceType != null)
@@ -163,19 +118,13 @@ public class CombatAction : MonoBehaviour
 	
     }
 
-    public void CalculateOutcome(StatisticsModule attackerStats, StatisticsModule targetStats)
-	{
-        IsAvoided = DodgedAction(attackerStats, targetStats);
-        IsBlocked = BlockedAction(attackerStats, targetStats);
-	}
-
-    public void ModyfiStatistics(StatisticsModule attackerStats, StatisticsModule targetStats)
+    public void ModyfiStatistics(StatisticsModule attackerStats, StatisticsModule targetStats, bool blocked)
     {
 
-        foreach (IStatisticModyfiyngAction modifier in StatisticModifiers)
+        foreach (StatisticModyfiyngAction modifier in StatisticModifiers)
         {
             float value = CalculateBaseModifierValue(modifier, attackerStats, targetStats);
-            if(IsBlocked == true)
+            if(blocked == true)
 			{
                 value *= 0.5f;
 			}
@@ -184,7 +133,7 @@ public class CombatAction : MonoBehaviour
     }
 
 
-    bool DodgedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
+    public bool DodgedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
     {
         if (unavoidable == false && damageType != StatisticsModule.DamageType.Force)
         {
@@ -204,7 +153,7 @@ public class CombatAction : MonoBehaviour
 
     }
 
-    bool BlockedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
+    public bool BlockedAction(StatisticsModule attackerStats, StatisticsModule targetStats)
 	{
 
 
@@ -228,7 +177,7 @@ public class CombatAction : MonoBehaviour
 		
     }
 
-    float CalculateBaseModifierValue(IStatisticModyfiyngAction modifier, StatisticsModule attackerStats, StatisticsModule targetStats)
+    float CalculateBaseModifierValue(StatisticModyfiyngAction modifier, StatisticsModule attackerStats, StatisticsModule targetStats)
     {
         float value = modifier.CalculateStatChange(power, attackerStats, targetStats);
 
@@ -265,9 +214,9 @@ public class CombatAction : MonoBehaviour
 
 
 
-    public List<IActionEffect> GetEffects()
+    public List<ActionEffect> GetEffects()
     {
-        return new List<IActionEffect>();
+        return new List<ActionEffect>();
     }
 
 }

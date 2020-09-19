@@ -24,48 +24,44 @@ public class Weapon : MonoBehaviour
 
     public AnimatorOverrideController animatorOverride;
 
-    [SerializeField] List<GameObject> abilitiesPrefab = new List<GameObject>();
-    [SerializeField] List<GameObject> combosPrefab = new List<GameObject>();
+    [Space(10)]
+    [Header("Actions")]
+    [SerializeField] CombatAction lightAttack;
+    [SerializeField] CombatAction mediumAttack;
+    [SerializeField] CombatAction strongAttack;
 
-    [SerializeField] GameObject lightAttack;
-    [SerializeField] GameObject mediumAttack;
-    [SerializeField] GameObject strongAttack;
+    [SerializeField] List<CombatAction> abilities = new List<CombatAction>();
+    [SerializeField] List<CombatAction> combos = new List<CombatAction>();
 
-    public List<CombatAction> abilities { get; private set; } = new List<CombatAction>();
-    public Dictionary<BaseAttackType, CombatAction> attacks { get; private set; } = new Dictionary<BaseAttackType, CombatAction>();
-    public List<CombatAction> combos { get; private set; } = new List<CombatAction>();
+
+    public Dictionary<BaseAttackType, CombatAction> Attacks
+	{
+        get
+        {
+            return new Dictionary<BaseAttackType, CombatAction>
+            {
+                {BaseAttackType.Light, lightAttack },
+                {BaseAttackType.Medium, mediumAttack },
+                {BaseAttackType.Strong, strongAttack }
+            };
+
+        }
+	}
+    public List<CombatAction> Abilities
+	{
+		get { return abilities; }
+	}
+    public List<CombatAction> Combos
+	{
+		get { return combos; }
+	}
+    
 
     void Awake()
     {
         statistics = GetComponent<WeaponStatistics>();
         weaponBehaviour = GetComponent<IWeaponBehaviour>();
-
-		foreach (GameObject ability in abilitiesPrefab)
-		{
-            GameObject newAbility = Instantiate(ability);
-            newAbility.transform.SetParent(transform.Find("Abilities"));
-            abilities.Add(newAbility.GetComponent<CombatAction>());
-		}
-
-        GameObject lightAttackGO =  Instantiate(lightAttack);
-        lightAttackGO.transform.SetParent(transform.Find("Attacks"));
-        attacks.Add(BaseAttackType.Light, lightAttackGO.GetComponent<CombatAction>());
-
-        GameObject mediumAttackGO = Instantiate(mediumAttack);
-        mediumAttackGO.transform.SetParent(transform.Find("Attacks"));
-        attacks.Add(BaseAttackType.Medium, mediumAttackGO.GetComponent<CombatAction>());
-
-        GameObject strongAttackGO = Instantiate(strongAttack);
-        strongAttackGO.transform.SetParent(transform.Find("Attacks"));
-        attacks.Add(BaseAttackType.Strong, strongAttackGO.GetComponent<CombatAction>());
-
-
-        foreach (GameObject combo in combosPrefab)
-        {
-            GameObject newCombo = Instantiate(combo);
-            newCombo.transform.SetParent(transform.Find("Combos"));
-            combos.Add(newCombo.GetComponent<CombatAction>());
-        }
+           
     }
 
     public Transform SetHand(Transform hand)

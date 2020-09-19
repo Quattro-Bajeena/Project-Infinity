@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
+  m_Name: Heal Self
+  m_EditorClassIdentifier: 
+  actionRange: 0
+  actionType: 0
+  damageType: 4
+  unavoidable: 1
+  power: 1
+  cost: 5
+  baseHitChance: 20
+  actionName: heal yourself
+  description: Heal yself
+  animationClip: {fileID: -6495878906448352753, guid: 492f9eca3277f5442a7996a7ffc12b09,
+    type: 3}
+  TargetType: {fileID: 11400000, guid: 5b228b23a5cce1a4291c8a774cb00b8f, type: 2}
+  ResourceType: {fileID: 11400000, guid: e41a8091c45b2624fb883e511ab40b2a, type: 2}
+  movePosition:
+    position: 0
+  StatisticModifiers:
+  - {fileID: 11400000, guid: 3ac77538e698f994291a0d249c9ade71, type: 2}
+  Elements: []
+  comboAction:
+    requiredInput: 
+  baseAttack:
+    attackType: 0

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetEnemies : MonoBehaviour ,ITargetType
+[CreateAssetMenu(fileName = "Target Enemies", menuName = "ScriptableObjects/Action Components/Target Types/Enemies")]
+public class TargetEnemies : TargetType
 {
-    public List<CombatModule> GetTargets(CombatModule attacker, List<CombatModule> potentialTargets)
+    public override List<CombatModule> GetTargets(CombatModule attacker, List<CombatModule> potentialTargets)
     {
         List<CombatModule> targets = new List<CombatModule>();
         
@@ -20,7 +21,7 @@ public class TargetEnemies : MonoBehaviour ,ITargetType
         return targets;
     }
 
-    public List<string> GetTargetsById(string attackerId, bool isCharacter, List<CombatModule> potentialTargets)
+    public override List<string> GetTargetsById(string attackerId, bool isCharacter, List<CombatModule> potentialTargets)
     {
         List<string> targets = new List<string>();
 

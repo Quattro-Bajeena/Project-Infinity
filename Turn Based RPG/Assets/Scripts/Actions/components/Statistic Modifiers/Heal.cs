@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heal : MonoBehaviour, IStatisticModyfiyngAction
+[CreateAssetMenu(fileName = "Heal", menuName = "ScriptableObjects/Action Components/Statistic Modifiers/Heal")]
+public class Heal : StatisticModyfiyngAction
 {
 
-
-	public float CalculateStatChange(float power, StatisticsModule attackerStats, StatisticsModule targetStats)
+	public override float CalculateStatChange(float power, StatisticsModule attackerStats, StatisticsModule targetStats)
 	{
 		return targetStats.atributes[StatisticsModule.Atribute.Force].Value * power;
 	}
 
-	public void ApplyStatChange(float value, StatisticsModule targetStats)
+	public override void ApplyStatChange(float value, StatisticsModule targetStats)
 	{
 		targetStats.Heal(value);
 	}

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForceResource : MonoBehaviour, IUsesResourceStat
+[CreateAssetMenu(fileName = "Force Point Resource", menuName = "ScriptableObjects/Action Components/Resource Types/Force Points")]
+public class ForceResource : UsesResourceStat
 {
-    public bool IsEnoughResource(StatisticsModule attackerStats, int cost)
+    public override bool IsEnoughResource(StatisticsModule attackerStats, int cost)
     {
         return attackerStats.resources[StatisticsModule.Resource.ForcePoints].IsEnough(cost);
     }
 
-    public void UseResourceStat(StatisticsModule attackerStats, int cost)
+    public override void UseResourceStat(StatisticsModule attackerStats, int cost)
     {
         attackerStats.resources[StatisticsModule.Resource.ForcePoints].Use(cost);
     }

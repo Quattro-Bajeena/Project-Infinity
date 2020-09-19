@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElementalModifier : MonoBehaviour
+
+[System.Serializable]
+public class ElementalModifier
 {
     [SerializeField] StatisticsModule.Elements element;
     public float CalculateElementalModifier(float statChange, StatisticsModule targetStatistics)

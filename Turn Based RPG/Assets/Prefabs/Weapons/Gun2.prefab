@@ -295,7 +295,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8409211040682686154}
-  m_LocalRotation: {x: 0.000000089406946, y: -0.65341204, z: -0, w: -0.7570025}
+  m_LocalRotation: {x: 0, y: 0.653414, z: 0, w: 0.7570008}
   m_LocalPosition: {x: 1.612, y: 5.358, z: -0.372}
   m_LocalScale: {x: 1.2853775, y: 1.2853767, z: 1.2853771}
   m_Children:
@@ -303,7 +303,7 @@ Transform:
   - {fileID: 9205807109481706780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -78.665, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 81.59901, z: 0}
 --- !u!114 &8679260234610510743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,8 +331,16 @@ MonoBehaviour:
   type: 1
   secondHandHandle: {fileID: 3718341412617722976}
   animatorOverride: {fileID: 22100000, guid: 5fa4135040827684c8c7347b0a8df9e1, type: 2}
-  abilitiesPrefab: []
-  combosPrefab: []
-  lightAttack: {fileID: 0}
-  mediumAttack: {fileID: 0}
-  strongAttack: {fileID: 0}
+  lightAttack: {fileID: 1870294219188194549, guid: 52a006104922cdc45a3e06038e4bf781,
+    type: 3}
+  mediumAttack: {fileID: 1870294219188194549, guid: 167d904982600c445a75b6ef9800a805,
+    type: 3}
+  strongAttack: {fileID: 1870294219188194549, guid: a299574209583484fbc92a5b1952fa4e,
+    type: 3}
+  abilitiesPrefab:
+  - {fileID: 8285992919270015217, guid: 968d07231ded8894981a3d6fb061a7da, type: 3}
+  - {fileID: 8285992919270015217, guid: 656a7f9e958085d4d9b53f98cbc64d03, type: 3}
+  - {fileID: 8285992919270015217, guid: 3a4aaebf6bf368944847905a74e6cbef, type: 3}
+  - {fileID: 2011012889317215738, guid: 9c0e3467f93951d40bee834268681c15, type: 3}
+  combosPrefab:
+  - {fileID: 2453806081442596673, guid: 0344572aac27c984bbad435e18e56bf6, type: 3}

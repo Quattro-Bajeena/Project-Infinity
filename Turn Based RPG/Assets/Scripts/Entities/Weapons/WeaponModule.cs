@@ -19,8 +19,8 @@ public class WeaponModule : MonoBehaviour
 	[Space(15)]
 
 	[SerializeField] bool secondHandIKActive = false;
-	[SerializeField] Transform leftHandTarget = null;
-	[SerializeField] Transform rightHandTarget = null;
+	Transform leftHandTarget = null;
+	Transform rightHandTarget = null;
 
 	void Awake()
     {
@@ -28,6 +28,11 @@ public class WeaponModule : MonoBehaviour
         animator = GetComponent<Animator>();
         avaiableWeapons.AddRange(GetComponentsInChildren<Weapon>());
 
+		
+    }
+
+	private void Start()
+	{
 		if (defaultWeapon)
 			ChangeWeapon(defaultWeapon);
 		else
@@ -38,9 +43,9 @@ public class WeaponModule : MonoBehaviour
 			if (weapon != currentWeapon)
 				weapon.gameObject.SetActive(false);
 		}
-    }
+	}
 
-    void ChangeWeapon(Weapon newWeapon)
+	void ChangeWeapon(Weapon newWeapon)
 	{
 		currentWeapon = newWeapon;
 		switch (newWeapon.type)
@@ -54,7 +59,7 @@ public class WeaponModule : MonoBehaviour
 				break;
 		}
 		entity.animations.ChangeWeapon(currentWeapon.animatorOverride);
-		entity.combat.ChangeWeapon(currentWeapon.abilities, currentWeapon.attacks, currentWeapon.combos);
+		entity.combat.ChangeWeapon(currentWeapon.Abilities, currentWeapon.Attacks, currentWeapon.Combos);
 	}
 
 
@@ -63,17 +68,18 @@ public class WeaponModule : MonoBehaviour
         
     }
 
+	//Events from Animation clips
     void OnWeaponRelease()
 	{
 		secondHandIKActive = false;
 	}
 
-    void OnWeaponMainHand()
+    public void OnWeaponMainHand()
 	{
 		secondHandIKActive = false;
 	}
 
-    void OnWeaponBothHands()
+    public void OnWeaponBothHands()
 	{
 		secondHandIKActive = true;
 	}

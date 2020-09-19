@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetSelf : MonoBehaviour, ITargetType
+[CreateAssetMenu(fileName = "Target Self", menuName = "ScriptableObjects/Action Components/Target Types/Self")]
+public class TargetSelf : TargetType
 {
-    public List<CombatModule> GetTargets(CombatModule attacker, List<CombatModule> potentialTargets)
+    public override List<CombatModule> GetTargets(CombatModule attacker, List<CombatModule> potentialTargets)
     {
         return new List<CombatModule>() { attacker };
     }
 
-    public List<string> GetTargetsById(string attackerId, bool isCharacter, List<CombatModule> potentialTargets)
+    public override List<string> GetTargetsById(string attackerId, bool isCharacter, List<CombatModule> potentialTargets)
     {
         return new List<string>() { attackerId };
     }

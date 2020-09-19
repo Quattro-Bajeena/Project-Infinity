@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ComboAction : MonoBehaviour
+[System.Serializable]
+public class ComboAction
 {
     public List<BaseAttackType> requiredInput;
 }

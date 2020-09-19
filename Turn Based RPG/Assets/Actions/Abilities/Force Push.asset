@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
+  m_Name: Force Push
+  m_EditorClassIdentifier: 
+  actionRange: 0
+  actionType: 0
+  damageType: 4
+  unavoidable: 0
+  power: 1
+  cost: 5
+  baseHitChance: 20
+  description: Push taht Force!
+  animationClip: {fileID: 6060332349333817591, guid: 492f9eca3277f5442a7996a7ffc12b09,
+    type: 3}
+  actionName: F.Push
+  TargetType: {fileID: 11400000, guid: 30648abe7908f234a83b8dc67067a28c, type: 2}
+  ResourceType: {fileID: 11400000, guid: e41a8091c45b2624fb883e511ab40b2a, type: 2}
+  movePosition:
+    position: 2
+  StatisticModifiers:
+  - {fileID: 11400000, guid: e64d02712c10aaa4cb8212bb05c1e423, type: 2}
+  Elements: []
+  comboAction:
+    requiredInput: 
+  baseAttack:
+    attackType: 0

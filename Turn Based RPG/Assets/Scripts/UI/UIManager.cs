@@ -242,7 +242,7 @@ public class UIManager : MonoBehaviour
         if (currentCharacter != null && currentActionTargets.Count > 0)
         {
             
-            CombatAction attack = characters[currentCharacter].baseAttacks[type];
+            CombatAction attack = characters[currentCharacter].BaseAttacks[type];
             if (attack.IsEnoughResource(characters[currentCharacter].Stats))
             {
                 EventManager.TriggerEvent(UIEvents.ActionLaunched, new UIEventData(currentCharacter, currentActionTargets, attack));
@@ -329,7 +329,7 @@ public class UIManager : MonoBehaviour
     {
         //Get character abilities
         currentUIMove = UIMove.Ability;
-        OpenCharacterAbilityPanel(new List<CombatAction>(characters[currentCharacter].abilities));
+        OpenCharacterAbilityPanel(new List<CombatAction>(characters[currentCharacter].Abilities));
     }
 
     public void OpenItemPanel()

@@ -59,9 +59,9 @@ public class CombatAIModule : MonoBehaviour
             PickAction();
 
 			
-            int index = Random.Range(0, entity.combat.abilities.Count - 1);
+            int index = Random.Range(0, entity.combat.Abilities.Count - 1);
 
-            CombatAction ability = entity.combat.abilities[index];
+            CombatAction ability = entity.combat.Abilities[index];
 
             if (ability.IsEnoughResource(entity.stats))
             {
