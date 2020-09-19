@@ -6,11 +6,13 @@ using UnityEngine.Events;
 
 public class BattleManager : MonoBehaviour
 {
-    [SerializeField] Dictionary<string, CombatModule> entitiesInBattle = new Dictionary<string, CombatModule>();
-    [SerializeField] List<string> entityQueue = new List<string>();
-    [SerializeField] Transform middleOfBattlefied;
+    [SerializeField] Transform battlefieldCenter;
+    [SerializeField] Transform charactersPosition;
+    [SerializeField] Transform enemiesPosition;
 
-    Transform battlefieldCenter;
+
+    Dictionary<string, CombatModule> entitiesInBattle = new Dictionary<string, CombatModule>();
+    [SerializeField] List<string> entityQueue = new List<string>();
 
     enum BattleState
     {
@@ -26,7 +28,12 @@ public class BattleManager : MonoBehaviour
     
     void Awake()
     {
-        battlefieldCenter = GameObject.Find("BattlefieldCenter").transform;
+        if(battlefieldCenter == null)
+            battlefieldCenter = GameObject.Find("BattlefieldCenter").transform;
+        if (charactersPosition == null)
+            charactersPosition = GameObject.Find("CharactersPosition").transform;
+        if (enemiesPosition == null)
+            enemiesPosition = GameObject.Find("EnemiesPosition").transform;
         
     }
 
@@ -35,8 +42,14 @@ public class BattleManager : MonoBehaviour
         var entities = FindObjectsOfType<CombatModule>();
         foreach (var entity in entities)
         {
+            if (entity.IsCharacter)
+                entity.enemiesPosition = enemiesPosition.position;
+            else
+                entity.enemiesPosition = charactersPosition.position;
+
             entity.battlefieldCenter = battlefieldCenter.position;
             entitiesInBattle.Add(entity.Entity.Id, entity);
+
         }
 
     }
@@ -111,7 +124,7 @@ public class BattleManager : MonoBehaviour
         }
 
         Vector3 position = action.GetMovePosition(attacker.transform.position, currentTargets[0].attackerPosition, battlefieldCenter.position);
-        attacker.ProcessAction(action, position);
+        attacker.ProcessAction(action, position, currentTargets[0].transform.position);
     }
 
     void CancelAttack(UIEventData data)

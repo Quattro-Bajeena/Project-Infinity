@@ -65,6 +65,13 @@ public class AnimationModule : MonoBehaviour
 		animator.SetBool("PerformingAbility", true);
 	}
 
+	public void PerformCombo(AnimationClip animation)
+	{
+		animator.SetBool("Defending", false);
+		overrideController["DefaultCombo"] = animation;
+		animator.SetBool("PerformingCombo", true);
+	}
+
 	public void PerformAttack(BaseAttackType type)
 	{
 		animator.SetBool("Defending", false);

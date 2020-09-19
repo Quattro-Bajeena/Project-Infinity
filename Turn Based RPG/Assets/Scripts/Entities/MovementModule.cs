@@ -62,10 +62,11 @@ public class MovementModule : MonoBehaviour
         StartCoroutine(TurnInTimeCoroutine(targetRotation, timeMultiplier));
     }
 
-    public void MoveToTarget(Vector3 target, float speedModifier = 1)
+    public void MoveToTarget(Vector3 moveTarget, Vector3 lookTarget, float speedModifier = 1)
     {
-        Vector3 targetGroundPosition = new Vector3(target.x, transform.position.y, target.z);
-        StartCoroutine(MoveToTargetCoroutine(targetGroundPosition, speedModifier));
+        Vector3 targetGroundPosition = new Vector3(moveTarget.x, transform.position.y, moveTarget.z);
+        Vector3 lookTargetGroundPosition = new Vector3(lookTarget.x, transform.position.y, lookTarget.z);
+        StartCoroutine(MoveToTargetCoroutine(targetGroundPosition, lookTargetGroundPosition, speedModifier));
     }
 
     IEnumerator TurnInTimeCoroutine(Quaternion targetRotation, float timeMultiplier)
@@ -82,27 +83,27 @@ public class MovementModule : MonoBehaviour
         transform.rotation = targetRotation;
     }
 
-    IEnumerator MoveToTargetCoroutine(Vector3 target, float speedModifier)
+    IEnumerator MoveToTargetCoroutine(Vector3 moveTarget, Vector3 lookTarget, float speedModifier)
 	{
         entity.animations.SetWalking(true, speedModifier);
 
-        float distance = Vector3.Distance(transform.position, target);
+        float distance = Vector3.Distance(transform.position, moveTarget);
         Vector3 direction;
-        transform.LookAt(target);
+        transform.LookAt(moveTarget);
 
         while (distance > 0.1f)
 		{
-            direction = Vector3.Normalize(target - transform.position);
+            direction = Vector3.Normalize(moveTarget - transform.position);
             controller.Move(direction * speed * speedModifier * Time.deltaTime);
 
-            distance = Vector3.Distance(transform.position, target);
+            distance = Vector3.Distance(transform.position, moveTarget);
             
 
             yield return null;
         }
 
-        //transform.LookAt(target);
-        controller.Move(target - transform.position);
+        transform.LookAt(lookTarget);
+        controller.Move(moveTarget - transform.position);
 
         entity.animations.SetWalking(false);
     }
@@ -111,7 +112,7 @@ public class MovementModule : MonoBehaviour
 	{
         Vector3 targetGroundPosition = new Vector3(orgPosition.x, transform.position.y, orgPosition.z);
 
-        yield return StartCoroutine(MoveToTargetCoroutine(targetGroundPosition, speedModifier));
+        yield return StartCoroutine(MoveToTargetCoroutine(targetGroundPosition, targetGroundPosition, speedModifier));
         yield return StartCoroutine(TurnInTimeCoroutine(orgRotation, turnTimeModifier));
 	}
 }

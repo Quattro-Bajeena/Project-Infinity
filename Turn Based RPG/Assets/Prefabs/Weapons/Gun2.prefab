@@ -331,16 +331,13 @@ MonoBehaviour:
   type: 1
   secondHandHandle: {fileID: 3718341412617722976}
   animatorOverride: {fileID: 22100000, guid: 5fa4135040827684c8c7347b0a8df9e1, type: 2}
-  lightAttack: {fileID: 1870294219188194549, guid: 52a006104922cdc45a3e06038e4bf781,
-    type: 3}
-  mediumAttack: {fileID: 1870294219188194549, guid: 167d904982600c445a75b6ef9800a805,
-    type: 3}
-  strongAttack: {fileID: 1870294219188194549, guid: a299574209583484fbc92a5b1952fa4e,
-    type: 3}
-  abilitiesPrefab:
-  - {fileID: 8285992919270015217, guid: 968d07231ded8894981a3d6fb061a7da, type: 3}
-  - {fileID: 8285992919270015217, guid: 656a7f9e958085d4d9b53f98cbc64d03, type: 3}
-  - {fileID: 8285992919270015217, guid: 3a4aaebf6bf368944847905a74e6cbef, type: 3}
-  - {fileID: 2011012889317215738, guid: 9c0e3467f93951d40bee834268681c15, type: 3}
-  combosPrefab:
-  - {fileID: 2453806081442596673, guid: 0344572aac27c984bbad435e18e56bf6, type: 3}
+  lightAttack: {fileID: 11400000, guid: 3c8eb3d9d25f18947a19ba09aad767fb, type: 2}
+  mediumAttack: {fileID: 11400000, guid: 3b99f9edb8f2f2542955cbab713bd80b, type: 2}
+  strongAttack: {fileID: 11400000, guid: 238d76be819c32444b4ca9fbd8242d5c, type: 2}
+  abilities:
+  - {fileID: 11400000, guid: a5bd4c9883929b445a6332160d74b20c, type: 2}
+  - {fileID: 11400000, guid: 462a3f094a0ff194da0e9f31540d0e0e, type: 2}
+  - {fileID: 11400000, guid: d6f1e27b84fe2b14cb6d56fc2ad8496d, type: 2}
+  - {fileID: 11400000, guid: c286e6d40db274e48b059c556bbe1c64, type: 2}
+  combos:
+  - {fileID: 11400000, guid: c62b531f26164894c91c2841d2ade9f5, type: 2}

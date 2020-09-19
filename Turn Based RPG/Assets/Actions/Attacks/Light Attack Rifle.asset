@@ -25,7 +25,7 @@ MonoBehaviour:
   TargetType: {fileID: 11400000, guid: 30648abe7908f234a83b8dc67067a28c, type: 2}
   ResourceType: {fileID: 11400000, guid: 85260e0f4e740b44d9b699e8c82be514, type: 2}
   movePosition:
-    position: 2
+    position: 1
   StatisticModifiers:
   - {fileID: 11400000, guid: 133da6761801e104480e5739793d3e36, type: 2}
   Elements: []

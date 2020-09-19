@@ -30,6 +30,7 @@ public class CombatModule : MonoBehaviour
 	Quaternion startRotation;
 	public Vector3 attackerPosition { get; private set; }
 	public Vector3 battlefieldCenter { get; set; }
+	public Vector3 enemiesPosition { get; set; }
 
 	[SerializeField] [Range(0, 1f)] float actionGauge;
 	public float ActionGauge { get { return actionGauge; } }
@@ -136,7 +137,7 @@ public class CombatModule : MonoBehaviour
 	}
 
 	//Functions directly accesed by Battle Manager
-	public void ProcessAction(CombatAction action, Vector3 position)
+	public void ProcessAction(CombatAction action, Vector3 movePosition, Vector3 lookPosition)
 	{
 
 		action.UseResourceStat(Entity.stats);
@@ -149,7 +150,7 @@ public class CombatModule : MonoBehaviour
 					state = CombatState.PerformingAction;
 					EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(Entity.Id));
 
-					StartCoroutine(PerformAttackAction(position));
+					StartCoroutine(PerformAttackAction(movePosition, lookPosition));
 
 				}
 				break;
@@ -160,7 +161,7 @@ public class CombatModule : MonoBehaviour
 					state = CombatState.PerformingAction;
 					EventManager.TriggerEvent(CombatEvents.StartingAction, new CombatEventData(Entity.Id));
 
-					StartCoroutine(PerformAbilityAction(action, position));
+					StartCoroutine(PerformAbilityAction(action, movePosition, lookPosition));
 				}
 				break;
 		}
@@ -243,7 +244,7 @@ public class CombatModule : MonoBehaviour
 	{
 		if (data.id == Entity.Id)
 		{
-			Entity.movement.MoveToTarget(battlefieldCenter, 2);
+			Entity.movement.MoveToTarget(battlefieldCenter, enemiesPosition, 2);
 		}
 
 	}
@@ -282,10 +283,10 @@ public class CombatModule : MonoBehaviour
 	}
 
 
-	IEnumerator PerformAttackAction(Vector3 targetPosition)
+	IEnumerator PerformAttackAction(Vector3 targetPosition, Vector3 lookPosition)
 	{
 
-		Entity.movement.MoveToTarget(targetPosition);
+		Entity.movement.MoveToTarget(targetPosition, lookPosition);
 		while (Entity.movement.IsMoving == true) { yield return null; }
 
 
@@ -297,15 +298,16 @@ public class CombatModule : MonoBehaviour
 				if (attackQueue.Peek().actionType == CombatAction.Type.Attack)
 					Entity.animations.PerformAttack(attackQueue.Peek().BaseAttackType);
 				else if(attackQueue.Peek().actionType == CombatAction.Type.Combo)
-					Entity.animations.PerformAbility(attackQueue.Peek().animationClip, weaponAbilities.Contains( attackQueue.Peek() ));
+					Entity.animations.PerformCombo(attackQueue.Peek().animationClip);
 
 				yield return null;
+
 				while (Entity.animations.IsAnimationPlaying() == true) { yield return null; }
 
 
 				EventManager.TriggerEvent(CombatEvents.CombatAnimationFinished, new CombatEventData(Entity.Id, attackQueue.Peek()));
 				attackQueue.Dequeue();
-				yield return new WaitForSeconds(0.3f);
+				yield return new WaitForSeconds(0.1f);
 			}
 			//no attacks and attacking is canceled
 			else if (attackCanceled == true)
@@ -329,18 +331,18 @@ public class CombatModule : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 
 
-		Entity.movement.ReturnToDefault();
+		Entity.movement.ReturnToDefault(1.5f);
 		while (Entity.movement.IsMoving == true) { yield return null; }
 
 
 		CompleteAction();
 	}
 
-	IEnumerator PerformAbilityAction(CombatAction action, Vector3 targetPosition)
+	IEnumerator PerformAbilityAction(CombatAction action, Vector3 targetPosition, Vector3 lookPosition)
 	{
 		if (action.IsTargetPositionStationary == false)
 		{
-			Entity.movement.MoveToTarget(targetPosition);
+			Entity.movement.MoveToTarget(targetPosition, lookPosition, 1.5f);
 			while (Entity.movement.IsMoving == true) { yield return null; }
 		}
 
@@ -356,7 +358,7 @@ public class CombatModule : MonoBehaviour
 
 		if (action.IsTargetPositionStationary == false)
 		{
-			Entity.movement.ReturnToDefault();
+			Entity.movement.ReturnToDefault(1.5f);
 			while (Entity.movement.IsMoving == true) { yield return null; }
 		}
 

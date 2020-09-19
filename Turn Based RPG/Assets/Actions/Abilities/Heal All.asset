@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0600f0b147b2aca43a0df8c422fe97fe, type: 3}
-  m_Name: Force Push
+  m_Name: Heal All
   m_EditorClassIdentifier: 
-  actionRange: 0
+  actionRange: 1
   actionType: 0
   damageType: 4
-  unavoidable: 0
+  unavoidable: 1
   power: 1
   cost: 5
   baseHitChance: 20
-  actionName: F.Push
-  description: Push taht Force!
-  animationClip: {fileID: 6060332349333817591, guid: 492f9eca3277f5442a7996a7ffc12b09,
+  actionName: heal all
+  description: Heal tyourt all companions
+  animationClip: {fileID: -6495878906448352753, guid: 492f9eca3277f5442a7996a7ffc12b09,
     type: 3}
-  TargetType: {fileID: 11400000, guid: 30648abe7908f234a83b8dc67067a28c, type: 2}
+  TargetType: {fileID: 11400000, guid: 27646e3b192da0647bb6cab2379b5c00, type: 2}
   ResourceType: {fileID: 11400000, guid: e41a8091c45b2624fb883e511ab40b2a, type: 2}
   movePosition:
     position: 0
   StatisticModifiers:
-  - {fileID: 11400000, guid: e64d02712c10aaa4cb8212bb05c1e423, type: 2}
+  - {fileID: 11400000, guid: 3ac77538e698f994291a0d249c9ade71, type: 2}
   Elements: []
   comboAction:
     requiredInput: 

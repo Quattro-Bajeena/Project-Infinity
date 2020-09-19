@@ -8,7 +8,7 @@ public class Heal : StatisticModyfiyngAction
 
 	public override float CalculateStatChange(float power, StatisticsModule attackerStats, StatisticsModule targetStats)
 	{
-		return targetStats.atributes[StatisticsModule.Atribute.Force].Value * power;
+		return attackerStats.atributes[StatisticsModule.Atribute.Force].Value * power;
 	}
 
 	public override void ApplyStatChange(float value, StatisticsModule targetStats)
